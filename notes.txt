@@ -1,6 +1,7 @@
 nomanaadma@gmail.com
 $upeEam#@!f0
 
+instead of username login make email login
 
 remove mails things
 

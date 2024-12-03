@@ -5,19 +5,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<title>{{ common.name }} | Login</title>
 	<link rel="icon" type="image/x-icon" href="{{ theme.favicon }}">
-	<link rel="stylesheet" href="public/css/style.min.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="public/css/style.min.css?v={{ "now"|date("U") }}" />
 	<script src="public/js/vendor.min.js"></script>
 	<script src="public/js/custom.js"></script>
 </head>
 <body>
 	<div class="lgn-background" style="background-image: url(public/uploads/{{ theme.lg_background }});">
-		<div class="lgn-wrapper">
+		<div class="lgn-wrapper rounded-4 pt-4 p-2">
 			<div class="lgn-logo text-center">
 				<a href="{{ common.url }}">
 					<img src="{{ theme.logo }}" alt="{{ common.name }}">
 				</a>
 			</div>
-			<div class="lgn-title">Sign In</div>
+			<div class="text-gray-900 fw-bolder lgn-title">Sign In</div>
+			
+			<div class="text-center">
+				<span class="w-300px text-gray-400 fw-semibold fs-7">Welcome to {{ common.name }}</span>
+			</div>
+			
 			<div class="lgn-form">
 				<form class="form-vertical" action="{{ action }}" method="post">
 					{% if success %}
@@ -43,7 +50,7 @@
 						<input type="text" id="lgn-bot" class="form-control" placeholder="Answer" autocomplete="off" required>
 					</div>
 					<div class="lgn-submit text-center">
-						<button type="submit" id="lgn-submit" class="btn btn-primary" name="login">Login</button>
+						<button type="submit" id="lgn-submit" class="btn-lg btn btn-primary w-100" name="login">Login</button>
 					</div>
 				</form>
 			</div>
