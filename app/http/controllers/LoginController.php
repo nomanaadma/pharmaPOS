@@ -21,8 +21,6 @@ class LoginController extends Controller
 		$this->load->model('commons');
 		$data['common'] = $this->model_commons->getSiteInfo();
 		$data['theme'] = $this->model_commons->getAdminTheme();
-		$data['first_number'] = rand(1,9);
-		$data['second_number'] = rand(1,20);
 		
 		if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
 			$this->session->data['refferal'] = $_SERVER['HTTP_REFERER'];
@@ -148,9 +146,7 @@ class LoginController extends Controller
 		if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
 			$this->session->data['refferal'] = $_SERVER['HTTP_REFERER'];
 		}
-		$data['first_number'] = rand(1,20);
-		$data['second_number'] = rand(1,20);
-
+		
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
 		$data['action'] = URL.DIR_ROUTE.'forgotpassword';
 		
@@ -254,9 +250,6 @@ class LoginController extends Controller
 			$this->load->model('commons');
 			$data['common'] = $this->model_commons->getSiteInfo();
 			$data['theme'] = $this->model_commons->getAdminTheme();
-
-			$data['first_number'] = rand(1,20);
-			$data['second_number'] = rand(1,20);
 
 			$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
 			$data['action'] = URL.DIR_ROUTE.'resetpassword';
