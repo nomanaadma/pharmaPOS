@@ -20,9 +20,3 @@ remove emailsetting from setting table
 
 customization.js
 
-
-
-
-
-
-

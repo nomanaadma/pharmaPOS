@@ -1,8 +1,3 @@
-/**
- * Purchase JS - purchase js for Drug Store theme
- * @version v1.0
- * @copyright 2020 Pepdev.
- */
  function roundNumber(number, decimals) {
  	var newString;
  	decimals = Number(decimals);
