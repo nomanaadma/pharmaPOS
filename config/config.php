@@ -29,10 +29,10 @@ define('DB_PASSWORD', '');
 /*MySQL database Name*/
 define('DB_DATABASE', 'pharmaPOS');
 /*Table Prefix*/
-define('DB_PREFIX', 'pp_');
+define('DB_PREFIX', '');
 
 
-define('AUTH_KEY', 'vfFqY19bxffbtHz10l9)DCQ97DD)U8%m*zSiJ?L8&1igSWD)kM3H)dPscl-Tvvc6');
-define('LOGGED_IN_SALT', 'Moq||2x(cG&n>Nn*GH2(YA5#LExDmmH01BHv2b#Q7cq18H31#sUJFoJ)#rXK8;eu');
-define('TOKEN', '4hIQ41wW4yj%r)q|(P1XZ}|aZqDxP#}ZL<?-lbP)*f#~M7}tZOhox%K-0Dmhn;4>');
-define('TOKEN_SALT', 'NyOQgpVwSrIfG6d4*MmY)SOVoNa)K}uD*C1KMc1xhu9Vuqm53Nx>t1JmJ0E5quc>');
+define('AUTH_KEY', 'PXgo}MIHBq8Rpkna&ntNv{LlLsHPPWL00srEbquAmyaGdioBgQ&%6oI7O}mDOjGj');
+define('LOGGED_IN_SALT', 'z5t?4MT*qf~qnHTjQdue(P*I6Wiupln?s(wZL4csy2DPs3QM3{&hSHL0T9vQV#?D');
+define('TOKEN', '%#vy3vPWymze1vhXP<1A-R*JKZj3fDgvahoPHYoRyQnDuoUMt#D6G;B&)3dEgfQS');
+define('TOKEN_SALT', 'ukP<}kk%G5DhxgQUyQ8vxdqD5go&)eURO<?&cWek#J12Y%kO>?d>3xBBOcAV<G1m');

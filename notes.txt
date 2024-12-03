@@ -2,6 +2,17 @@ nomanaadma@gmail.com
 $upeEam#@!f0
 
 
+remove mails things
+
+remove captcha from login
+
+remove public/sample
+remove css/lang
+
+remove unnecessary assets
+
+
+
 
 
 
