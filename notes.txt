@@ -1,11 +1,7 @@
 nomanaadma@gmail.com
 $upeEam#@!f0
 
-instead of username login make email login
-
 remove mails things
-
-remove captcha from login
 
 remove public/sample
 remove css/lang
@@ -18,6 +14,11 @@ $mail_result = $this->controller_mail->sendMail($mail);
 mail controller
 
 
+
+remove emailsetting from setting table
+
+
+customization.js
 
 
 

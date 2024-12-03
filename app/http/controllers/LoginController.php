@@ -20,7 +20,6 @@ class LoginController extends Controller
 
 		$this->load->model('commons');
 		$data['common'] = $this->model_commons->getSiteInfo();
-		$data['theme'] = $this->model_commons->getAdminTheme();
 		
 		if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
 			$this->session->data['refferal'] = $_SERVER['HTTP_REFERER'];
@@ -141,7 +140,6 @@ class LoginController extends Controller
 
 		$this->load->model('commons');
 		$data['common'] = $this->model_commons->getSiteInfo();
-		$data['theme'] = $this->model_commons->getAdminTheme();
 
 		if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
 			$this->session->data['refferal'] = $_SERVER['HTTP_REFERER'];
@@ -216,7 +214,6 @@ class LoginController extends Controller
 		if ($this->model_login->checkEmailHash($data)) {
 			$this->load->model('commons');
 			$data['common'] = $this->model_commons->getSiteInfo();
-			$data['theme'] = $this->model_commons->getAdminTheme();
 
 			$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
 			$data['action'] = URL.DIR_ROUTE.'resetpassword';

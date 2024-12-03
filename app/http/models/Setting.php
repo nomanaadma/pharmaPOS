@@ -8,7 +8,7 @@ class Setting extends Model
 {
 	public function getSetting()
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `name` IN ('siteinfo', 'sociallink')");
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `name` IN ('siteinfo')");
 		return $query->rows;
 	}
 
@@ -42,15 +42,5 @@ class Setting extends Model
 			return false;
 		}
 	}
-
-	public function getCustomization()
-	{
-		$query = $this->database->query("SELECT `data` FROM  `" . DB_PREFIX . "setting` WHERE `name` = ? LIMIT 1", array('admintheme') );
-		return $query->row['data'];
-	}
-
-	public function updateCustomization($data)
-	{
-		$query = $this->database->query("UPDATE `" . DB_PREFIX . "setting` SET `data` = ? WHERE `name` = ? ", array($data, 'admintheme'));
-	}
+	
 }

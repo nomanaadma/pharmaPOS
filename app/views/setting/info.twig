@@ -27,9 +27,9 @@
 			<div class="tab-content pt-4">
 				<div class="tab-pane active" id="setting-info">
 					<div class="row">
-						<div class="col-md-6">
-							<div class="row pb-2">
-								<div class="col-md-6">
+						<div class="col-md-12">
+						<div class="row pb-2">
+								<div class="col-md-3">
 									<div class="form-group">
 										<label class="d-block">Logo</label>
 										<div class="image-upload" {% if siteinfo.logo %}style="display:none"{% endif %}>
@@ -44,10 +44,43 @@
 										<div class="saved-picture-delete" data-toggle="tooltip" data-placement="right" title="Remove" {% if siteinfo.logo is empty %}style="display:none"{% endif %}>
 											<a class="las la-trash-alt"></a>
 										</div>
-										<div class="form-text">This logo will be used on invoice, bill etc. Please use JPG format.</div>
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="d-block">Logo Icon</label>
+										<div class="image-upload" {% if siteinfo.logo_icon %}style="display:none"{% endif %}>
+											<a>Upload</a>
+										</div>
+										<div class="saved-picture" {% if siteinfo.logo_icon is empty %}style="display:none"{% endif %}>
+											{% if siteinfo.logo_icon %}
+												<img class="img-thumbnail" src="public/uploads/{{ siteinfo.logo_icon }}" alt="">
+											{% endif %}
+											<input type="hidden" name="info[logo_icon]" value="{{ siteinfo.logo_icon }}">
+										</div>
+										<div class="saved-picture-delete" data-toggle="tooltip" data-placement="right" title="Remove" {% if siteinfo.logo is empty %}style="display:none"{% endif %}>
+											<a class="las la-trash-alt"></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="d-block">Login background</label>
+										<div class="image-upload" {% if siteinfo.lg_background %}style="display:none"{% endif %}>
+											<a>Upload</a>
+										</div>
+										<div class="saved-picture" {% if siteinfo.lg_background is empty %}style="display:none"{% endif %}>
+											{% if siteinfo.lg_background %}
+												<img class="img-thumbnail" src="public/uploads/{{ siteinfo.lg_background }}" alt="">
+											{% endif %}
+											<input type="hidden" name="info[lg_background]" value="{{ siteinfo.lg_background }}">
+										</div>
+										<div class="saved-picture-delete" data-toggle="tooltip" data-placement="right" title="Remove" {% if siteinfo.logo is empty %}style="display:none"{% endif %}>
+											<a class="las la-trash-alt"></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
 									<div class="form-group">
 										<label class="d-block">Favicon</label>
 										<div class="image-upload" {% if siteinfo.favicon %}style="display:none"{% endif %}>
@@ -65,6 +98,8 @@
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="col-md-6">
 							<div class="form-group">
 								<label>Store Name <span class="form-required">*</span></label>
 								<div class="input-group">

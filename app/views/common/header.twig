@@ -17,9 +17,9 @@
 </head>
 <body>
     {% autoescape %}
-    <div class="wrapper {% if common.theme.layout %} {{ common.theme.layout }} {% endif %}">
+    <div class="wrapper">
         <!-- Main Container -->
-        <div id="main-wrapper" class="{% if common.theme.layout_fixed %} {{ common.theme.layout_fixed }} {% endif %} {% if common.theme.side_menu %} menu-{{ common.theme.side_menu }} {% endif %} {% if common.theme.layout_menu %} {{ common.theme.layout_menu }} {% endif %}">
+        <div id="main-wrapper">
             <!-- Media Modal -->
             <div id="media-upload" class="modal fade">
                 <div class="modal-dialog modal-xl">
@@ -42,7 +42,7 @@
             <div class="menu-wrapper">
                 <div class="menu">{{ common.admin_menu | raw }}</div>
             </div>
-            <div class="page-hdr {{ common.theme.header_color }}">
+            <div class="page-hdr">
                 <div class="row align-items-center">
                     <div class="col-4 col-md-7 page-hdr-left">
                         <!-- Logo Container -->

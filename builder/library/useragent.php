@@ -14,9 +14,9 @@ class Useragent {
 		$this->database = $registry->get('database');
 		$this->session = $registry->get('session');
 
-		$query = $this->database->query("SELECT `data` FROM `" . DB_PREFIX . "setting` WHERE `name` in ('siteinfo', 'admintheme')");
+		$query = $this->database->query("SELECT `data` FROM `" . DB_PREFIX . "setting` WHERE `name` in ('siteinfo')");
 		$this->info = json_decode($query->rows[0]['data'], true);
-		$this->theme = json_decode($query->rows[1]['data'], true);
+		$this->theme = json_decode($query->rows[0]['data'], true);
 
 		if (isset($this->session->data['user_id']) && isset($this->session->data['login_token'])) {
 			if ($this->validateLoginToken($this->session->data['login_token'])) {

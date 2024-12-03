@@ -41,6 +41,7 @@ class Commons extends Model
 		} else {
 			$data['logo'] = 'public/images/logo.png';
 		}
+
 		if (!empty($data['logo']) && file_exists(DIR.'public/uploads/'.$data['logo_icon'])) {
 			$data['logo_icon'] = 'public/uploads/'.$data['logo_icon'];
 		} else {
@@ -78,23 +79,6 @@ class Commons extends Model
 		$data['dir_route'] = DIR_ROUTE;
 		$data['url_route'] = URL.DIR_ROUTE;
 
-		return $data;
-	}
-
-	public function getAdminTheme()
-	{
-		$query = $this->database->query("SELECT `data` FROM `" . DB_PREFIX . "setting` WHERE `name` = ?", array('admintheme'));
-		$data = json_decode($query->row['data'], true);
-		if (!empty($data['logo']) && file_exists(DIR.'public/uploads/'.$data['logo'])) {
-			$data['logo'] = 'public/uploads/'.$data['logo'];
-		} else {
-			$data['logo'] = 'public/images/logo.png';
-		}
-		if (!empty($data['favicon']) && file_exists(DIR.'public/uploads/'.$data['favicon'])) {
-			$data['favicon'] = 'public/uploads/'.$data['favicon'];
-		} else {
-			$data['favicon'] = 'public/images/logo.png';
-		}
 		return $data;
 	}
 

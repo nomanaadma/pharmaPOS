@@ -186,47 +186,4 @@ class SettingController extends Controller
 		}
 	}
 
-	public function customization()
-	{
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		$this->load->model('setting');
-		/**
-		* Get all info data from DB using info model's method
-		**/
-		$data['result'] = json_decode($this->model_setting->getCustomization(), true);
-		
-		/* Set confirmation message if page submitted before */
-		if (isset($this->session->data['message'])) {
-			$data['message'] = $this->session->data['message'];
-			unset($this->session->data['message']);
-		}
-		$data['page_title'] = 'Theme Customization';
-		/*Set action method for form submit call*/
-		$data['action'] = URL.DIR_ROUTE.'customization';
-		/*Render Info view*/
-		$this->response->setOutput($this->load->view('setting/customization', $data));
-	}
-
-	public function customizationAction()
-	{
-		$temp = $this->url->post;
-		$temp['layout_menu'] = isset($temp['layout_menu']) ? $temp['layout_menu'] : false;
-		$data = array('layout' => $temp['layout'],
-			'layout_fixed' => $temp['layout_fixed'],
-			'layout_menu' => $temp['layout_menu'],
-			'side_menu' => $temp['side-menu'], 
-			'header_color' => $temp['header-color'],
-			'logo' => $temp['logo'],
-			'logo_icon' => $temp['logo_icon'],
-			'favicon' => $temp['favicon'],
-			'lg_background' => $temp['lg_background']
-		);
-		
-		$this->load->model('setting');
-		$result = $this->model_setting->updateCustomization(json_encode($data));
-		
-		$this->session->data['message'] = array('alert' => 'success', 'value' => 'Customization updated successfully.');
-		$this->url->redirect('customization');
-	}
 }
