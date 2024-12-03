@@ -16106,12 +16106,14 @@ select.form-control:not([size]):not([multiple]) {
   min-height: 100%;
   padding: 16px;
   background-color: #f5f9fc;
-  background-image: url(../images/login-bg.jpg); }
+  background-image: url(../images/login-bg.jpg);
+  display: flex;
+}
 
 .lgn-wrapper {
   max-width: 500px;
   width: 100%;
-  margin: 20px auto;
+  margin: auto;
   position: relative;
   background: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);

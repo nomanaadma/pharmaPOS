@@ -1,0 +1,19 @@
+[04-Dec-2024 00:03:53 Asia/Calcutta] PHP Fatal error:  Uncaught Error: Call to undefined method LoginController::sendForgotMail() in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php:180
+Stack trace:
+#0 D:\laragon\www\pharmaPOS\builder\core\action.php(28): LoginController->forgotAction()
+#1 D:\laragon\www\pharmaPOS\builder\core\router.php(50): Action->execute(Object(Repository), Array)
+#2 D:\laragon\www\pharmaPOS\builder\core\router.php(40): Router->dispatch(Array)
+#3 D:\laragon\www\pharmaPOS\builder\bootstrap.php(67): Router->route('forgotpassword', 'POST')
+#4 D:\laragon\www\pharmaPOS\builder\startup.php(63): require_once('D:\\laragon\\www\\...')
+#5 D:\laragon\www\pharmaPOS\index.php(14): launch()
+#6 {main}
+  thrown in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[04-Dec-2024 00:04:02 Asia/Calcutta] PHP Notice:  Undefined index: email in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[04-Dec-2024 00:04:02 Asia/Calcutta] PHP Notice:  Undefined index: temp_hash in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[04-Dec-2024 00:04:16 Asia/Calcutta] PHP Notice:  Undefined index: email in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[04-Dec-2024 00:04:16 Asia/Calcutta] PHP Notice:  Undefined index: temp_hash in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[04-Dec-2024 00:04:43 Asia/Calcutta] PHP Notice:  Undefined index: email in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[04-Dec-2024 00:04:43 Asia/Calcutta] PHP Notice:  Undefined index: temp_hash in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[04-Dec-2024 00:05:18 Asia/Calcutta] PHP Notice:  Undefined index: email in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[04-Dec-2024 00:05:18 Asia/Calcutta] PHP Notice:  Undefined index: temp_hash in D:\laragon\www\pharmaPOS\app\http\controllers\LoginController.php on line 180
+[03-Dec-2024 18:38:30 UTC] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in D:\laragon\www\pharmaPOS\builder\library\url.php on line 100

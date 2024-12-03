@@ -12,6 +12,12 @@ remove css/lang
 
 remove unnecessary assets
 
+remove 
+$result = $this->model_commons->getTemplateAndInfo('forgotpassword');
+$mail_result = $this->controller_mail->sendMail($mail);
+mail controller
+
+
 
 
 

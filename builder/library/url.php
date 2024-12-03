@@ -93,10 +93,10 @@ class Url
 		return $prefix.$append;
 	}
 
-	public function redirect($to, $exit = true, $status = 302)
+	public function redirect($to, $exit = true, $status = 302, $forced = false)
 	{
-		if (headers_sent()) {
-			echo '<script>window.location ='. URL . DIR_ROUTE . $to .'</script>';
+		if (headers_sent() || $forced) {
+			echo '<script>window.location ="'. $to .'"</script>';
 		} else {
 			header('location: '. URL. DIR_ROUTE . $to, true, $status);
 		}

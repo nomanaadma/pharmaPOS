@@ -169,7 +169,7 @@ class LoginController extends Controller
 		if ($user = $this->model_login->checkAdminUser($data['mail'])) {
 			/** 
 			* Check Login attempt
-			* The account is locked From too many login attempts 
+			* The account is locked From too many login attempts
             **/
 			if (!$this->checkLoginAttempts($data['mail'])) {
 				$this->session->data['error'] = 'Error: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.';
@@ -177,14 +177,8 @@ class LoginController extends Controller
 			} elseif ( $user['status'] === 1 ) {
 				$user['temp_hash'] = md5(uniqid(mt_rand(), true));
 				$this->model_login->editHash($user);
-				$result = $this->sendForgotMail($user);
-				
-				if ($result) {
-					$this->session->data['success'] = 'Success: Reset instruction sent to your E-mail address.';
-				} else {
-					$this->session->data['error'] = 'Error: Mail could not be sent. Please contact us for more info.';
-				}
-				$this->url->redirect('login');
+				$reset_link = URL.DIR_ROUTE.'resetpassword&id='.$user['email'].'&code='.$user['temp_hash'];
+				$this->url->redirect($reset_link, true, 302, true);
 			} else {
 	        	/** 
 	        	* If account is disabled by admin 
@@ -200,33 +194,6 @@ class LoginController extends Controller
 		} else {
 			$this->session->data['error'] = 'Error: Account does not exist.';
 			$this->url->redirect('forgotpassword');
-		}
-	}
-
-	public function sendForgotMail($data)
-	{
-		$this->load->model('commons');
-		$result = $this->model_commons->getTemplateAndInfo('forgotpassword');
-
-		$link = '<a href="'.URL.'">Click Here</a>';
-		$reset_link = '<a href="'.URL.DIR_ROUTE.'resetpassword&id='.$data['email'].'&code='.$data['temp_hash'].'">Reset Link</a>';
-		$result['template']['message'] = str_replace('{firstname}', $data['firstname'], $result['template']['message']);
-		$result['template']['message'] = str_replace('{email}', $data['email'], $result['template']['message']);
-		$result['template']['message'] = str_replace('{reset_link}', $reset_link, $result['template']['message']);
-		$result['template']['message'] = str_replace('{business_name}', $result['common']['name'], $result['template']['message']);
-
-		$mail['name'] = $data['firstname'].' '.$data['lastname'];
-		$mail['email'] = $data['email'];
-		$mail['subject'] = $result['template']['subject'];
-		$mail['message'] = $result['template']['message'];
-		
-		$this->load->controller('mail');
-		$mail_result = $this->controller_mail->sendMail($mail);
-		
-		if ($mail_result == 1) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 
@@ -278,38 +245,11 @@ class LoginController extends Controller
 		}
 
 		if ($this->model_login->resetPassword($data)) {
-			$this->sendResetMail($user);
 			$this->session->data['success'] = 'Success: Password changed successfully. Please login now.';
 			$this->url->redirect('login');
 		} else {
 			$this->session->data['error'] = 'Error: Server Error!!! Please contact us for support.';
-			$this->url->redirect('login');	
-		}
-	}
-
-	public function sendResetMail($data)
-	{
-		$this->load->model('commons');
-		$result = $this->model_commons->getTemplateAndInfo('resetpassword');
-		
-		$link = '<a href="'.URL.'">Click Here</a>';
-		
-		$result['template']['message'] = str_replace('{firstname}', $data['firstname'], $result['template']['message']);
-		$result['template']['message'] = str_replace('{email}', $data['email'], $result['template']['message']);
-		$result['template']['message'] = str_replace('{business_name}', $result['common']['name'], $result['template']['message']);
-
-		$mail['name'] = $data['firstname'].' '.$data['lastname'];
-		$mail['email'] = $data['email'];
-		$mail['subject'] = $result['template']['subject'];
-		$mail['message'] = $result['template']['message'];
-
-		$this->load->controller('mail');
-		$mail_result = $this->controller_mail->sendMail($mail);
-
-		if ($mail_result == 1) {
-			return true;
-		} else {
-			return false;
+			$this->url->redirect('login');
 		}
 	}
 
