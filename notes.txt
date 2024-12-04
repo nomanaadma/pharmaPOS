@@ -10,6 +10,9 @@ Medicine Other in roles edit remove
 
 expense
 
+search
+pharmacy
+
 remove public/sample
 
 check user_id need in customer and other tables

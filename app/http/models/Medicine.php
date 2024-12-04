@@ -5,11 +5,6 @@
 */
 class Medicine extends Model
 {
-	public function allPharmacy()
-	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "pharmacy` ORDER BY `date_of_joining` DESC");
-		return $query->rows;
-	}
 
 	public function getSuppliers()
 	{

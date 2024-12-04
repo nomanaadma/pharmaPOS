@@ -25,7 +25,7 @@ class Upload extends Model
 
 	public function createMedia($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "media` (`media`, `ext`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?) ", array($this->database->escape($data['file']), $data['ext'], (int)$data['user_id'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "media` (`media`, `ext`, `created_date`) VALUES (?, ?, ?) ", array($this->database->escape($data['file']), $data['ext'], $data['datetime']));
 		if ($query->row > 0) {
 			return $this->database->last_id(); 
 		} else {
@@ -36,28 +36,6 @@ class Upload extends Model
 	public function deleteMedia($data)
 	{
 		$this->database->query("DELETE FROM `" . DB_PREFIX . "media` WHERE `media` = ? AND `id` = ?" , array($this->database->escape($data['name']), (int)$data['id']));
-	}
-
-	public function createGallery($data)
-	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "gallery` (`media`, `ext`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?) ", array($this->database->escape($data['file']), $data['ext'], (int)$data['user_id'], $data['datetime']));
-		if ($query->row > 0) {
-			return $this->database->last_id(); 
-		} else {
-			return false;
-		}
-	}
-
-	public function isGallery($data)
-	{
-		$query = $this->database->query("SELECT id FROM `" . DB_PREFIX . "gallery` WHERE id = ? AND media = ?", array((int)$data['id'], $data['name']));
-		if ($query->row > 0) { return true; }
-		else { return false; }
-	}
-
-	public function deleteGallery($data)
-	{
-		$this->database->query("DELETE FROM `" . DB_PREFIX . "gallery` WHERE `media` = ? AND `id` = ?" , array($this->database->escape($data['name']), (int)$data['id']));
 	}
 
 }

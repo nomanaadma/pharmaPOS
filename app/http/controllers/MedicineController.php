@@ -684,15 +684,14 @@ class MedicineController extends Controller
 					$this->load->model('customer');
 
 					$nameParts = explode(' ', $data['billing']['name']);
-					$lastName = array_pop($nameParts);
 					$firstName = implode(' ', $nameParts);
+					$lastName = array_pop($nameParts);
 
 					$customer_data = [
 						'firstname' => $firstName,
 						'lastname' => $lastName,
 						'mail' => $data['billing']['email'],
 						'mobile' => $data['billing']['mobile'],
-						'user_id' => (int)$this->session->data['user_id'],
 						'datetime' => date('Y-m-d H:i:s'),
 						'gender' => null,
 					];

@@ -172,7 +172,6 @@ class CustomerController extends Controller
 		}
 		
 		$data['address'] = json_encode($data['address']);
-		$data['user_id'] = $this->session->data['user_id'];
 		$data['datetime'] = date('Y-m-d H:i:s');
 		
 		$this->load->model('customer');

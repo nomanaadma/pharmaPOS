@@ -36,7 +36,6 @@ class UploadController extends Controller
 	public function uploadMedia()
 	{
 		$data = $this->url->post;
-		$data['user_id'] = $this->session->data['user_id'];
 
 		$file = $this->url->files['file'];
 		$data['ext'] = pathinfo($file['name'], PATHINFO_EXTENSION);
@@ -97,62 +96,6 @@ class UploadController extends Controller
 		exit();
 	}
 
-	public function indexGallery()
-	{
-		$file = $this->url->files['file'];
-
-		$data['ext'] = pathinfo($file['name'], PATHINFO_EXTENSION);
-
-		$data['filedir'] = DIR.'public/images/gallery/';
-		$data['file_name'] = 'gallery-'.uniqid(rand());
-		$data['file'] = $data['file_name'].'.'.$data['ext'];
-
-		$filesystem = new Filesystem();
-		$result = $filesystem->moveUpload($file, $data);
-		
-		if ($result['error'] === false) {
-			$data['name'] = $result['name'];
-			$data['user_id'] = $this->session->data['user_id'];
-			$data['datetime'] = date('Y-m-d H:i:s');
-			$this->load->model('upload');
-			$result['id'] = $this->model_upload->createGallery($data);
-			$result['error'] = false;
-			$result['file'] = $data['file'];
-			echo json_encode($result);
-		} else {
-			echo json_encode($result);
-		}
-	}
-
-	public function indexGalleryDelete()
-	{
-		$data = $this->url->post;
-		$data['id'] = (int)$data['id'];
-		if (!is_string($data['name'])) {
-			echo json_encode(array("error" => true, "message" => "File is wrong or does not exist."));
-			exit();
-		}
-
-		if (empty($data['id']) && !is_int($data['id'])) {
-			echo json_encode(array("error" => true, "message" => "File is wrong or does not exist."));
-			exit();
-		}
-		$this->load->model('upload');
-		if (!$this->model_upload->isGallery($data)) {
-			echo json_encode(array("error" => true, "message" => "File is wrong or does not exist."));
-			exit();
-		}
-
-		if (!unlink(DIR.'/public/images/gallery/'.$data['name'])) {
-			echo json_encode(array("error" => true, "message" => "Error deleting ".$file));
-			exit();
-		} else {
-			$this->model_upload->deleteGallery($data);
-			echo json_encode(array("error" => false, "message" => "File deleted successfully."));
-		}
-		exit();
-	}
-
 	protected function deleteMedia()
 	{
 		$file = $this->url->post('name');
@@ -163,25 +106,6 @@ class UploadController extends Controller
 		}
 		
 		if (!unlink('../public/uploads/'.$file))
-		{
-			echo ("Error deleting $file");
-		}
-		else
-		{
-			echo 1;
-		}
-	}
-
-	protected function deleteGallery()
-	{
-		echo "string";
-		exit();
-		$file = $this->url->post('name');
-		if (!is_string($file)) {
-			echo "Invalid file name!";
-			exit();
-		}
-		if (!unlink('../public/images/gallery/'.$file))
 		{
 			echo ("Error deleting $file");
 		}
