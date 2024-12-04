@@ -87,11 +87,6 @@ $router->get('subscriber/edit', 'SubscriberController@indexEdit');
 $router->post('subscriber/edit', 'SubscriberController@indexAction');
 $router->post('subscriber/delete', 'SubscriberController@indexDelete');
 
-$router->get('expensetype', 'TypesController@expenseType');
-$router->post('expensetype/add', 'TypesController@expenseTypeAction');
-$router->post('expensetype/edit', 'TypesController@expenseTypeAction');
-$router->post('expensetype/delete', 'TypesController@expenseTypeDelete');
-
 $router->get('reports', 'ReportController@index');
 
 $router->get('send/email', 'SenderController@indexMail');
