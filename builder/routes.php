@@ -80,12 +80,6 @@ $router->post('medicine/category/add', 'MedicineController@mCategoryAction');
 $router->post('medicine/category/edit', 'MedicineController@mCategoryAction');
 $router->post('medicine/category/delete', 'MedicineController@mCategoryDelete');
 
-$router->get('salarytemplate', 'SalarytemplateController@index');
-$router->get('salarytemplate/add', 'SalarytemplateController@indexAdd');
-$router->post('salarytemplate/add', 'SalarytemplateController@indexAction');
-$router->get('salarytemplate/edit', 'SalarytemplateController@indexEdit');
-$router->post('salarytemplate/edit', 'SalarytemplateController@indexAction');
-$router->post('salarytemplate/delete', 'SalarytemplateController@indexDelete');
 $router->get('managesalary', 'ManagesalaryController@index');
 $router->get('managesalary/view', 'ManagesalaryController@indexView');
 $router->get('managesalary/add', 'ManagesalaryController@indexAdd');
@@ -101,13 +95,6 @@ $router->get('makepayment/add', 'ManagesalaryController@makepaymentAdd');
 $router->post('makepayment/add', 'ManagesalaryController@makepaymentAction');
 $router->post('checkstaffsalary', 'ManagesalaryController@checkStaffSalary');
 
-$router->get('expenses', 'ExpenseController@index');
-$router->get('expense/add', 'ExpenseController@indexAdd');
-$router->post('expense/add', 'ExpenseController@indexAction');
-$router->get('expense/edit', 'ExpenseController@indexEdit');
-$router->post('expense/edit', 'ExpenseController@indexAction');
-$router->post('expense/delete', 'ExpenseController@indexDelete');
-
 $router->get('subscribers', 'SubscriberController@index');
 $router->get('subscriber/add', 'SubscriberController@indexAdd');
 $router->post('subscriber/add', 'SubscriberController@indexAction');
@@ -115,16 +102,6 @@ $router->get('subscriber/edit', 'SubscriberController@indexEdit');
 $router->post('subscriber/edit', 'SubscriberController@indexAction');
 $router->post('subscriber/delete', 'SubscriberController@indexDelete');
 
-$router->get('staffattendance', 'StaffattendanceController@index');
-$router->get('staffattendance/view', 'StaffattendanceController@indexView');
-$router->get('staffattendance/add', 'StaffattendanceController@indexAdd');
-$router->post('staffattendance/add', 'StaffattendanceController@indexAction');
-
-$router->get('items', 'ItemsController@index');
-$router->post('item/add', 'ItemsController@indexAction');
-$router->post('item/edit', 'ItemsController@indexAction');
-$router->post('item/delete', 'ItemsController@indexDelete');
-$router->get('item/search', 'ItemsController@indexSearch');
 $router->get('expensetype', 'TypesController@expenseType');
 $router->post('expensetype/add', 'TypesController@expenseTypeAction');
 $router->post('expensetype/edit', 'TypesController@expenseTypeAction');
