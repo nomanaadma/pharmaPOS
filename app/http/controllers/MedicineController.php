@@ -18,7 +18,6 @@ class MedicineController extends Controller
 		**/
 		$this->load->model('medicine');
 		$data['result'] = $this->model_medicine->getMedicines();
-		$data['category'] = $this->model_medicine->getMCategory();
 
 		/* Set confirmation message if page submitted before */
 		if (isset($this->session->data['message'])) {
@@ -31,7 +30,6 @@ class MedicineController extends Controller
 		$data['page_add'] = $this->user_agent->hasPermission('medicine/add') ? true : false;
 		$data['page_edit'] = $this->user_agent->hasPermission('medicine/edit') ? true : false;
 		$data['page_delete'] = $this->user_agent->hasPermission('medicine/delete') ? true : false;
-		$data['page_upload'] = $this->user_agent->hasPermission('medicine/upload') ? true : false;
 		
 		$data['action_delete'] = URL.DIR_ROUTE.'medicine/delete';
 		
@@ -202,74 +200,6 @@ class MedicineController extends Controller
 		$result = $this->model_medicine->deleteMedicine($this->url->post('id'));
 		$this->session->data['message'] = array('alert' => 'success', 'value' => 'Medicine deleted successfully.');
 		$this->url->redirect('medicines');
-	}
-
-	public function medicineUpload()
-	{
-		$data = $this->url->post;
-		$file = $this->url->file('medicine');
-		
-		$allowedFileType = ['application/vnd.ms-excel', 'text/csv'];
-		if (in_array($file["type"], $allowedFileType)) {
-			$ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-			$targetPath = 'public/medicine.'.$ext;
-			move_uploaded_file($file['tmp_name'], $targetPath);
-			if (($handle = fopen($targetPath, "r")) !== FALSE) {
-				$this->load->model('medicine');
-				$row = 1;
-				while (($temp = fgetcsv($handle, 1000, ",")) !== FALSE) {
-					$result['name'] = array();
-					$temp = $this->url->clean($temp);
-					
-					if ($row > 0 && !empty($temp[1])) {
-						$result['name'] = $temp[0];
-						$result['company'] = $temp[1];
-						$result['generic'] = $temp[2];
-						$result['medicine_group'] = $temp[3];
-						$result['unit'] = $temp[4];
-						$result['unitpacking'] = $temp[5];
-						$result['storebox'] = $temp[6];
-						$result['minlevel'] = $temp[7];
-						$result['reorderlevel'] = $temp[8];
-						$result['note'] = $temp[9];
-						$result['category'] = $data['category'];
-						$result['datetime'] =  date('Y-m-d H:i:s');
-						$result['user_id'] = $data['user_id'];
-						$this->model_medicine->createMedicine($result);
-						$this->session->data['message'] = array('alert' => 'success', 'value' => 'Medicine imported successfully.');
-					} else {
-						$this->session->data['message'] = array('alert' => 'warning', 'value' => 'No medicine rows found in file.');
-					}
-					$row++;
-				}
-				fclose($handle);
-			} else {
-				$this->session->data['message'] = array('alert' => 'error', 'value' => 'Server Error.');
-			}
-			unlink($targetPath);
-		} else {
-			$this->session->data['message'] = array('alert' => 'error', 'value' => 'Only CSV file allowed.');
-		}
-		$this->url->redirect('medicines');
-	}
-
-	public function medicineSampleDownload()
-	{
-		$filepath = 'public/sample/import_medicine.csv';
-		if(file_exists($filepath)){
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename=medicine_sample.csv');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate');
-			header('Pragma: public');
-			header('Content-Length: ' . filesize($filepath));
-			flush();
-			readfile($filepath);
-			exit;
-		}
-		$this->url->redirect('medicine');
-		exit();
 	}
 
 	public function validateField($data)

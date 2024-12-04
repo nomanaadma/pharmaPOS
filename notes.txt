@@ -4,20 +4,18 @@ $upeEam#@!f0
 aminshoukat4@gmail.com
 $upeEam#@!f0
 
-add relations
-
-Medicine Other in roles edit remove
-
-in pos/bill calculation updates on focusout fix it
+medicine_bills table work
 
 expense
 
-remove public/sample
+bills not showing for default values getMedicineBills(
 
-check user_id need in customer and other tables
+reports work
 
 https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-application/25581006
 http://pepdev.com/theme-preview/drugstore/
 
+
+discounttype and discount column in medicine_purchase
 
 

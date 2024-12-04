@@ -107,8 +107,6 @@ class Medicine extends Model
 		return true;
 	}
 
-
-
 	public function getMedicineBills($period)
 	{
 		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_bill` WHERE bill_date BETWEEN ? AND ? ORDER BY bill_date DESC", array($period['start'], $period['end']));

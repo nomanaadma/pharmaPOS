@@ -11,9 +11,6 @@
 			</div>
 		</div>
 		<div class="col-sm-8 text-right">
-			{% if page_upload %}
-				<a class="btn btn-white btn-sm mr-2" data-toggle="modal" data-target="#uploadmedicine-modal"><i class="las la-cloud-upload-alt text-primary pr-2"></i> Import Medicines</a>
-			{% endif %}
 			{% if page_add %}
 				<a href="{{ common.info.url_route }}medicine/add" class="btn btn-primary btn-sm"><i class="las la-plus pr-2"></i> New Medicine</a>
 			{% endif %}
@@ -96,47 +93,5 @@
 	</div>
 </div>
 
-<div class="modal fade" id="uploadmedicine-modal">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Import Medicines</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<form action="{{ common.info.url_route }}medicine/upload" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="_token" value="{{ common.token }}">
-				<div class="modal-body">
-					<div class="form-group">
-						<label>Medicine Category</label>
-						<div class="input-group">
-							<div class="input-group-prepend"><span class="input-group-text"><i class="las la-tag"></i></span></div>
-							<select name="category" class="custom-select">
-								{% for value in category %}
-								    <option value="{{ value.id }}">{{ value.name }}</option>
-								{% endfor %}
-							</select>
-						</div>
-					</div>
-					<div class="form-group mb-0">
-						<div class="input-group">
-							<div class="custom-file">
-								<input type="file" name="medicine" class="custom-file-input m-0" id="medicinefile" accept=".csv" required>
-								<label class="custom-file-label" for="medicinefile">Choose file (Only CSV file)</label>
-							</div>
-							<div class="input-group-append">
-								<a href="{{ common.info.url_route }}medicine/sample" class="input-group-text">Download Sample</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" name="submit" class="btn btn-primary">Upload</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
 {% if page_delete %}{{ include('common/delete_modal.twig') }}{% endif %}
 	{{ include('common/footer.twig') }}
