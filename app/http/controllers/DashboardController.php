@@ -42,11 +42,6 @@ class DashboardController extends Controller
 		$data['period']['start'] = date("Y-m-d", strtotime( date( 'Y-m-01' )." -11 months"));
 		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
 
-		$data['chart_bill'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartBill());
-		$data['chart_purchase'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartPurchase());
-		$data['chart_salary'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartSalary());
-		$data['chart_customer'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartCustomer());
-
 		$data['main_stats'] = $this->model_dashboard->getMainStats();
 		$data['revenue_stats'] = $this->model_dashboard->getRevenueStats();
 		$data['income_stats'] = $this->model_dashboard->getIncomeStats();
@@ -124,9 +119,6 @@ class DashboardController extends Controller
 		$data['period']['start'] = date("Y-m-d", strtotime( date( 'Y-m-01' )." -11 months"));
 		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
 		
-		$data['chart_income'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartIncome());
-		$data['chart_bill'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartIncomeBill());
-		$data['chart_purchase'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartPurchase());
 		$data['income_stats'] = $this->model_dashboard->getIncomeStats();
 		$data['bill_stats'] = $this->model_dashboard->getBillStats();
 
@@ -151,8 +143,6 @@ class DashboardController extends Controller
 		$data['period']['start'] = date("Y-m-d", strtotime( date( 'Y-m-01' )." -11 months"));
 		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
 		
-		$data['chart_bill'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartIncomeBill());
-		$data['chart_purchase'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartPurchase());
 		$data['bill_stats'] = $this->model_dashboard->getBillStats();
 		$data['purchase'] = $this->model_dashboard->getLatestPurchase();
 		

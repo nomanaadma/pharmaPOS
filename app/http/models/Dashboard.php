@@ -15,40 +15,11 @@ class Dashboard extends Model
 		
 		$data['amount'] = number_format((float)$data['bill']['amount'], 2, '.', '');
 
-		$query = $this->database->query("SELECT SUM(amount) AS amount FROM `" . DB_PREFIX . "staff_payment`");
-		$data['salary'] = number_format((float)$query->row['amount'], 2, '.', '');
-
 		$query = $this->database->query("SELECT SUM(amount) AS amount FROM `" . DB_PREFIX . "medicine_purchase`");
 		$data['purchase'] = number_format((float)$query->row['amount'], 2, '.', '');
 
 
 		return $data;
-	}
-
-	public function getChartBill()
-	{
-		$query = $this->database->query("SELECT SUM(amount) AS amount, MONTH(bill_date) AS month FROM `" . DB_PREFIX . "medicine_bill` WHERE bill_date > DATE_SUB(now(), INTERVAL 12 MONTH) GROUP BY MONTH(bill_date)");
-		return $query->rows;
-	}
-
-	public function getChartPurchase()
-	{
-		$query = $this->database->query("SELECT SUM(amount) AS amount, MONTH(date) AS month FROM `" . DB_PREFIX . "medicine_purchase` WHERE date > DATE_SUB(now(), INTERVAL 12 MONTH) GROUP BY MONTH(date)");
-		return $query->rows;
-	}
-
-	public function getChartCustomer()
-	{
-		$query = $this->database->query("SELECT COUNT(id) AS amount, MONTH(date_of_joining) AS month FROM `" . DB_PREFIX . "customers` WHERE date_of_joining > DATE_SUB(now(), INTERVAL 12 MONTH) GROUP BY MONTH(date_of_joining)");
-		return $query->rows;
-	}
-
-	public function getChartSalary()
-	{
-		$month = date("Y-m", strtotime( date( 'Y-m-01' )." -12 months"));
-
-		$query = $this->database->query("SELECT SUM(amount) AS amount, month FROM `" . DB_PREFIX . "staff_payment` WHERE month_year > '".$month."' GROUP BY month");
-		return $query->rows;
 	}
 
 	public function getIncomeStats()

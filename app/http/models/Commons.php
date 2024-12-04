@@ -188,8 +188,6 @@ class Commons extends Model
 			'medicine/purchase/view' => 'purchase',
 			'medicine/category' => 'settings',
 			'medicine/stock' => 'stockadjustment',
-			'makepayment' => 'payroll',
-			'makepayment/add' => 'payroll',
 			'expensetype' => 'settings',
 			'subscribers' => 'subscribers',
 			'subscriber/add' => 'subscribers',

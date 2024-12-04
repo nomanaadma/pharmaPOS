@@ -80,21 +80,6 @@ $router->post('medicine/category/add', 'MedicineController@mCategoryAction');
 $router->post('medicine/category/edit', 'MedicineController@mCategoryAction');
 $router->post('medicine/category/delete', 'MedicineController@mCategoryDelete');
 
-$router->get('managesalary', 'ManagesalaryController@index');
-$router->get('managesalary/view', 'ManagesalaryController@indexView');
-$router->get('managesalary/add', 'ManagesalaryController@indexAdd');
-$router->post('managesalary/add', 'ManagesalaryController@indexAction');
-$router->get('managesalary/edit', 'ManagesalaryController@indexEdit');
-$router->post('managesalary/edit', 'ManagesalaryController@indexAction');
-$router->get('managesalary/history', 'ManagesalaryController@history');
-$router->get('managesalary/history/view', 'ManagesalaryController@historyView');
-$router->get('managesalary/history/pdf', 'ManagesalaryController@historyPdf');
-$router->post('managesalary/history/delete', 'ManagesalaryController@historyDelete');
-$router->get('makepayment', 'ManagesalaryController@makepayment');
-$router->get('makepayment/add', 'ManagesalaryController@makepaymentAdd');
-$router->post('makepayment/add', 'ManagesalaryController@makepaymentAction');
-$router->post('checkstaffsalary', 'ManagesalaryController@checkStaffSalary');
-
 $router->get('subscribers', 'SubscriberController@index');
 $router->get('subscriber/add', 'SubscriberController@indexAdd');
 $router->post('subscriber/add', 'SubscriberController@indexAction');

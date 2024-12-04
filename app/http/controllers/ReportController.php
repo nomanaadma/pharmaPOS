@@ -86,7 +86,6 @@ class ReportController extends Controller
 		$this->load->model('report');
 		$data['result'] = $this->model_report->getPurchases($data['period']);
 
-		$data['purchase_chart'] = $this->formatChartDataWithMonth($this->model_report->getChartPurchase($data['period']));
 		$data['purchase_stats'] = $this->model_report->getPurchaseStats($data['period']);
 		
 		$data['page_title'] = 'Purchase Report';
@@ -112,97 +111,10 @@ class ReportController extends Controller
 
 		$this->load->model('report');
 		$data['result'] = $this->model_report->getBills($data['period']);
-		$data['bill_chart'] = $this->formatChartDataWithMonth($this->model_report->getChartBills($data['period']));
 		$data['bill_stats'] = $this->model_report->getBillsStats($data['period']);
 		
 		$data['page_title'] = 'POS/Bill Report';
 		$this->response->setOutput($this->load->view('report/report_bill', $data));
-	}
-
-	public function reportExpenses()
-	{
-		$this->load->controller('common');
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-
-		$this->load->model('report');
-		$data['result'] = $this->model_report->getExpenses($data['period']);
-		$data['expense_chart'] = $this->formatChartDataWithMonth($this->model_report->getChartExpenses($data['period']));
-		$data['expense_stats'] = $this->model_report->getExpensesStats($data['period']);
-		
-		$data['page_title'] = 'Expenses Report';
-		$this->response->setOutput($this->load->view('report/report_expenses', $data));
-	}
-
-	public function reportAccountStatement()
-	{
-		$this->load->controller('common');
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-
-		$this->load->model('report');
-		$data['result'] = $this->model_report->getAccounts();
-		
-		$data['page_title'] = 'Account Statement';
-		$this->response->setOutput($this->load->view('report/report_acconts', $data));
-	}
-
-	public function reportStatement()
-	{
-		$id = (int)$this->url->get('id');
-		if (empty($id) || !is_int($id)) {
-			$this->url->redirect('reports&name=accountstatement');
-		}
-
-		$this->load->controller('common');
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-
-		$this->load->model('report');
-		$data['account'] = $this->model_report->getAccount($id);
-
-		if (empty($data['account'])) {
-			$this->url->redirect('reports&name=accountstatement');
-		}
-		$data['result'] = $this->model_report->getAccountsStatement($id, $data['period']);
-
-		$data['credit'] = 0;
-		$data['debit'] = 0;
-		$data['page_title'] = $data['account']['account_name'].' Statement';
-		$this->response->setOutput($this->load->view('report/report_statement', $data));
 	}
 
 	public function reportInventory()
