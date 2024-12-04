@@ -39,13 +39,13 @@ class Report extends Model
 
 	public function getMedicines()
 	{
-		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.date_of_joining DESC");
+		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.created_date DESC");
 		return $query->rows;
 	}
 
 	public function getOutofStock()
 	{
-		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.date_of_joining DESC");
+		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.created_date DESC");
 		return $query->rows;
 	}
 

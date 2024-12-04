@@ -48,7 +48,7 @@
 							<td>{{ common.info.currency_abbr~value.tax }}</td>
 							<th>{{ common.info.currency_abbr~value.discount_value }}</th>
 							<td>{{ common.info.currency_abbr~value.amount }}</td>
-							<th>{{ value.date_of_joining|date(common.info.date_format) }}</th>
+							<th>{{ value.created_date|date(common.info.date_format) }}</th>
 							{% if page_view or page_edit or page_delete %}
 								<td class="table-action">
 									{% if page_view or page_edit %}

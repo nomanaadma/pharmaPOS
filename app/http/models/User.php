@@ -6,7 +6,7 @@ class User extends Model
 {
 	public function allUsers()
 	{
-		$query = $this->database->query("SELECT u.*, u.user_id AS id, ur.name AS role FROM `" . DB_PREFIX . "users` As u LEFT JOIN `" . DB_PREFIX . "user_role` As ur ON u.user_role = ur.id ORDER BY `date_of_joining` DESC");
+		$query = $this->database->query("SELECT u.*, u.user_id AS id, ur.name AS role FROM `" . DB_PREFIX . "users` As u LEFT JOIN `" . DB_PREFIX . "user_role` As ur ON u.user_role = ur.id ORDER BY `created_date` DESC");
 		return $query->rows;
 	}
 
@@ -73,7 +73,7 @@ class User extends Model
 
 	public function createUser($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "users` (`user_role`, `user_name`, `firstname`, `lastname`, `email`, `mobile`,`gender`, `password`, `temp_hash`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['user_role']), $this->database->escape($data['user_name']), $this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $this->database->escape($data['gender']), $data['password'], $data['hash'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "users` (`user_role`, `user_name`, `firstname`, `lastname`, `email`, `mobile`,`gender`, `password`, `temp_hash`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['user_role']), $this->database->escape($data['user_name']), $this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $this->database->escape($data['gender']), $data['password'], $data['hash'], $data['datetime']));
 		if ($query->num_rows > 0) {
 			return $this->database->last_id();
 		} else {
@@ -99,7 +99,7 @@ class User extends Model
 
 	public function getRoles()
 	{
-		$query = $this->database->query("SELECT `id`, `name`, `description`, `date_of_joining` FROM `" . DB_PREFIX . "user_role`");
+		$query = $this->database->query("SELECT `id`, `name`, `description`, `created_date` FROM `" . DB_PREFIX . "user_role`");
 		return $query->rows;
 	}
 

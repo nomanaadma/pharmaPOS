@@ -34,7 +34,7 @@
 							<td>{{ loop.index }}</td>
 							<td class="text-primary">{{ value.name }}</td>
 							<td>{{ value.description }}</td>
-							<td>{{ value.date_of_joining|date(common.info.date_format) }}</td>
+							<td>{{ value.created_date|date(common.info.date_format) }}</td>
 							<td class="table-action">
 								{% if value.id > '1' %}
 									<a href="{{ common.info.url_route~'role/edit&id='~value.id }}" class="text-primary edit" data-toggle="tooltip" title="Edit"><i class="las la-edit"></i></a>

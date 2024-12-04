@@ -56,7 +56,7 @@
 									<span class="label label-danger">InActive</span>
 								{% endif %}
 							</td>
-							<td>{{ value.date_of_joining|date(common.info.date_format) }}</td>
+							<td>{{ value.created_date|date(common.info.date_format) }}</td>
 							{% if page_view or page_edit or page_delete %}
 								<td class="table-action">
 									{% if page_view or page_edit %}

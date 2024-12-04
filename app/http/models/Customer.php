@@ -7,13 +7,13 @@ class Customer extends Model
 {
 	public function getCustomers($period)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "customers` WHERE `date_of_joining` BETWEEN '".$period['start']."' AND '".$period['end']."' ORDER BY `date_of_joining` DESC");		
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "customers` WHERE `created_date` BETWEEN '".$period['start']."' AND '".$period['end']."' ORDER BY `created_date` DESC");		
 		return $query->rows;
 	}
 
 	public function getCustomer($id)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "customers` WHERE `id` = ? ORDER BY `date_of_joining` DESC", array((int)$id));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "customers` WHERE `id` = ? ORDER BY `created_date` DESC", array((int)$id));
 		return $query->row;
 	}
 
@@ -40,7 +40,7 @@ class Customer extends Model
 
 	public function createCustomer($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "customers` (`firstname`, `lastname`, `email`, `mobile`, `gender`, `status`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $this->database->escape($data['gender']), 1, $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "customers` (`firstname`, `lastname`, `email`, `mobile`, `gender`, `status`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $this->database->escape($data['gender']), 1, $data['datetime']));
 		if ($this->database->error()) {
 			return false;
 		} else {

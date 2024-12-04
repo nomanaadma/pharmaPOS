@@ -34,7 +34,7 @@ class Finance extends Model
 
 	public function createCurrency($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "currency` (`name`, `abbr`, `status`, `date_of_joining`) VALUES (?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['abbr']), (int)$data['status'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "currency` (`name`, `abbr`, `status`, `created_date`) VALUES (?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['abbr']), (int)$data['status'], $data['datetime']));
 		if ($query->num_rows > 0) {
 			return true;
 		} else {
@@ -70,7 +70,7 @@ class Finance extends Model
 
 	public function createPaymentMethod($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "payment_method` (`name`, `status`, `date_of_joining`) VALUES (?, ?, ?)", array($this->database->escape($data['name']), (int)$data['status'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "payment_method` (`name`, `status`, `created_date`) VALUES (?, ?, ?)", array($this->database->escape($data['name']), (int)$data['status'], $data['datetime']));
 		if ($query->num_rows > 0) {
 			return true;
 		} else {
@@ -106,7 +106,7 @@ class Finance extends Model
 
 	public function createTax($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "taxes` (`name`, `rate`, `date_of_joining`) VALUES (?, ?, ?)", array($this->database->escape($data['name']), (float)$data['rate'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "taxes` (`name`, `rate`, `created_date`) VALUES (?, ?, ?)", array($this->database->escape($data['name']), (float)$data['rate'], $data['datetime']));
 		if ($query->num_rows > 0) {
 			return true;
 		} else {

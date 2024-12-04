@@ -5,6 +5,11 @@
 */
 class Medicine extends Model
 {
+	public function allPharmacy()
+	{
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "pharmacy` ORDER BY `created_date` DESC");
+		return $query->rows;
+	}
 
 	public function getSuppliers()
 	{
@@ -20,7 +25,7 @@ class Medicine extends Model
 
 	public function getMedicines()
 	{
-		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.date_of_joining DESC");
+		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.created_date DESC");
 		return $query->rows;
 	}
 
@@ -55,7 +60,7 @@ class Medicine extends Model
 
 	public function createMedicine($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicines` (`name`, `company`, `generic`, `medicine_group`, `category`, `storebox`, `minlevel`, `reorderlevel`, `unit`, `unitpacking`, `note`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $data['company'], $data['generic'], $data['medicine_group'], (int)$data['category'], $data['storebox'], $data['minlevel'], $data['reorderlevel'], $data['unit'], $data['unitpacking'], $data['note'], (int)$data['user_id'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicines` (`name`, `company`, `generic`, `medicine_group`, `category`, `storebox`, `minlevel`, `reorderlevel`, `unit`, `unitpacking`, `note`, `user_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $data['company'], $data['generic'], $data['medicine_group'], (int)$data['category'], $data['storebox'], $data['minlevel'], $data['reorderlevel'], $data['unit'], $data['unitpacking'], $data['note'], (int)$data['user_id'], $data['datetime']));
 		if ($query->num_rows > 0) {
 			return $this->database->last_id();
 		} else {
@@ -171,7 +176,7 @@ class Medicine extends Model
 
 	public function createMedicineBill($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_bill` (`name`, `email`, `mobile`, `method`, `bill_date`, `items`, `subtotal`, `tax`, `discount_value`, `amount`, `note`, `customer_id`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), $data['method'], $data['bill_date'], $data['items'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['customer_id'], (int)$data['user_id'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_bill` (`name`, `email`, `mobile`, `method`, `bill_date`, `items`, `subtotal`, `tax`, `discount_value`, `amount`, `note`, `customer_id`, `user_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), $data['method'], $data['bill_date'], $data['items'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['customer_id'], (int)$data['user_id'], $data['datetime']));
 		
 		if ($query->num_rows > 0) {
 			return $this->database->last_id();
@@ -187,7 +192,7 @@ class Medicine extends Model
 
 	public function getPurchases($period)
 	{
-		$query = $this->database->query("SELECT mp.*, s.name AS supplier FROM `" . DB_PREFIX . "medicine_purchase` AS mp LEFT JOIN `" . DB_PREFIX . "suppliers` AS s ON s.id = mp.supplier WHERE mp.date between '".$period['start']."' AND '".$period['end']."' ORDER BY date_of_joining DESC");
+		$query = $this->database->query("SELECT mp.*, s.name AS supplier FROM `" . DB_PREFIX . "medicine_purchase` AS mp LEFT JOIN `" . DB_PREFIX . "suppliers` AS s ON s.id = mp.supplier WHERE mp.date between '".$period['start']."' AND '".$period['end']."' ORDER BY created_date DESC");
 		return $query->rows;
 	}
 
@@ -235,7 +240,7 @@ class Medicine extends Model
 
 	public function createMedicinePurchase($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_purchase` (`supplier`, `date`, `total`, `tax`, `discount_value`, `amount`, `note`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['supplier']), $data['date'], $data['total'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['user_id'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_purchase` (`supplier`, `date`, `total`, `tax`, `discount_value`, `amount`, `note`, `user_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['supplier']), $data['date'], $data['total'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['user_id'], $data['datetime']));
 		if ($query->num_rows > 0) {
 			return $this->database->last_id();
 		} else {
@@ -252,7 +257,7 @@ class Medicine extends Model
 
 	public function createMedicinebatch($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_batch` (`name`, `batch`, `expiry`, `pqty`, `qty`, `saleprice`, `purchaseprice`, `discounttype`, `discount`, `discountvalue`, `tax`, `taxprice`, `price`, `medicine_id`, `purchase_id`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], $data['purchase_id'], (int)$data['user_id'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_batch` (`name`, `batch`, `expiry`, `pqty`, `qty`, `saleprice`, `purchaseprice`, `discounttype`, `discount`, `discountvalue`, `tax`, `taxprice`, `price`, `medicine_id`, `purchase_id`, `user_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], $data['purchase_id'], (int)$data['user_id'], $data['datetime']));
 		
 		if ($query->num_rows > 0) {
 			return $this->database->last_id();
@@ -295,7 +300,7 @@ class Medicine extends Model
 
 	public function createMCategory($data)
 	{
-		$this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_category` (`name`, `date_of_joining`) VALUES (?, ?)", array($this->database->escape($data['name']), $data['datetime']));
+		$this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_category` (`name`, `created_date`) VALUES (?, ?)", array($this->database->escape($data['name']), $data['datetime']));
 		return true;
 	}
 
