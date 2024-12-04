@@ -80,13 +80,6 @@ $router->post('medicine/category/add', 'MedicineController@mCategoryAction');
 $router->post('medicine/category/edit', 'MedicineController@mCategoryAction');
 $router->post('medicine/category/delete', 'MedicineController@mCategoryDelete');
 
-$router->get('subscribers', 'SubscriberController@index');
-$router->get('subscriber/add', 'SubscriberController@indexAdd');
-$router->post('subscriber/add', 'SubscriberController@indexAction');
-$router->get('subscriber/edit', 'SubscriberController@indexEdit');
-$router->post('subscriber/edit', 'SubscriberController@indexAction');
-$router->post('subscriber/delete', 'SubscriberController@indexDelete');
-
 $router->get('reports', 'ReportController@index');
 
 $router->get('send/email', 'SenderController@indexMail');
