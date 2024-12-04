@@ -55,7 +55,6 @@ class DashboardController extends Controller
 		$data['main_stats'] = $this->model_dashboard->getMainStats();
 		$data['revenue_stats'] = $this->model_dashboard->getRevenueStats();
 		$data['income_stats'] = $this->model_dashboard->getIncomeStats();
-		$data['notices'] = $this->model_dashboard->getNotices();
 
 		$data['page_title'] = 'Dashboard';
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
@@ -82,7 +81,6 @@ class DashboardController extends Controller
 		$data['chart_patient'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartpatient());
 		$data['appointment_stats'] = $this->model_dashboard->getAppointmentStats();
 		$data['clinic_stats'] = $this->model_dashboard->getClinicStats();
-		$data['notices'] = $this->model_dashboard->getNotices();
 
 		$data['page_title'] = 'Dashboard';
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
@@ -109,7 +107,6 @@ class DashboardController extends Controller
 		$data['chart_expense'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartExpense($common['user']['user_id']));
 		$data['chart_appointment'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartAppointment($common['user']['doctor']));
 		$data['appointment_stats'] = $this->model_dashboard->getAppointmentStats($common['user']['doctor']);
-		$data['notices'] = $this->model_dashboard->getNotices();
 		
 		$data['page_title'] = 'Dashboard';
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
@@ -140,7 +137,6 @@ class DashboardController extends Controller
 		$data['income_stats'] = $this->model_dashboard->getIncomeStats();
 		$data['bill_stats'] = $this->model_dashboard->getBillStats();
 		$data['invoice_stats'] = $this->model_dashboard->getInvoiceStats();
-		$data['notices'] = $this->model_dashboard->getNotices();
 
 		$data['page_title'] = 'Dashboard';
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
@@ -169,7 +165,6 @@ class DashboardController extends Controller
 		$data['purchase'] = $this->model_dashboard->getLatestPurchase();
 		
 		$data['bill_stats'] = $this->model_dashboard->getBillStats();
-		$data['notices'] = $this->model_dashboard->getNotices();
 
 		$data['page_title'] = 'Dashboard';
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
@@ -182,7 +177,6 @@ class DashboardController extends Controller
 	{
 		$data['common'] = $common;
 		$this->load->model('dashboard');
-		$data['notices'] = $this->model_dashboard->getNotices();
 		
 		$data['page_title'] = 'Dashboard';
 		$data['title'] = 'Dashboard';

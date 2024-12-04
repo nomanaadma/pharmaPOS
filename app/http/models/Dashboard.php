@@ -6,11 +6,6 @@
 
 class Dashboard extends Model
 {
-	public function getNotices()
-	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "noticeboard` WHERE end_date >= '".date('Y-m-d')."' ");
-		return $query->rows;
-	}
 
 	public function getMainStats()
 	{

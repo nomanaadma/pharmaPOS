@@ -129,15 +129,6 @@ $router->get('subscriber/edit', 'SubscriberController@indexEdit');
 $router->post('subscriber/edit', 'SubscriberController@indexAction');
 $router->post('subscriber/delete', 'SubscriberController@indexDelete');
 
-
-$router->get('noticeboard', 'NoticeboardController@index');
-$router->get('noticeboard/view', 'NoticeboardController@indexView');
-$router->get('noticeboard/add', 'NoticeboardController@indexAdd');
-$router->post('noticeboard/add', 'NoticeboardController@indexAction');
-$router->get('noticeboard/edit', 'NoticeboardController@indexEdit');
-$router->post('noticeboard/edit', 'NoticeboardController@indexAction');
-$router->post('noticeboard/delete', 'NoticeboardController@indexDelete');
-
 $router->get('staffattendance', 'StaffattendanceController@index');
 $router->get('staffattendance/view', 'StaffattendanceController@indexView');
 $router->get('staffattendance/add', 'StaffattendanceController@indexAdd');

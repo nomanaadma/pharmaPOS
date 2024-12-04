@@ -124,3 +124,5 @@ Stack trace:
 [04-Dec-2024 14:23:22 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
 [04-Dec-2024 14:23:36 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
 [04-Dec-2024 14:23:36 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
+[04-Dec-2024 14:29:50 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
+[04-Dec-2024 14:29:50 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
