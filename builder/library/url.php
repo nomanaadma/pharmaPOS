@@ -23,7 +23,6 @@ class Url
 			}
 		} else {
 			$data = $this->htmlPurify($data);
-			// $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
 		}
 
 		return $data;

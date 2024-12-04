@@ -24,7 +24,6 @@ $router->post('customer/add', 'CustomerController@indexAction');
 $router->get('customer/edit', 'CustomerController@indexEdit');
 $router->post('customer/edit', 'CustomerController@indexAction');
 $router->post('customer/delete', 'CustomerController@indexDelete');
-$router->post('customer/sendmail', 'CustomerController@indexMail');
 $router->get('customer/search', 'CustomerController@searchPatient');
 
 $router->get('users', 'UserController@index');
@@ -81,13 +80,6 @@ $router->post('medicine/category/edit', 'MedicineController@mCategoryAction');
 $router->post('medicine/category/delete', 'MedicineController@mCategoryDelete');
 
 $router->get('reports', 'ReportController@index');
-
-$router->get('send/email', 'SenderController@indexMail');
-$router->post('send/email', 'SenderController@indexMailAction');
-$router->get('sendbulk/email', 'SenderController@indexBulkMail');
-$router->post('sendbulk/email', 'SenderController@indexBulkMailAction');
-$router->post('get/receiver', 'SenderController@indexUsers');
-$router->get('emaillogs', 'SenderController@indexEmailLog');
 
 $router->get('paymentmethod', 'FinanceController@paymentMethod');
 $router->post('paymentmethod/add', 'FinanceController@paymentMethodAction');

@@ -73,8 +73,6 @@ class CustomerController extends Controller
 		$data['page_edit'] = $this->user_agent->hasPermission('customer/edit') ? true : false;
 		$data['page_bills'] = $this->user_agent->hasPermission('medicine/billing') ? true : false;
 		$data['bill_view'] = $this->user_agent->hasPermission('medicine/billing/view') ? true : false;
-		$data['page_sendmail'] = $this->user_agent->hasPermission('customer/sendmail') ? true : false;
-
 				
 		if (isset($this->session->data['message'])) {
 			$data['message'] = $this->session->data['message'];
@@ -212,41 +210,6 @@ class CustomerController extends Controller
 		$this->model_customer->deleteCustomer($this->url->post('id'));
 		$this->session->data['message'] = array('alert' => 'success', 'value' => 'Customer deleted successfully.');
 		$this->url->redirect('customers');
-	}
-
-	public function indexMail()
-	{
-		if (!isset($_POST['submit'])) {
-			$this->url->redirect('customers');
-		}
-
-		$data = $this->url->post;
-		$this->load->controller('common');
-		$this->load->model('customer');
-		$result = $this->model_customer->getCustomer($data['mail']['id']);
-		if (empty($result)) {
-			$this->url->redirect('customers');
-		}
-
-		$data['mail']['email'] = $result['email'];
-		$data['mail']['name'] = $result['firstname'].' '.$result['lastname'];
-		$data['mail']['redirect'] = 'customer/view&id='.$result['id'];
-		
-		$this->load->controller('Mail');
-		$mail_result = $this->controller_mail->sendmail($data['mail']);
-
-		if ($mail_result == 1) {
-			$data['mail']['type'] = 'customer';
-			$data['mail']['type_id'] = $data['mail']['id'];
-			$data['mail']['user_id'] = $this->session->data['user_id'];
-			
-			$this->controller_mail->createMailLog($data['mail']);
-			$this->session->data['message'] = array('alert' => 'success', 'value' => 'Success: Message sent successfully.');
-			$this->url->redirect('customer/view&id='.$result['id']);
-		} else {
-			$this->session->data['message'] = array('alert' => 'error', 'value' => $mail_result);
-			$this->url->redirect('customer/view&id='.$result['id']);
-		}
 	}
 
 	public function searchPatient()

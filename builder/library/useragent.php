@@ -73,12 +73,10 @@ class Useragent {
 			'logout',
 			'profile',
 			'profile/password',
-			'checkstaffsalary',
 			'getmedicine',
 			'getbatch',
 			'getbatchdata',
 			'customer/search',
-			'item/search',
 			'get/receiver',
 			'attach/documents',
 			'attach/documents/delete'

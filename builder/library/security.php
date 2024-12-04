@@ -1,9 +1,0 @@
-<?php
-
-
-/**
- * security
- */
-class Security
-{
-}

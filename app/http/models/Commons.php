@@ -194,11 +194,6 @@ class Commons extends Model
 			'paymentgateway' => 'settings',
 			'suppliers' => 'settings',
 			'items' => 'settings',
-			'send/email' => 'email',
-			'sendbulk/email' => 'email',
-			'emaillogs' => 'email',
-			'emailtemplate' => 'email',
-			'emailsetting' => 'email',
 			'customization' => 'customization'
 		);
 		if (isset($data[$key])) {

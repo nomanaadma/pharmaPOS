@@ -8,29 +8,29 @@ remove css/lang
 
 remove unnecessary assets
 
-remove subscriber
-
 search due
+
+remove
+$this->controller_mail
+
+
 
 remove 
 $result = $this->model_commons->getTemplateAndInfo('forgotpassword');
 $mail_result = $this->controller_mail->sendMail($mail);
 mail controller
 
-remove dashboard chart
+what's template folder in views? 
 
 remove emailsetting from setting table
 
 remove extra js like
-chart.js and 
 customization.js
+
+salary
 
 remove doctors, invoice, emails
 
-remove invoice section
-remove invoice.js
-remove doctor field in POS/Bill
-remove doctor section
 remove common.info.invoice_cnote and full invoice section in setting info
 
 fix invoice template = http://pharmapos.test/index.php?route=medicine/billing/view&id=2
@@ -41,6 +41,7 @@ remove billing_pdf_1.twig and all twig files search by Dr.
 
 remove permissions in user_role table
 
+$data['mail_info'] = $this->model_commons->getMailInfo();
 
 remove extra fields like blood group, address, from customer 
 in bill if the customer is new then add it to customer section 
@@ -48,6 +49,8 @@ in bill if the customer is new then add it to customer section
 search Invoice Items
 
 edit roleList()
+
+remove extra libraries in builder/libaray like pdf, mail
 
 https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-application/25581006
 http://pepdev.com/theme-preview/drugstore/
