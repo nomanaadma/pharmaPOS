@@ -220,7 +220,6 @@ class Commons extends Model
 			'expense/add' => 'expenses',
 			'expense/edit' => 'expenses',
 			'expensetype' => 'settings',
-			'doctors' => 'settings',
 			'doctor/add' => 'settings',
 			'doctor/edit' => 'settings',
 			'subscribers' => 'subscribers',

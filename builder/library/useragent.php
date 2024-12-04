@@ -78,7 +78,6 @@ class Useragent {
 			'getbatch',
 			'getbatchdata',
 			'customer/search',
-			'doctor/search',
 			'item/search',
 			'get/receiver',
 			'attach/documents',

@@ -148,13 +148,6 @@ $router->get('noticeboard/edit', 'NoticeboardController@indexEdit');
 $router->post('noticeboard/edit', 'NoticeboardController@indexAction');
 $router->post('noticeboard/delete', 'NoticeboardController@indexDelete');
 
-$router->get('doctors', 'DoctorController@index');
-$router->get('doctor/add', 'DoctorController@indexAdd');
-$router->post('doctor/add', 'DoctorController@indexAction');
-$router->get('doctor/edit', 'DoctorController@indexEdit');
-$router->post('doctor/edit', 'DoctorController@indexAction');
-$router->post('doctor/delete', 'DoctorController@indexDelete');
-$router->get('doctor/search', 'DoctorController@searchDoctor');
 $router->get('staffattendance', 'StaffattendanceController@index');
 $router->get('staffattendance/view', 'StaffattendanceController@indexView');
 $router->get('staffattendance/add', 'StaffattendanceController@indexAdd');

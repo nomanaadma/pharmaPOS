@@ -220,17 +220,6 @@ $(document).ready(function () {
     $(".discount-total").on('blur', update_price);
     $(".paid-amount").on('blur', update_price);
 
-    $(".patient-doctor").autocomplete({
-        source: path.concat('doctor/search'),
-        minLength: 2,
-        focus: function() {return false;},
-        select: function( event, ui ) {
-            $('.patient-doctor').val(ui.item.label);
-            $('.patient-doctor-id').val(ui.item.id);
-            return false;
-        }
-    });
-
     $('.invoice-items').on('click', '.add-items', function () {
         if($(".item-row").length === 0) {
             item_html(0);

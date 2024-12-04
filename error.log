@@ -113,3 +113,10 @@ Stack trace:
 [04-Dec-2024 01:18:39 Asia/Calcutta] PHP Notice:  Undefined index: logo_icon in D:\laragon\www\pharmaPOS\app\http\models\Commons.php on line 48
 [04-Dec-2024 01:20:51 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
 [04-Dec-2024 01:20:51 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
+[04-Dec-2024 13:39:03 Asia/Calcutta] PHP Notice:  Undefined index: doctor in D:\laragon\www\pharmaPOS\app\http\models\Medicine.php on line 185
+[04-Dec-2024 13:39:03 Asia/Calcutta] PHP Notice:  Undefined index: doctor_id in D:\laragon\www\pharmaPOS\app\http\models\Medicine.php on line 185
+[04-Dec-2024 13:39:32 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
+[04-Dec-2024 13:39:32 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
+[04-Dec-2024 13:44:45 Asia/Calcutta] PHP Notice:  Undefined index: doctor_id in D:\laragon\www\pharmaPOS\app\http\models\Medicine.php on line 185
+[04-Dec-2024 13:45:14 Asia/Calcutta] PHP Warning:  imagecreatefrompng(): gd-png: libpng warning: iCCP: known incorrect sRGB profile in D:\laragon\www\pharmaPOS\builder\vendor\dompdf\dompdf\lib\Cpdf.php on line 4794
+[04-Dec-2024 13:45:16 Asia/Calcutta] PHP Warning:  imagecreatefrompng(): gd-png: libpng warning: iCCP: known incorrect sRGB profile in D:\laragon\www\pharmaPOS\builder\vendor\dompdf\dompdf\lib\Cpdf.php on line 4794

@@ -244,17 +244,6 @@ $(document).ready(function () {
 		}
 	});
 
-	$(".patient-doctor").autocomplete({
-		source: $('.site_url').val().concat('doctor/search'),
-		minLength: 2,
-		focus: function() {return false;},
-		select: function( event, ui ) {
-			$('.patient-doctor').val(ui.item.label);
-			$('.patient-doctor-id').val(ui.item.id);
-			return false;
-		}
-	});
-
 	$('body').on('click', `.add-taxes, .invoice-tax p`, function () {
 		var ele = $(this).parents('.item-row').find('.invoice-tax');
 		ele.addClass('tax-modal-open');

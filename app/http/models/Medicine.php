@@ -176,13 +176,13 @@ class Medicine extends Model
 
 	public function updateMedicineBill($data)
 	{
-		$this->database->query("UPDATE `" . DB_PREFIX . "medicine_bill` SET `name` = ?, `email` = ?, `mobile` = ?, `doctor` = ?, `method` = ?, `bill_date` = ?, `items` = ?, `subtotal` = ?, `tax` = ?, `discount_value` = ?, `amount` = ?, `note` = ?, `doctor_id` = ?, `customer_id` = ? WHERE `id` = ? ", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), $this->database->escape($data['doctor']), (int)$data['method'], $data['bill_date'], $data['items'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['doctor_id'], (int)$data['customer_id'], (int)$data['id']));
+		$this->database->query("UPDATE `" . DB_PREFIX . "medicine_bill` SET `name` = ?, `email` = ?, `mobile` = ?, `method` = ?, `bill_date` = ?, `items` = ?, `subtotal` = ?, `tax` = ?, `discount_value` = ?, `amount` = ?, `note` = ?, `doctor_id` = ?, `customer_id` = ? WHERE `id` = ? ", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), (int)$data['method'], $data['bill_date'], $data['items'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['doctor_id'], (int)$data['customer_id'], (int)$data['id']));
 		return true;
 	}
 
 	public function createMedicineBill($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_bill` (`name`, `email`, `mobile`, `doctor`, `method`, `bill_date`, `items`, `subtotal`, `tax`, `discount_value`, `amount`, `note`, `doctor_id`, `customer_id`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), $this->database->escape($data['doctor']), $data['method'], $data['bill_date'], $data['items'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['doctor_id'], (int)$data['customer_id'], (int)$data['user_id'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_bill` (`name`, `email`, `mobile`, `method`, `bill_date`, `items`, `subtotal`, `tax`, `discount_value`, `amount`, `note`, `doctor_id`, `customer_id`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), $data['method'], $data['bill_date'], $data['items'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['doctor_id'], (int)$data['customer_id'], (int)$data['user_id'], $data['datetime']));
 		
 		if ($query->num_rows > 0) {
 			return $this->database->last_id();
