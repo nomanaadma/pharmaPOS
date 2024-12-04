@@ -49,10 +49,6 @@ class SettingController extends Controller
 			$this->session->data['message'] = array('alert' => 'error', 'value' => 'Please enter valid '.implode(", ",$validate_field).'!');
 			$this->url->redirect('info');
 		}
-		
-		if (empty($data['info']['doctor_access'])) {
-			$data['info']['doctor_access'] = 0;
-		}
 
 		$data['info'] = json_encode($data['info']);
 		$this->load->model('setting');

@@ -90,11 +90,6 @@ $router->post('tax/add', 'FinanceController@taxAction');
 $router->post('tax/edit', 'FinanceController@taxAction');
 $router->post('tax/delete', 'FinanceController@taxDelete');
 
-$router->get('emailtemplate', 'EmailtemplateController@emailTemplate');
-$router->post('emailtemplate', 'EmailtemplateController@emailTemplateAction');
-$router->get('emailsetting', 'EmailtemplateController@emailSetting');
-$router->post('emailsetting', 'EmailtemplateController@emailSettingAction');
-
 $router->post('attach/documents', 'UploadController@attachDocuments');
 $router->post('attach/documents/delete', 'UploadController@attachDocumentsDelete');
 

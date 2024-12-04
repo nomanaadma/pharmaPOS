@@ -32,12 +32,6 @@ class User extends Model
 		return $query->rows;
 	}
 
-	public function userInvoicetList($email)
-	{
-		$query = $this->database->query("SELECT i.id, i.name, i.email, i.mobile, i.amount, i.due, d.name AS `doctor`, i.date_of_joining AS `date`, c.abbr FROM `" . DB_PREFIX . "invoice` AS i LEFT JOIN `" . DB_PREFIX . "doctor` AS d ON d.id = i.doctor_id LEFT JOIN `" . DB_PREFIX . "currency` AS c ON c.id = i.currency WHERE i.email = ? ORDER BY i.date_of_joining DESC", array($this->database->escape($email)));
-		return $query->rows;
-	}
-
 	public function checkUserName($username, $id)
 	{
 		if (!empty($id)) {

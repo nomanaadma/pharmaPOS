@@ -23,7 +23,6 @@ class Commons extends Model
 
 	public function getUserInfo($user_id)
 	{
-		//$query = $this->database->query("SELECT u.user_id, u.firstname, u.lastname, u.picture, ur.id AS role_id, ur.name AS role, ur.permission, d.id AS doctor FROM `" . DB_PREFIX . "users` AS u LEFT JOIN `" . DB_PREFIX . "user_role` AS ur ON ur.id = u.user_role LEFT JOIN `" . DB_PREFIX . "doctors` AS d ON d.user_id = u.user_id WHERE u.user_id = ?", array((int)$user_id));
 		$data = $this->user_agent->getUserData();
 		if (!empty($data['picture']) && file_exists(DIR.'public/uploads/'.$data['picture'])) {
 			$data['picture'] = 'public/uploads/'.$data['picture'];
@@ -82,23 +81,6 @@ class Commons extends Model
 		return $data;
 	}
 
-	public function getMailInfo()
-	{
-		$query = $this->database->query("SELECT `data` FROM `" . DB_PREFIX . "setting` WHERE `name` = ?", array('emailsetting'));
-		return json_decode($query->row['data'], true);
-	}
-
-	public function getAppointmentDoctors()
-	{
-		$query = $this->database->query("SELECT d.id, CONCAT(d.firstname, ' ', d.lastname) AS name, d.weekly, d.national, dep.name AS department, dep.id AS department_id FROM `" . DB_PREFIX . "doctors` AS d LEFT JOIN `" . DB_PREFIX . "departments` AS dep ON dep.id = d.department_id WHERE d.appointment_status = ? ORDER BY d.department_id ASC", array(1));
-		return $query->rows;
-	}
-
-	public function getInvoiceData()
-	{
-		return $this->user_agent->getInfo();
-	}
-	
 	public function getUserData($id)
 	{
 		$query = $this->database->query("SELECT `firstname`, `lastname` FROM `" . DB_PREFIX . "users` WHERE `user_id` = ?", array((int)$id));
@@ -107,14 +89,6 @@ class Commons extends Model
 		} else {
 			return '';
 		}
-	}
-
-	public function getTemplateAndInfo($id)
-	{
-		$query = $this->database->query("SELECT subject, message FROM `" . DB_PREFIX . "email_template` WHERE `template` = ? LIMIT 1", array($id));
-		$data['template'] = $query->row;
-		$data['common'] = $this->user_agent->getInfo();
-		return $data;
 	}
 
 	public function createAdminMenu()

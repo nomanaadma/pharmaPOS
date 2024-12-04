@@ -5,13 +5,13 @@
  */
 class Customer extends Model
 {
-	public function getCustomers($period, $doctor = NULL)
+	public function getCustomers($period)
 	{
 		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "customers` WHERE `date_of_joining` BETWEEN '".$period['start']."' AND '".$period['end']."' ORDER BY `date_of_joining` DESC");		
 		return $query->rows;
 	}
 
-	public function getCustomer($id, $doctor = NULL)
+	public function getCustomer($id)
 	{
 		$query = $this->database->query("SELECT *, TIMESTAMPDIFF(YEAR, dob, CURDATE()) AS age FROM `" . DB_PREFIX . "customers` WHERE `id` = ? ORDER BY `date_of_joining` DESC", array((int)$id));
 		return $query->row;

@@ -53,87 +53,10 @@ class DashboardController extends Controller
 		$this->response->setOutput($this->load->view('dashboard/dashboard-admin', $data));
 	}
 
-	protected function deanDashboard($common)
-	{
-		$data['common'] = $common;
-		$this->load->model('dashboard');
-		$data['doctors'] = $this->model_dashboard->getDoctors();
-
-		$data['title'] = 'Dashboard';
-		if (isset($this->session->data['message'])) {
-			$data['message'] = $this->session->data['message'];
-			unset($this->session->data['message']);
-		}
-		$data['period']['start'] = date("Y-m-d", strtotime( date( 'Y-m-01' )." -11 months"));
-		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
-		
-		$data['chart_appointment'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartAppointment());
-		$data['chart_patient'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartpatient());
-		$data['appointment_stats'] = $this->model_dashboard->getAppointmentStats();
-		$data['clinic_stats'] = $this->model_dashboard->getClinicStats();
-
-		$data['page_title'] = 'Dashboard';
-		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
-		$data['action_new_appointment'] = URL.DIR_ROUTE.'appointment/add';
-		/*Render dahsboard view*/
-		$this->response->setOutput($this->load->view('dashboard/dashboard-dean', $data));
-	}
-
-	protected function doctorDashboard($common)
-	{
-		$data['common'] = $common;
-		$this->load->model('dashboard');
-		$data['doctors'] = $this->model_dashboard->getDoctors();
-
-		$data['title'] = 'Dashboard';
-		if (isset($this->session->data['message'])) {
-			$data['message'] = $this->session->data['message'];
-			unset($this->session->data['message']);
-		}
-		$data['period']['start'] = date("Y-m-d", strtotime( date( 'Y-m-01' )." -11 months"));
-		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
-		
-		$data['chart_patient'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartpatient($common['user']['doctor']));
-		
-		$data['chart_appointment'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartAppointment($common['user']['doctor']));
-		$data['appointment_stats'] = $this->model_dashboard->getAppointmentStats($common['user']['doctor']);
-		
-		$data['page_title'] = 'Dashboard';
-		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
-		$data['action_new_appointment'] = URL.DIR_ROUTE.'appointment/add';
-		/*Render dahsboard view*/
-		$this->response->setOutput($this->load->view('dashboard/dashboard-doctor', $data));
-	}
-
-	protected function accountantDashboard($common)
-	{
-		$data['common'] = $common;
-		$this->load->model('dashboard');
-		$data['doctors'] = $this->model_dashboard->getDoctors();
-
-		$data['title'] = 'Dashboard';
-		if (isset($this->session->data['message'])) {
-			$data['message'] = $this->session->data['message'];
-			unset($this->session->data['message']);
-		}
-		$data['period']['start'] = date("Y-m-d", strtotime( date( 'Y-m-01' )." -11 months"));
-		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
-		
-		$data['income_stats'] = $this->model_dashboard->getIncomeStats();
-		$data['bill_stats'] = $this->model_dashboard->getBillStats();
-
-		$data['page_title'] = 'Dashboard';
-		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
-		$data['action'] = URL.DIR_ROUTE.'appointment/sidebar';
-		/*Render dahsboard view*/
-		$this->response->setOutput($this->load->view('dashboard/dashboard-accountant', $data));
-	}
-
 	protected function pharmacistDashboard($common)
 	{
 		$data['common'] = $common;
 		$this->load->model('dashboard');
-		$data['doctors'] = $this->model_dashboard->getDoctors();
 
 		$data['title'] = 'Dashboard';
 		if (isset($this->session->data['message'])) {

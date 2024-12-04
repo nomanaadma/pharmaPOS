@@ -46,21 +46,12 @@
 							<p>{{ result.bill_date|date(info.date_format) }}</p>
 						</div>
 					</td>
-					{% if result.doctor %}
-						<td class="text-center">
-							<div>
-								<span>Doctor</span>
-								<p>Dr. {{ result.doctor }}</p>
-							</div>
-						</td>
-					{% else %}
-						<td class="text-center">
-							<div>
-								<span>Amount</span>
-								<p>{{ info.currency_abbr~result.amount }}</p>
-							</div>
-						</td>
-					{% endif %}	
+					<td class="text-center">
+						<div>
+							<span>Amount</span>
+							<p>{{ info.currency_abbr~result.amount }}</p>
+						</div>
+					</td>
 					<td class="text-center">
 						<div>
 							<span>Payment Method</span>

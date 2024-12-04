@@ -10,32 +10,27 @@ remove unnecessary assets
 
 search due
 
-remove
-$this->controller_mail
-
-
-
 remove 
-$result = $this->model_commons->getTemplateAndInfo('forgotpassword');
 $mail_result = $this->controller_mail->sendMail($mail);
-mail controller
-
-what's template folder in views? 
-
-remove emailsetting from setting table
 
 remove extra js like
 customization.js
 
 salary
 
-remove doctors, invoice, emails
+remove
+deanDashboard(
+accountantDashboard(
+and other dashboards
+
+
+
+remove invoice, emails
 
 remove common.info.invoice_cnote and full invoice section in setting info
 
 fix invoice template = http://pharmapos.test/index.php?route=medicine/billing/view&id=2
 
-search doctor and remove all occuraance
 
 remove billing_pdf_1.twig and all twig files search by Dr.
 
