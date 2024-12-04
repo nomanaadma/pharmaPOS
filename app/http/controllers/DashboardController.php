@@ -53,31 +53,6 @@ class DashboardController extends Controller
 		$this->response->setOutput($this->load->view('dashboard/dashboard-admin', $data));
 	}
 
-	protected function pharmacistDashboard($common)
-	{
-		$data['common'] = $common;
-		$this->load->model('dashboard');
-
-		$data['title'] = 'Dashboard';
-		if (isset($this->session->data['message'])) {
-			$data['message'] = $this->session->data['message'];
-			unset($this->session->data['message']);
-		}
-		$data['period']['start'] = date("Y-m-d", strtotime( date( 'Y-m-01' )." -11 months"));
-		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
-		
-		$data['bill_stats'] = $this->model_dashboard->getBillStats();
-		$data['purchase'] = $this->model_dashboard->getLatestPurchase();
-		
-		$data['bill_stats'] = $this->model_dashboard->getBillStats();
-
-		$data['page_title'] = 'Dashboard';
-		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
-		$data['action'] = URL.DIR_ROUTE.'appointment/sidebar';
-		/*Render dahsboard view*/
-		$this->response->setOutput($this->load->view('dashboard/dashboard-pharmacist', $data));
-	}
-
 	protected function employeeDashbaord($common)
 	{
 		$data['common'] = $common;

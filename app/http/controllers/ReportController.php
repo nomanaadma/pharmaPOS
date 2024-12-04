@@ -9,18 +9,10 @@ class ReportController extends Controller
 	{
 		$report = $this->url->get('name');
 		
-		if ($report == "invoice") {
-			$this->reportInvoice();
-		} elseif ($report == "purchase") {
+		if ($report == "purchase") {
 			$this->reportPurchase();
 		} elseif ($report == "bill") {
 			$this->reportBill();
-		} elseif ($report == "expenses") {
-			$this->reportExpenses();
-		} elseif ($report == "accountstatement") {
-			$this->reportAccountStatement();
-		} elseif ($report == "statement") {
-			$this->reportStatement();
 		} elseif ($report == "inventory") {
 			$this->reportInventory();
 		} elseif ($report == "outofstock") {
@@ -38,30 +30,6 @@ class ReportController extends Controller
 		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
 		$data['page_title'] = 'Reports';
 		$this->response->setOutput($this->load->view('report/reports', $data));
-	}
-
-	public function reportInvoice()
-	{
-		$this->load->controller('common');
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-
-		$this->load->model('report');
-
-		$data['page_title'] = 'Invoice Report';
-
-		$this->response->setOutput($this->load->view('report/report_invoice', $data));
 	}
 
 	public function reportPurchase()

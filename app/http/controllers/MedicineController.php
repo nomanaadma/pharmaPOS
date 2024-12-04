@@ -488,10 +488,7 @@ class MedicineController extends Controller
 		/*Render Medicine view*/
 		$this->response->setOutput($this->load->view('medicine/billing_view', $data));
 	}
-	/**
-	* Medicine Billing index PDF method
-	* This method will be called on Medicine Billing PDF
-	**/
+	
 	public function medicineBillingAdd()
 	{
 		$this->load->model('commons');

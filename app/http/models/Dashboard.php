@@ -44,9 +44,5 @@ class Dashboard extends Model
 		return $data;
 	}
 
-	public function getLatestPurchase()
-	{
-		$query = $this->database->query("SELECT mp.*, s.name AS supplier FROM `" . DB_PREFIX . "medicine_purchase` AS mp LEFT JOIN `" . DB_PREFIX . "suppliers` AS s ON s.id = mp.supplier ORDER BY date_of_joining DESC LIMIT 5");
-		return $query->rows;
-	}
+
 }

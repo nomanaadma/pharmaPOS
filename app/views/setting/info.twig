@@ -223,69 +223,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="dotted-seprator mt-3 mb-4"></div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Invoice Prefix</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"><i class="las la-flag"></i></span>
-									</div>
-									<input type="text" name="info[invoice_prefix]" class="form-control" value="{{ siteinfo.invoice_prefix }}" placeholder="Enter Invoice Prefix . . .">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Predefined Customer Note</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"><i class="las la-flag"></i></span>
-									</div>
-									<textarea name="info[invoice_cnote]" class="form-control" placeholder="Invoice Predefined Customer Note">{{ siteinfo.invoice_cnote }}</textarea>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Predefined Terms & Conditions</label>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<span class="input-group-text"><i class="las la-flag"></i></span>
-									</div>
-									<textarea name="info[invoice_tc]" class="form-control" placeholder="Invoice Terms & Conditions">{{ siteinfo.invoice_tc }}</textarea>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group invoice-template-img">
-								<label>Invoice Template</label>
-								<div>
-									<div class="custom-control custom-radio custom-radio-1 d-inline-block">
-										<input type="radio" name="info[invoice_template]" class="custom-control-input" value="1" id="invoice-template-1" {{ siteinfo.invoice_template == '1' ? 'checked' : false }}>
-										<label class="custom-control-label" for="invoice-template-1"><img src="public/images/invoice-1.png" alt="Invoice Template 1"></label>
-									</div>
-									<div class="custom-control custom-radio custom-radio-1 d-inline-block">
-										<input type="radio" name="info[invoice_template]" class="custom-control-input" value="2" id="invoice-template-2" {{ siteinfo.invoice_template == '2' ? 'checked' : false }}>
-										<label class="custom-control-label" for="invoice-template-2"><img src="public/images/invoice-2.png" alt="Invoice Template 2"></label>
-									</div>
-									<div class="custom-control custom-radio custom-radio-1 d-inline-block">
-										<input type="radio" name="info[invoice_template]" class="custom-control-input" value="3" id="invoice-template-3" {{ siteinfo.invoice_template == '3' ? 'checked' : false }}>
-										<label class="custom-control-label" for="invoice-template-3"><img src="public/images/invoice-3.png" alt="Invoice Template 3"></label>
-									</div>
-									<div class="custom-control custom-radio custom-radio-1 d-inline-block">
-										<input type="radio" name="info[invoice_template]" class="custom-control-input" value="4" id="invoice-template-4" {{ siteinfo.invoice_template == '4' ? 'checked' : false }}>
-										<label class="custom-control-label" for="invoice-template-4"><img src="public/images/invoice-4.png" alt="Invoice Template 4"></label>
-									</div>
-									<div class="custom-control custom-radio custom-radio-1 d-inline-block">
-										<input type="radio" name="info[invoice_template]" class="custom-control-input" value="5" id="invoice-template-5" {{ siteinfo.invoice_template == '5' ? 'checked' : false }}>
-										<label class="custom-control-label" for="invoice-template-5"><img src="public/images/invoice-5.png" alt="Invoice Template 5"></label>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				<div class="tab-pane" id="setting-address">
 					<div class="row">
