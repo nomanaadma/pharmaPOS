@@ -30,8 +30,8 @@
 						<th>#</th>
 						<th>Customer Info</th>
 						<th>Gender</th>
-						<th>Bloodgroup</th>
-						<th>Date of Birth</th>
+						<th>Email</th>
+						<th>Number</th>
 						<th>Status</th>
 						<th>Created Date</th>
 						{% if page_view or page_edit or page_delete %}
@@ -45,12 +45,10 @@
 							<td>{{ loop.index }}</td>
 							<td>
 								<p class="m-0 text-primary">{{ value.firstname~value.lastname }}</p>
-								<p class="m-0">{{ value.email }}</p>
-								<p class="m-0">{{ value.mobile }}</p>
 							</td>
 							<td>{{ value.gender }}</td>
-							<td>{{ value.bloodgroup }}</td>
-							<td>{{ value.dob|date(common.info.date_format) }}</td>
+							<td>{{ value.email }}</td>
+							<td>{{ value.mobile }}</td>
 							<td>
 								{% if value.status == '1' %}
 									<span class="label label-success">Active</span>

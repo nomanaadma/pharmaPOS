@@ -82,7 +82,6 @@ class UserController extends Controller
 			$this->session->data['message'] = array('alert' => 'warning', 'value' => 'User does not exist in database!');
 			$this->url->redirect('users');
 		}
-		$data['result']['address'] = json_decode($data['result']['address'], true);
 		$data['roles'] = $this->model_user->getUserRoles();
 
 		$this->load->model('commons');

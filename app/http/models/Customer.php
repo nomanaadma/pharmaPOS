@@ -46,7 +46,7 @@ class Customer extends Model
 
 	public function createCustomer($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "customers` (`firstname`, `lastname`, `email`, `mobile`, `address`, `bloodgroup`, `gender`, `dob`, `status`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $this->database->escape($data['address']), $this->database->escape($data['bloodgroup']), $this->database->escape($data['gender']), $data['dob'], 1, (int)$data['user_id'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "customers` (`firstname`, `lastname`, `email`, `mobile`, `gender`, `status`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $this->database->escape($data['gender']), 1, (int)$data['user_id'], $data['datetime']));
 		if ($this->database->error()) {
 			return false;
 		} else {
@@ -56,7 +56,7 @@ class Customer extends Model
 
 	public function updateCustomer($data)
 	{
-		$query = $this->database->query("UPDATE `" . DB_PREFIX . "customers` SET `firstname` = ?, `lastname` = ?, `email` = ?, `mobile` = ?, `address` = ?, `bloodgroup` = ?, `gender` = ?, `dob` = ?, `status` = ? WHERE `id` = ?" , array($this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $data['address'], $this->database->escape($data['bloodgroup']), $this->database->escape($data['gender']), $data['dob'], $data['status'], (int)$data['id']));
+		$query = $this->database->query("UPDATE `" . DB_PREFIX . "customers` SET `firstname` = ?, `lastname` = ?, `email` = ?, `mobile` = ?, `gender` = ?, `status` = ? WHERE `id` = ?" , array($this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $this->database->escape($data['gender']), $data['status'], (int)$data['id']));
 	}
 
 	public function getSearchedCustomer($data)

@@ -212,7 +212,7 @@ class CustomerController extends Controller
 		$this->url->redirect('customers');
 	}
 
-	public function searchPatient()
+	public function searchCustomer()
 	{
 		$data = $this->url->get;
 		$this->load->model('customer');

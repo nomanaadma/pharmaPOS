@@ -10,8 +10,6 @@ Medicine Other in roles edit remove
 
 expense
 
-remove blood group and extra fields in adding user
-
 remove public/sample
 
 remove invoice
