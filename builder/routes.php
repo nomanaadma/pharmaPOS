@@ -27,20 +27,6 @@ $router->post('customer/delete', 'CustomerController@indexDelete');
 $router->post('customer/sendmail', 'CustomerController@indexMail');
 $router->get('customer/search', 'CustomerController@searchPatient');
 
-$router->get('accounts', 'AccountController@index');
-$router->get('account/add', 'AccountController@indexAdd');
-$router->post('account/add', 'AccountController@indexAction');
-$router->get('account/edit', 'AccountController@indexEdit');
-$router->post('account/edit', 'AccountController@indexAction');
-$router->post('account/delete', 'AccountController@indexDelete');
-
-$router->get('account/transactions', 'AccountController@transactions');
-$router->get('account/transaction/add', 'AccountController@transactionAdd');
-$router->post('account/transaction/add', 'AccountController@transactionAction');
-$router->get('account/transaction/edit', 'AccountController@transactionEdit');
-$router->post('account/transaction/edit', 'AccountController@transactionAction');
-$router->post('account/transaction/delete', 'AccountController@transactionDelete');
-
 $router->get('users', 'UserController@index');
 $router->get('user/add', 'UserController@indexAdd');
 $router->post('user/add', 'UserController@indexAction');
