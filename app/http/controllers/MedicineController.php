@@ -442,7 +442,6 @@ class MedicineController extends Controller
 		/* Set page title */
 		$data['page_title'] = 'POS/Bill';
 		$data['page_view'] = $this->user_agent->hasPermission('medicine/billing/view') ? true : false;
-		$data['page_pdf'] = $this->user_agent->hasPermission('medicine/billing/pdf') ? true : false;
 		$data['page_add'] = $this->user_agent->hasPermission('medicine/billing/add') ? true : false;
 		$data['page_edit'] = $this->user_agent->hasPermission('medicine/billing/edit') ? true : false;
 		$data['page_delete'] = $this->user_agent->hasPermission('medicine/billing/delete') ? true : false;
@@ -484,48 +483,11 @@ class MedicineController extends Controller
 
 		/* Set page title */
 		$data['page_title'] = 'Bill View';
-		$data['page_pdf'] = $this->user_agent->hasPermission('medicine/billing/pdf') ? true : false;
 		$data['page_edit'] = $this->user_agent->hasPermission('medicine/billing/edit') ? true : false;
 		$data['page_delete'] = $this->user_agent->hasPermission('medicine/billing/delete') ? true : false;
 		//$data['action'] = URL.DIR_ROUTE.'medicine/billing/edit';
 		/*Render Medicine view*/
 		$this->response->setOutput($this->load->view('medicine/billing_view', $data));
-	}
-	/**
-	* Medicine Billing index View method
-	* This method will be called on Medicine Billing View
-	**/
-	public function medicineBillingPdf()
-	{
-		/**
-		* Check if id exist in url if not exist then redirect to Medicine list view 
-		**/
-		$id = (int)$this->url->get('id');
-		if (empty($id) || !is_int($id)) {
-			$this->url->redirect('medicine/billing');
-		}
-
-		$this->load->model('medicine');
-		$data['result'] = $this->model_medicine->getMedicineBill($id);
-		if (empty($data['result'])) {
-			$this->session->data['message'] = array('alert' => 'warning', 'value' => 'Purchase does not exist in database!');
-			$this->url->redirect('medicine/billing');
-		}
-		$data['result']['items'] = json_decode($data['result']['items'], true);
-		$this->load->model('commons');
-		$data['info'] = $this->model_commons->getSiteInfo();
-		
-		$meta_title = 'Invoice';
-
-		if (!empty($data['info']['invoice_template'])) {
-			$data['html'] = $this->load->view('medicine/billing_pdf_'.(int)$data['info']['invoice_template'], $data);
-		} else {
-			$data['html'] = $this->load->view('medicine/billing_pdf_1', $data);
-		}
-
-		
-		$pdf = new PDF();
-		$pdf->createPDF($data);
 	}
 	/**
 	* Medicine Billing index PDF method

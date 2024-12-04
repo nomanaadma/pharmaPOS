@@ -19441,9 +19441,6 @@ select.form-control:not([size]):not([multiple]) {
   cursor: pointer;
 }
 
-/**************************************************
-[ INVOICE TEMPLATE CSS START] *********************
-//*************************************************/
 .inv-template {
   width: 100%;
   background: #FFF;

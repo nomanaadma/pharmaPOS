@@ -1,8 +1,42 @@
-[04-Dec-2024 16:20:06 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
-[04-Dec-2024 16:20:06 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
-[04-Dec-2024 16:20:06 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
-[04-Dec-2024 16:20:06 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
-[04-Dec-2024 16:20:07 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
-[04-Dec-2024 16:20:07 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
-[04-Dec-2024 16:24:37 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
-[04-Dec-2024 16:24:37 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
+[04-Dec-2024 16:57:12 Asia/Calcutta] PHP Fatal error:  Uncaught Error: Class 'PDF' not found in D:\laragon\www\pharmaPOS\app\http\controllers\MedicineController.php:527
+Stack trace:
+#0 D:\laragon\www\pharmaPOS\builder\core\action.php(28): MedicineController->medicineBillingPdf()
+#1 D:\laragon\www\pharmaPOS\builder\core\router.php(50): Action->execute(Object(Repository), Array)
+#2 D:\laragon\www\pharmaPOS\builder\core\router.php(40): Router->dispatch(Array)
+#3 D:\laragon\www\pharmaPOS\builder\bootstrap.php(67): Router->route('medicine/billin...', 'GET')
+#4 D:\laragon\www\pharmaPOS\builder\startup.php(63): require_once('D:\\laragon\\www\\...')
+#5 D:\laragon\www\pharmaPOS\index.php(11): launch()
+#6 {main}
+  thrown in D:\laragon\www\pharmaPOS\app\http\controllers\MedicineController.php on line 527
+[04-Dec-2024 16:59:21 Asia/Calcutta] PHP Fatal error:  Uncaught Error: Class 'PDF' not found in D:\laragon\www\pharmaPOS\app\http\controllers\MedicineController.php:527
+Stack trace:
+#0 D:\laragon\www\pharmaPOS\builder\core\action.php(28): MedicineController->medicineBillingPdf()
+#1 D:\laragon\www\pharmaPOS\builder\core\router.php(50): Action->execute(Object(Repository), Array)
+#2 D:\laragon\www\pharmaPOS\builder\core\router.php(40): Router->dispatch(Array)
+#3 D:\laragon\www\pharmaPOS\builder\bootstrap.php(67): Router->route('medicine/billin...', 'GET')
+#4 D:\laragon\www\pharmaPOS\builder\startup.php(63): require_once('D:\\laragon\\www\\...')
+#5 D:\laragon\www\pharmaPOS\index.php(11): launch()
+#6 {main}
+  thrown in D:\laragon\www\pharmaPOS\app\http\controllers\MedicineController.php on line 527
+[04-Dec-2024 16:59:21 Asia/Calcutta] PHP Fatal error:  Uncaught Error: Class 'PDF' not found in D:\laragon\www\pharmaPOS\app\http\controllers\MedicineController.php:527
+Stack trace:
+#0 D:\laragon\www\pharmaPOS\builder\core\action.php(28): MedicineController->medicineBillingPdf()
+#1 D:\laragon\www\pharmaPOS\builder\core\router.php(50): Action->execute(Object(Repository), Array)
+#2 D:\laragon\www\pharmaPOS\builder\core\router.php(40): Router->dispatch(Array)
+#3 D:\laragon\www\pharmaPOS\builder\bootstrap.php(67): Router->route('medicine/billin...', 'GET')
+#4 D:\laragon\www\pharmaPOS\builder\startup.php(63): require_once('D:\\laragon\\www\\...')
+#5 D:\laragon\www\pharmaPOS\index.php(11): launch()
+#6 {main}
+  thrown in D:\laragon\www\pharmaPOS\app\http\controllers\MedicineController.php on line 527
+[04-Dec-2024 16:59:32 Asia/Calcutta] PHP Fatal error:  Uncaught Error: Class 'PDF' not found in D:\laragon\www\pharmaPOS\app\http\controllers\MedicineController.php:529
+Stack trace:
+#0 D:\laragon\www\pharmaPOS\builder\core\action.php(28): MedicineController->medicineBillingPdf()
+#1 D:\laragon\www\pharmaPOS\builder\core\router.php(50): Action->execute(Object(Repository), Array)
+#2 D:\laragon\www\pharmaPOS\builder\core\router.php(40): Router->dispatch(Array)
+#3 D:\laragon\www\pharmaPOS\builder\bootstrap.php(67): Router->route('medicine/billin...', 'GET')
+#4 D:\laragon\www\pharmaPOS\builder\startup.php(63): require_once('D:\\laragon\\www\\...')
+#5 D:\laragon\www\pharmaPOS\index.php(11): launch()
+#6 {main}
+  thrown in D:\laragon\www\pharmaPOS\app\http\controllers\MedicineController.php on line 529
+[04-Dec-2024 17:00:02 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31
+[04-Dec-2024 17:00:02 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 31

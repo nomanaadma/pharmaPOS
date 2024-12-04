@@ -61,7 +61,6 @@ $router->post('medicine/stock', 'MedicineController@stockUpdate');
 $router->post('medicine/stock/delete', 'MedicineController@stockDelete');
 $router->get('medicine/billing', 'MedicineController@medicineBilling');
 $router->get('medicine/billing/view', 'MedicineController@medicineBillingView');
-$router->get('medicine/billing/pdf', 'MedicineController@medicineBillingPdf');
 $router->get('medicine/billing/add', 'MedicineController@medicineBillingAdd');
 $router->post('medicine/billing/add', 'MedicineController@medicineBillingAction');
 $router->get('medicine/billing/edit', 'MedicineController@medicineBillingEdit');

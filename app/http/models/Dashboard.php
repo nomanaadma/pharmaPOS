@@ -26,9 +26,8 @@ class Dashboard extends Model
 	{
 		$query = $this->database->query("SELECT SUM(amount) AS amount, SUM(discount_value) AS discount, SUM(tax) AS tax FROM `" . DB_PREFIX . "medicine_bill`");
 		$data['bill'] = $query->row;
-		
+
 		$data['amount'] = number_format((float)$data['bill']['amount'], 2, '.', '');
-		$data['paid'] = number_format((float)$data['bill']['amount'], 2, '.', '');
 		$data['tax'] = number_format((float)$data['bill']['tax'], 2, '.', '');
 		$data['discount'] = number_format((float)$data['bill']['discount'], 2, '.', '');
 		return $data;

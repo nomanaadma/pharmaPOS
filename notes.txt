@@ -1,19 +1,29 @@
 nomanaadma@gmail.com
 $upeEam#@!f0
 
-remove mails things
+
+expense
+
+medicineBillingPdf
+
+invoice_template
+
+
+pdf
+
+
+print bill layout
+
+
+
 
 remove public/sample
 remove css/lang
 
 remove unnecessary assets
 
-search due
-
 remove extra js like
 customization.js
-
-salary
 
 remove
 check
@@ -26,8 +36,6 @@ remove common.info.invoice_cnote and full invoice section in setting info
 fix invoice template = http://pharmapos.test/index.php?route=medicine/billing/view&id=2
 
 remove attached_files
-
-check payments table
 
 remove user roles
 

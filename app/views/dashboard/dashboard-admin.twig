@@ -8,18 +8,6 @@
     </div>
     <div class="col-md-6 col-lg-3">
         <div class="dashboard-stat">
-            <div class="content"><h4 class="text-dark">{{ common.info.currency_abbr }}{{ main_stats.expense|number_format(2, '.', '') }}</h4> <span class="text-dark">Expenses</span></div>
-            <div class="icon"><i class="las la-receipt text-danger"></i></div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <div class="dashboard-stat">
-            <div class="content"><h4 class="text-dark">{{ common.info.currency_abbr }}{{ main_stats.salary|number_format(2, '.', '') }}</h4> <span class="text-dark">Salary Expenses</span></div>
-            <div class="icon"><i class="las la-hand-holding-usd text-warning"></i></div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-3">
-        <div class="dashboard-stat">
             <div class="content"><h4 class="text-dark">{{ common.info.currency_abbr }}{{ main_stats.purchase|number_format(2, '.', '') }}</h4> <span class="text-dark">Purchase</span></div>
             <div class="icon"><i class="las la-file-invoice-dollar text-secondary"></i></div>
         </div>
@@ -55,32 +43,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-6 col-xl-4">
-                    <div class="widget-1">
-                        <div class="content">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h5 class="title">Paid</h5>
-                                    <span class="descr">All Time</span>
-                                </div>
-                                <div class="col text-right">
-                                    <div class="number text-success">{{ common.info.currency_abbr }}{{ income_stats.paid|number_format(2, '.', '') }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h5 class="title">Due Amount</h5>
-                                    <span class="descr">All Time</span>
-                                </div>
-                                <div class="col text-right">
-                                    <div class="number text-danger">{{ common.info.currency_abbr }}{{ income_stats.due|number_format(2, '.', '') }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-12 col-lg-12 col-xl-4">
                     <div class="widget-1">
                         <div class="content">
@@ -91,17 +53,6 @@
                                 </div>
                                 <div class="col text-right">
                                     <div class="number text-info">{{ common.info.currency_abbr }}{{ income_stats.discount|number_format(2, '.', '') }}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h5 class="title">Total Expenses</h5>
-                                    <span class="descr">All Time</span>
-                                </div>
-                                <div class="col text-right">
-                                    <div class="number text-danger">{{ common.info.currency_abbr }}{{ main_stats.expense + main_stats.salary|number_format(2, '.', '') }}</div>
                                 </div>
                             </div>
                         </div>

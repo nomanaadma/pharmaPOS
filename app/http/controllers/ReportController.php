@@ -27,8 +27,6 @@ class ReportController extends Controller
 			$this->reportOutofStock();
 		} elseif ($report == "income_expenses") {
 			$this->reportIncome();
-		} elseif ($report == "salary") {
-			$this->reportSalary();
 		} else {
 			$this->reports();
 		}
@@ -192,31 +190,6 @@ class ReportController extends Controller
 		$data['page_title'] = 'Income & Expense Report';
 		$this->response->setOutput($this->load->view('report/report_income_expense', $data));
 	}
-
-	public function reportSalary()
-	{
-		$this->load->controller('common');
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-
-		$this->load->model('report');
-		$data['result'] = $this->model_report->getSalary($data['period']);
-
-		$data['page_title'] = 'Salary Report';
-		$this->response->setOutput($this->load->view('report/report_salary', $data));
-	}
-
 
 	public function formatChartDataWithMonth($data)
 	{
