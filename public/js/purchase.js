@@ -107,11 +107,11 @@
  }
 
  function bind() {
- 	$(".item-purchaseprice").on('blur', updatePrice);
- 	$(".item-qty").on('blur', updatePrice);
- 	$(".item-discounttype").on('blur', updatePrice);
- 	$(".item-discount").on('blur', updatePrice);
- 	$(".discount-total").on('blur', updatePrice);
+ 	$(".item-purchaseprice").on('input', updatePrice);
+ 	$(".item-qty").on('input', updatePrice);
+ 	$(".item-discounttype").on('input', updatePrice);
+ 	$(".item-discount").on('input', updatePrice);
+ 	$(".discount-total").on('input', updatePrice);
  	$("body").on('change', '.item-tax', updatePrice);
  	$("body").on('change', '.discount-type', updatePrice);
  }

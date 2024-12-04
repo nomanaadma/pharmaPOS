@@ -30,7 +30,7 @@ class Setting extends Model
 
 	public function createSupplier($data)
 	{
-		$this->database->query("INSERT INTO `" . DB_PREFIX . "suppliers` (`name`, `email`, `phone`, `address`, `user_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['phone']), $data['address'], (int)$data['user_id'], $data['datetime']));
+		$this->database->query("INSERT INTO `" . DB_PREFIX . "suppliers` (`name`, `email`, `phone`, `address`, `created_date`) VALUES (?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['phone']), $data['address'], $data['datetime']));
 	}
 
 	public function deleteSupplier($id)

@@ -8,10 +8,9 @@ add relations
 
 Medicine Other in roles edit remove
 
-expense
+in pos/bill calculation updates on focusout fix it
 
-search
-pharmacy
+expense
 
 remove public/sample
 

@@ -208,7 +208,6 @@ class MedicineController extends Controller
 	{
 		$data = $this->url->post;
 		$file = $this->url->file('medicine');
-		$data['user_id'] = $this->session->data['user_id'];
 		
 		$allowedFileType = ['application/vnd.ms-excel', 'text/csv'];
 		if (in_array($file["type"], $allowedFileType)) {
@@ -629,7 +628,6 @@ class MedicineController extends Controller
 
 		$data['billing']['bill_date'] = DateTime::createFromFormat($data['info']['date_format'], $data['billing']['bill_date'])->format('Y-m-d');
 		$data['billing']['datetime'] =  date('Y-m-d H:i:s');
-		$data['billing']['user_id'] = $this->session->data['user_id'];
 
 		$this->load->model('commons');
 		$data['info'] = $this->model_commons->getSiteInfo();
@@ -921,10 +919,7 @@ class MedicineController extends Controller
 
 		$data['purchase']['date'] = DateTime::createFromFormat($data['info']['date_format'], $data['purchase']['date'])->format('Y-m-d');
 		$data['purchase']['datetime'] =  date('Y-m-d H:i:s');
-		$data['purchase']['user_id'] = $this->session->data['user_id'];
-		// echo "<pre>";
-		// print_r($data);
-		// exit();
+
 		$this->load->model('medicine');
 		if (!empty($data['purchase']['id'])) {
 			$batches = $this->model_medicine->getBatches($data['purchase']['id']);
@@ -950,7 +945,6 @@ class MedicineController extends Controller
 					}
 					$batch['purchase_id'] = $data['purchase']['id'];
 					$batch['datetime'] =  date('Y-m-d H:i:s');
-					$batch['user_id'] = $this->session->data['user_id'];
 
 					if (empty($value['id'])) {
 						$this->model_medicine->createMedicinebatch($batch);
@@ -977,7 +971,6 @@ class MedicineController extends Controller
 					$batch['expiry'] = DateTime::createFromFormat($data['info']['date_my_format'], $value['expiry'])->format('Y-m');
 					$batch['purchase_id'] = $data['purchase']['id'];
 					$batch['datetime'] =  date('Y-m-d H:i:s');
-					$batch['user_id'] = $this->session->data['user_id'];
 					$this->model_medicine->createMedicinebatch($batch);
 				}
 			}

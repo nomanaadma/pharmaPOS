@@ -134,8 +134,7 @@ class SettingController extends Controller
 		
 		$data = $this->url->post;
 		$data['datetime'] =  date('Y-m-d H:i:s');
-		$data['user_id'] =  $this->session->data['user_id'];
-	
+			
 		$this->load->model('setting');
 		if (!empty($data['id'])) {
 			$result = $this->model_setting->updateSupplier($data);
