@@ -417,11 +417,6 @@ class UserController extends Controller
 				'medicine/purchase/edit' => 'Purchase Edit',
 				'medicine/purchase/delete' => 'Purchase Delete',
 				'medicine/purchase/view' => 'Purchase View'),
-			'Purchase Other' => array('medicine/purchase/pdf' => 'Purchase PDF/Print',
-				'1' => '',
-				'2' => '',
-				'3' => '',
-				'4' => ''),
 			'Stock adjustment' => array('medicine/stock' => 'Stock List',
 				'medicine/stock/delete' => 'Stock Delete',
 				'1' => '',
@@ -469,9 +464,7 @@ class UserController extends Controller
 				'1' => ''),
 			'Media' => array('get/media' => 'Media on Modal',
 				'media/upload' => 'Media Upload',
-				'media/delete' => 'Media Delete',
-				'upload/gallery' => 'Gallery Upload',
-				'gallery/delete' => 'Gallery Delete'));
+				'media/delete' => 'Media Delete'));
 
 		return $data;
 	}

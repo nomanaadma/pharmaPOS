@@ -11,20 +11,10 @@
 			</div>
 		</div>
 		<div class="col-sm-8 text-right">
-			<div class="dropdown d-inline-block mr-2">
-				<a class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown"><i class="las la-cloud-download-alt text-primary pr-2"></i> Export</a>
-				<ul class="dropdown-menu dropdown-menu-right export-button">
-					<li><a href="#" class="pdf"><i class="las la-file-pdf pr-2"></i>PDF</a></li>
-					<li><a href="#" class="excel"><i class="las la-file-excel pr-2"></i>Excel</a></li>
-					<li><a href="#" class="csv"><i class="las la-file-csv pr-2"></i>CSV</a></li>
-					<li><a href="#" class="print"><i class="las la-print pr-2"></i>Print</a></li>
-					<li><a href="#" class="copy"><i class="las la-copy pr-2"></i>Copy</a></li>
-				</ul>
-			</div>
 			<a href="{{ common.info.url_route }}medicine/stock&type=live" class="btn btn-white btn-sm mr-2"><i class="las la-calendar text-success mr-2"></i> Live Stock</a>
 			<div class="dropdown d-inline-block mr-2">
 				<a class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown"><i class="las la-calendar text-danger pr-2"></i> Expire Stock</a>
-				<ul class="dropdown-menu dropdown-menu-right export-button">
+				<ul class="dropdown-menu dropdown-menu-right">
 					<li><a href="{{ common.info.url_route }}medicine/stock&type=expired">Expired</a></li>
 					<li><a href="{{ common.info.url_route }}medicine/stock&type=willexpirein1">Expire in 1 month</a></li>
 					<li><a href="{{ common.info.url_route }}medicine/stock&type=willexpirein2">Expire in 2 month</a></li>
@@ -73,7 +63,7 @@
 									{% if page_purchase_view or page_purchase_edit or page_edit %}
 										<div class="dropdown d-inline-block">
 											<a class="text-primary edit dropdown-toggle" data-toggle="dropdown"><i class="las la-ellipsis-h"></i></a>
-											<ul class="dropdown-menu dropdown-menu-right export-button">
+											<ul class="dropdown-menu dropdown-menu-right">
 												{% if page_edit %}
 													<li><a class="edit-stock" data-id="{{ value.id }}" data-medicineid="{{ value.medicine_id }}"><i class="las la-pen-nib pr-2"></i>Update Stock</a></li>
 												{% endif %}

@@ -50,7 +50,6 @@ $router->post('medicine/upload', 'MedicineController@medicineUpload');
 $router->get('medicine/sample', 'MedicineController@medicineSampleDownload');
 $router->get('medicine/purchase', 'MedicineController@medicinePurchaseList');
 $router->get('medicine/purchase/view', 'MedicineController@medicinePurchaseView');
-$router->get('medicine/purchase/pdf', 'MedicineController@medicinePurchasePdf');
 $router->get('medicine/purchase/add', 'MedicineController@medicinePurchaseAdd');
 $router->post('medicine/purchase/add', 'MedicineController@medicinePurchaseAction');
 $router->get('medicine/purchase/edit', 'MedicineController@medicinePurchaseEdit');

@@ -257,28 +257,6 @@
     });
 
 
-    $("#attach-file-upload").dropzone({
-        addRemoveLinks: true,
-        acceptedFiles: "image/*,application/pdf",
-        maxFilesize: 2,
-        dictDefaultMessage: 'Drop files here or click here to upload.<br /><br /> Only Image and PDF allowed.',
-        init: function() {
-            var attachmentDropzone = this;
-            
-            this.on("success", function(file, xhr){
-                var response = JSON.parse(xhr);
-                if (response.error === false) {
-                    $('.attachment-container').append(response.media);
-                    toastr.success('File uploaded successfully.', 'Success');
-                    $('#attach-file').modal('hide');
-                } else {
-                    toastr.error(response.message, 'Error');
-                }
-                attachmentDropzone.removeFile(file);
-            });
-        }
-    });
-
     //********************************************
     //Admin Panel Left Side Menu *****************
     //********************************************
@@ -385,16 +363,6 @@
 
         $('.table-date-range').on('apply.daterangepicker', function(ev, picker) {
             window.location.replace(path+tabledate_data.route+'&start='+picker.startDate.format('YYYY-MM-DD')+'&end='+picker.endDate.format('YYYY-MM-DD'));
-        });
-    }
-
-    if ($('a.open-pdf').length) {
-        $("a.open-pdf").fancybox({
-            'frameWidth': 800,
-            'frameHeight': 800,
-            'overlayShow': true,
-            'hideOnContentClick': false,
-            'type': 'iframe'
         });
     }
 
@@ -666,37 +634,6 @@
         order: [],
         dom: "<'row align-items-center pb-3'<'col-sm-6 text-left'l><'col-sm-6 text-right'f>><'row'<'col-sm-12'tr>><'row align-items-center pt-3'<'col-sm-12 col-md-4'i><'col-sm-12 col-md-8 text-right dataTables_pager'p>>",
         responsive: false,
-        buttons: [
-        {
-            extend: 'print',
-            autoPrint: true,
-            exportOptions: {
-                columns: ':visible'
-            },
-            customize: function (win) {
-                $(win.document.body).find('h1').css('text-align','center');
-                $(win.document.body).find('h1').css('font-size','20px');
-            }
-        },
-        {
-            extend: 'copyHtml5',
-            exportOptions: {
-                columns: ':visible'
-            }
-        },
-        {
-            extend: 'excelHtml5',
-            exportOptions: {
-                columns: ':visible'
-            }
-        },
-        {
-            extend: 'csvHtml5',
-            exportOptions: {
-                columns: ':visible'
-            }
-        }
-        ],
         language: {
             "paginate": {
                 "first":       '<i class="las la-angle-double-left"></i>',
@@ -748,31 +685,6 @@
             ele.find('i').removeClass('la-toggle-off');
         }
         column.visible(!column.visible());
-    });
-
-    $(".export-button .print").on("click", function(e) {
-        e.preventDefault(); dataTable.button(0).trigger()
-        countdatatable.button(0).trigger()
-    });
-
-    $(".export-button .copy").on("click", function(e) {
-        e.preventDefault(); dataTable.button(1).trigger()
-        countdatatable.button(1).trigger()
-    });
-
-    $(".export-button .excel").on("click", function(e) {
-        e.preventDefault(); dataTable.button(2).trigger()
-        countdatatable.button(2).trigger()
-    });
-
-    $(".export-button .csv").on("click", function(e) {
-        e.preventDefault(); dataTable.button(3).trigger()
-        countdatatable.button(3).trigger()
-    });
-
-    $(".export-button .pdf").on("click", function(e) {
-        e.preventDefault(); dataTable.button(4).trigger()
-        countdatatable.button(4).trigger()
     });
 
     $('body').on('change', 'input:radio[name=layout]', function () {

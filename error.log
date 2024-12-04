@@ -1,0 +1,17 @@
+[04-Dec-2024 18:14:35 Asia/Calcutta] PHP Parse error:  syntax error, unexpected '$this' (T_VARIABLE) in D:\laragon\www\pharmaPOS\app\http\controllers\UserController.php on line 44
+[04-Dec-2024 18:45:22 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:45:22 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:45:30 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:45:30 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:45:53 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:45:53 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:45:54 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:45:54 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:46:58 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 44
+[04-Dec-2024 18:46:58 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 44
+[04-Dec-2024 18:47:22 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 42
+[04-Dec-2024 18:47:22 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 42
+[04-Dec-2024 18:47:23 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:47:23 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:49:45 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41
+[04-Dec-2024 18:49:45 Asia/Calcutta] PHP Notice:  Trying to access array offset on value of type null in D:\laragon\www\pharmaPOS\app\http\controllers\ErrorController.php on line 41

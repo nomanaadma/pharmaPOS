@@ -770,7 +770,6 @@ class MedicineController extends Controller
 		/* Set page title */
 		$data['page_title'] = 'Purchase';
 		$data['page_view'] = $this->user_agent->hasPermission('medicine/purchase') ? true : false;
-		$data['page_pdf'] = $this->user_agent->hasPermission('medicine/purchase/pdf') ? true : false;
 		$data['page_add'] = $this->user_agent->hasPermission('medicine/purchase/add') ? true : false;
 		$data['page_edit'] = $this->user_agent->hasPermission('medicine/purchase/edit') ? true : false;
 		$data['page_delete'] = $this->user_agent->hasPermission('medicine/purchase/delete') ? true : false;
@@ -808,7 +807,6 @@ class MedicineController extends Controller
 		$data['page_title'] = 'Purchase View';
 
 		$data['page_view'] = $this->user_agent->hasPermission('medicine/purchase') ? true : false;
-		$data['page_pdf'] = $this->user_agent->hasPermission('medicine/purchase/pdf') ? true : false;
 		$data['page_add'] = $this->user_agent->hasPermission('medicine/purchase/add') ? true : false;
 		$data['page_edit'] = $this->user_agent->hasPermission('medicine/purchase/edit') ? true : false;
 		$data['page_delete'] = $this->user_agent->hasPermission('medicine/purchase/delete') ? true : false;
@@ -816,38 +814,7 @@ class MedicineController extends Controller
 		/*Render Medicine view*/
 		$this->response->setOutput($this->load->view('medicine/purchase_view', $data));
 	}
-	/**
-	* Medicine Purchase index View method
-	* This method will be called on Medicine Purchase View
-	**/
-	public function medicinePurchasePdf()
-	{
-		/**
-		* Check if id exist in url if not exist then redirect to Medicine list view 
-		**/
-		$id = (int)$this->url->get('id');
-		if (empty($id) || !is_int($id)) {
-			$this->url->redirect('medicine/purchase');
-		}
-
-		$this->load->model('medicine');
-		$data['result'] = $this->model_medicine->getPurchaseView($id);
-		if (empty($data['result'])) {
-			$this->session->data['message'] = array('alert' => 'warning', 'value' => 'Purchase does not exist in database!');
-			$this->url->redirect('medicine/purchase');
-		}
-		$data['batches'] = $this->model_medicine->getBatches($id);
-		$this->load->model('commons');
-		$data['info'] = $this->model_commons->getSiteInfo();
-		$meta_title = 'Prescription';
-		$data['html'] = $this->load->view('medicine/purchase_pdf', $data);
-		$pdf = new PDF();
-		$pdf->createPDF($data);
-	}
-	/**
-	* Medicine Purchase index PDF method
-	* This method will be called on Medicine Purchase PDF
-	**/
+	
 	public function medicinePurchaseAdd()
 	{
 		$this->load->model('commons');
