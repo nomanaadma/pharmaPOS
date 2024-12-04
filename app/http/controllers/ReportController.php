@@ -60,11 +60,6 @@ class ReportController extends Controller
 		}
 
 		$this->load->model('report');
-		$data['result'] = $this->model_report->getInvoices($data['period']);
-		$data['chart_invoice'] = $this->formatChartDataWithMonth($this->model_report->getChartInvoice($data['period']));
-		$data['chart_invoice_status'] = $this->formatChartData($this->model_report->getChartInvoicebyStatus($data['period']));
-
-		$data['invoice_stats'] = $this->model_report->getInvoiceStats($data['period']);
 
 		$data['page_title'] = 'Invoice Report';
 

@@ -42,15 +42,10 @@ class DashboardController extends Controller
 		$data['period']['start'] = date("Y-m-d", strtotime( date( 'Y-m-01' )." -11 months"));
 		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
 
-		$data['chart_invoice'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartInvoice());
 		$data['chart_bill'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartBill());
 		$data['chart_purchase'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartPurchase());
-		$data['chart_expense'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartExpense());
 		$data['chart_salary'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartSalary());
 		$data['chart_customer'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartCustomer());
-		$data['chart_transaction'] = $this->formatTransactionWithMonth($this->model_dashboard->getChartTransaction());
-	
-		$data['chart_expense_type'] = $this->formatPieChartData($this->model_dashboard->getChartExpensebyType());
 
 		$data['main_stats'] = $this->model_dashboard->getMainStats();
 		$data['revenue_stats'] = $this->model_dashboard->getRevenueStats();
@@ -104,7 +99,7 @@ class DashboardController extends Controller
 		$data['period']['end'] = date("Y-m-d", strtotime( date( 'Y-m-d' )));
 		
 		$data['chart_patient'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartpatient($common['user']['doctor']));
-		$data['chart_expense'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartExpense($common['user']['user_id']));
+		
 		$data['chart_appointment'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartAppointment($common['user']['doctor']));
 		$data['appointment_stats'] = $this->model_dashboard->getAppointmentStats($common['user']['doctor']);
 		
@@ -132,11 +127,8 @@ class DashboardController extends Controller
 		$data['chart_income'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartIncome());
 		$data['chart_bill'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartIncomeBill());
 		$data['chart_purchase'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartPurchase());
-		$data['chart_expense'] = $this->formatChartDataWithMonth($this->model_dashboard->getChartExpense());
-		$data['chart_invoice_status'] = $this->formatChartData($this->model_dashboard->getChartInvoiceStatus());
 		$data['income_stats'] = $this->model_dashboard->getIncomeStats();
 		$data['bill_stats'] = $this->model_dashboard->getBillStats();
-		$data['invoice_stats'] = $this->model_dashboard->getInvoiceStats();
 
 		$data['page_title'] = 'Dashboard';
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);

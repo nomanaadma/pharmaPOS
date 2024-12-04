@@ -11,37 +11,6 @@ class Report extends Model
 		return $query->rows;
 	}
 
-	public function getInvoices($period)
-	{
-		$query = $this->database->query("SELECT i.* FROM `" . DB_PREFIX . "invoice` AS i WHERE i.invoicedate between '".$period['start']."' AND '".$period['end']."' ORDER BY i.invoicedate DESC");
-		return $query->rows;
-	}
-
-	public function getChartInvoice($period)
-	{
-		$query = $this->database->query("SELECT SUM(amount) AS amount, MONTH(invoicedate) AS month FROM `" . DB_PREFIX . "invoice` WHERE invoicedate > DATE_SUB(now(), INTERVAL 12 MONTH) GROUP BY MONTH(invoicedate)");
-		return $query->rows;
-	}
-
-	public function getChartInvoicebyStatus($period)
-	{
-		$query = $this->database->query("SELECT COUNT(status) AS value, status AS label FROM `" . DB_PREFIX . "invoice` WHERE invoicedate > DATE_SUB(now(), INTERVAL 12 MONTH) GROUP BY status");
-		return $query->rows;
-	}
-
-	public function getInvoiceStats($period)
-	{
-		$query = $this->database->query("SELECT SUM(amount) AS amount, IF(amount > 0, 100, 0) AS p_amount, SUM(paid) AS paid, (SUM(paid) / SUM(amount)) * 100 AS p_paid, SUM(due) AS due, (SUM(due) / SUM(amount)) * 100 AS p_due, SUM(discount_value) AS discount, (SUM(discount_value) / SUM(amount)) * 100 AS p_discount,  SUM(tax) AS tax, (SUM(tax) / SUM(amount)) * 100 AS p_tax FROM `" . DB_PREFIX . "invoice` WHERE invoicedate between '".$period['start']."' AND '".$period['end']."'");
-		$data = $query->row;
-
-		$data['p_paid'] = number_format((float)$query->row['p_paid'], 2, '.', '');
-		$data['p_due'] = number_format((float)$query->row['p_due'], 2, '.', '');
-		$data['p_discount'] = number_format((float)$query->row['p_discount'], 2, '.', '');
-		$data['p_tax'] = number_format((float)$query->row['p_tax'], 2, '.', '');
-		return $data;
-	}
-
-
 	public function getPurchases($period)
 	{
 		$query = $this->database->query("SELECT mp.*, s.name AS supplier FROM `" . DB_PREFIX . "medicine_purchase` AS mp LEFT JOIN `" . DB_PREFIX . "suppliers` AS s ON s.id = mp.supplier WHERE mp.date between '".$period['start']."' AND '".$period['end']."' ORDER BY date DESC");
