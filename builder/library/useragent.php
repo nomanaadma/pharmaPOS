@@ -77,9 +77,7 @@ class Useragent {
 			'getbatch',
 			'getbatchdata',
 			'customer/search',
-			'get/receiver',
-			'attach/documents',
-			'attach/documents/delete'
+			'get/receiver'
 		);
 
 		$this->permission = array_merge($this->permission, $extension);

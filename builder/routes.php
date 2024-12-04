@@ -88,9 +88,6 @@ $router->post('tax/add', 'FinanceController@taxAction');
 $router->post('tax/edit', 'FinanceController@taxAction');
 $router->post('tax/delete', 'FinanceController@taxDelete');
 
-$router->post('attach/documents', 'UploadController@attachDocuments');
-$router->post('attach/documents/delete', 'UploadController@attachDocumentsDelete');
-
 $router->get('get/media', 'UploadController@getMedia');
 $router->post('media/upload', 'UploadController@uploadMedia');
 $router->post('media/delete', 'UploadController@mediaDelete');

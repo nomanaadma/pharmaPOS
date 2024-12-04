@@ -138,12 +138,6 @@ class Medicine extends Model
 		return $query->row;
 	}
 
-	public function getAttachments($id)
-	{
-		$query = $this->database->query("SELECT `id`, `file`, `ext` FROM `" . DB_PREFIX . "attached_files` WHERE `type` = ? AND `type_id` = ?", array('billing', (int)$id));
-		return $query->rows;
-	}
-
 	public function updateMedicineBatchSold($data)
 	{
 		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE `id` = ? AND `medicine_id` = ?", array($data['batch'], $data['medicine_id']));
@@ -193,12 +187,8 @@ class Medicine extends Model
 
 	public function deleteMedicineBill($id)
 	{
-		$this->database->query("DELETE FROM `" . DB_PREFIX . "attached_files` WHERE `type` = ? AND type_id = ?", array('billing', (int)$id ));
 		$this->database->query("DELETE FROM `" . DB_PREFIX . "medicine_bill` WHERE `id` = ?", array((int)$id));
 	}
-
-
-
 
 	public function getPurchases($period)
 	{

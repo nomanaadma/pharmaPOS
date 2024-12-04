@@ -448,7 +448,7 @@ class MedicineController extends Controller
 
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
 		$data['action_delete'] = URL.DIR_ROUTE.'medicine/billing/delete';
-		$data['delete_msg'] = 'Inventory will be updated and those Stock will be added in Inventory and Attachments will be deleted.';
+		$data['delete_msg'] = 'Inventory will be updated and those Stock will be added in Inventory.';
 		
 		/*Render Medicine view*/
 		$this->response->setOutput($this->load->view('medicine/billing_list', $data));
@@ -475,7 +475,6 @@ class MedicineController extends Controller
 		}
 
 		$data['result']['items'] = json_decode($data['result']['items'], true);
-		$data['attachments'] = $this->model_medicine->getAttachments($id);
 		
 		$data['taxes'] = $this->model_medicine->getTaxes();
 		$this->load->model('commons');

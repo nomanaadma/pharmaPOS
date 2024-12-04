@@ -279,32 +279,6 @@
         }
     });
 
-    $('.attachment-container').on('click', '.attachment-delete a', function () {
-        var ele = $(this),
-        name = ele.parents('.attachment-image').find('input').val(),
-        id = $('#attach-file #attach-file-upload').find('input[name=id]').val(),
-        type = $('#attach-file #attach-file-upload').find('input[name=type]').val();
-        $.ajax({
-            type: 'POST',
-            url: 'index.php?route=attach/documents/delete',
-            data: {name: name, type: type, id: id, _token: $('.s_token').val()},
-            error: function() {
-                toastr.error('File could not be deleted', 'Server Error');
-            },
-            success: function(response) {
-                response = JSON.parse(response);
-                if (response.error === false) {
-                    ele.parents('.attachment-image').remove();
-                    toastr.success(response.message, 'Success');
-                } else {
-                    toastr.error(response.message, 'Error');
-                }
-            }
-        });
-    });
-
-
-
     //********************************************
     //Admin Panel Left Side Menu *****************
     //********************************************

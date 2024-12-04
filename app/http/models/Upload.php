@@ -5,10 +5,6 @@
  */
 class Upload extends Model
 {
-	public function createAttachments($data)
-	{
-		$this->database->query("INSERT INTO `" . DB_PREFIX . "attached_files` (`file`, `ext`, `type`, `type_id`, `user_id`, `date_of_joining`) VALUES (?, ?, ?, ?, ?, ?) ", array($data['file'], $data['ext'], $this->database->escape($data['type']), (int)$data['id'], (int)$data['user_id'], $data['datetime']));
-	}
 
 	public function getMedia()
 	{
@@ -64,8 +60,4 @@ class Upload extends Model
 		$this->database->query("DELETE FROM `" . DB_PREFIX . "gallery` WHERE `media` = ? AND `id` = ?" , array($this->database->escape($data['name']), (int)$data['id']));
 	}
 
-	public function deleteAttachments($data)
-	{
-		$this->database->query("DELETE FROM `" . DB_PREFIX . "attached_files` WHERE `file` = ? AND `type` = ? AND `type_id` = ?" , array($this->database->escape($data['name']), $data['type'], (int)$data['type_id']));
-	}
 }

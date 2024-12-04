@@ -33,63 +33,6 @@ class UploadController extends Controller
 		echo $data;
 	}
 
-	public function attachDocuments()
-	{
-		$data = $this->url->post;
-		$data['user_id'] = $this->session->data['user_id'];
-
-		$file = $this->url->files['file'];
-		$data['ext'] = pathinfo($file['name'], PATHINFO_EXTENSION);
-
-		$data['filedir'] = DIR.'public/uploads/attachments/';
-		$data['file_name'] = 'Doc-'.uniqid(rand()).$data['id'];
-		$data['file'] = $data['file_name'].'.'.$data['ext'];
-
-		$filesystem = new Filesystem();
-
-		$result = $filesystem->moveUpload($file, $data);
-		if ($result['error'] === false) {
-			$data['name'] = $result['name'];
-			$data['datetime'] = date('Y-m-d H:i:s');
-			$this->load->model('upload');
-			$this->model_upload->createAttachments($data);
-			$result['ext'] = $data['ext'];
-			if ($data['ext'] == 'pdf') {
-				$media = '<a href="public/uploads/attachments/'.$data['file'].'" class="open-pdf"><i class="las la-file-pdf"></i></a>';
-			} else {
-				$media = '<a data-fancybox="gallery" href="public/uploads/attachments/'.$data['file'].'"><img class="img-thumbnail" src="public/uploads/attachments/'.$data['file'].'" alt="Image"></a>';
-			}
-
-			$result['media'] = '<div class="attachment-image attachment-pdf">'.$media.'<input type="hidden" name="report_name" value="'.$data['file'].'"><div class="attachment-delete" data-toggle="tooltip" title="" data-original-title="Delete"><a class="las la-trash-alt"></a></div>
-			</div>';
-			echo json_encode($result);
-		} else {
-			echo json_encode($result);
-		}
-	}
-
-	public function attachDocumentsDelete()
-	{
-		$file = $this->url->post('name');
-		if (!is_string($file)) {
-			echo json_encode(array("error" => true, "message" => "File is wrong or does not exist."));
-			exit();
-		}
-
-		if (!unlink(DIR.'/public/uploads/attachments/'.$file)) {
-			echo json_encode(array("error" => true, "message" => "Error deleting ".$file));
-			exit();
-		} else {
-			$data['name'] = $this->url->post('name');
-			$data['type_id'] = $this->url->post('id');
-			$data['type'] = $this->url->post('type');
-			$this->load->model('upload');
-			$result = $this->model_upload->deleteAttachments($data);
-			echo json_encode(array("error" => false, "message" => "File deleted successfully."));
-		}
-		exit();
-	}
-
 	public function uploadMedia()
 	{
 		$data = $this->url->post;

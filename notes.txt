@@ -35,8 +35,6 @@ remove common.info.invoice_cnote and full invoice section in setting info
 
 fix invoice template = http://pharmapos.test/index.php?route=medicine/billing/view&id=2
 
-remove attached_files
-
 remove user roles
 
 remove billing_pdf_1.twig and all twig files search by Dr.
