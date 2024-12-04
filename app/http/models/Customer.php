@@ -17,12 +17,6 @@ class Customer extends Model
 		return $query->row;
 	}
 
-	public function getInvoices($data)
-	{
-		$query = $this->database->query("SELECT i.* FROM `" . DB_PREFIX . "invoice` AS i WHERE i.customer_id = ? OR i.email = ? ORDER BY i.invoicedate DESC LIMIT 20", array((int)$data['id'], $data['email']));
-		return $query->rows;
-	}
-
 	public function getBills($data)
 	{
 		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_bill` WHERE customer_id = ? OR email = ? ORDER BY bill_date DESC LIMIT 20", array((int)$data['id'], $data['email']));

@@ -24,9 +24,6 @@
 					<h3>{{ result.firstname~' '~result.lastname }}</h3>
 					<ul class="v-menu text-left pt-3 nav d-block">
 						<li><a href="#customer-info" class="active" data-toggle="tab"><i class="las la-info-circle"></i> <span>Customer Info</span></a></li>
-						{% if page_invoices %}
-							<li><a href="#customer-invoice" data-toggle="tab"><i class="las la-file-invoice"></i> <span>Invoices</span></a></li>
-						{% endif %}
 						{% if page_bills %}
 							<li><a href="#customer-bills" data-toggle="tab"><i class="las la-cart-plus"></i> <span>POS/Bills</span></a></li>
 						{% endif %}
@@ -94,70 +91,6 @@
 					</div>
 				</div>
 			</div>
-			{% if page_invoices %}
-				<div class="tab-pane fade" id="customer-invoice">
-					<div class="panel panel-default">
-						<div class="panel-head">
-							<div class="panel-title">Customer's Invoices</div>
-							<div class="panel-action">
-								{% if invoice_add %}
-									<a href="{{ common.info.url_route }}invoice/add" class="btn btn-primary btn-sm" target="_blank"><i class="las la-plus pr-2"></i> New Invoice</a>
-								{% endif %}
-							</div>
-						</div>
-						<div class="panel-body">
-							<table class="table table-middle table-bordered table-striped datatable-table">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>Amount</th>
-										<th>Due</th>
-										<th>Status</th>
-										<th>InvoiceDate</th>
-										{% if invoice_view %}
-										<th></th>
-										{% endif %}
-									</tr>
-								</thead>
-								<tbody>
-									{% for value in invoices %}
-										<tr>
-											<td class="text-primary">{{ common.info.invoice_prefix~"%05d"|format(value.id) }}</td>
-											<td>{{ common.info.currency_abbr~' '~value.amount }}</td>
-											<td>{{ common.info.currency_abbr~' '~value.due }}</td>
-											<td>
-												{% if value.status == "Paid" %}
-													<span class="label label-success">Paid</span>
-												{% elseif value.status == "Unpaid" %}
-													<span class="label label-danger">Unpaid</span>
-												{% elseif value.status == "Pending" %}
-													<span class="label label-secondary">Pending</span>
-												{% elseif value.status == "In Process" %}
-													<span class="label label-primary">In Process</span>
-												{% elseif value.status == "Cancelled" %}
-													<span class="label label-warning">Cancelled</span>
-												{% elseif value.status == "Other" %}
-													<span class="label label-default">Other</span>
-												{% elseif value.status == "Partially Paid" %}
-													<span class="label label-info badge-pill badge-sm">Partially Paid</span>
-												{% else %}
-													<span class="label label-white">Unknown</span>
-												{% endif %}
-											</td>
-											<td>{{ value.invoicedate|date(common.info.date_format) }}</td>
-											{% if invoice_view %}
-												<td class="table-action">
-													<a href="{{ common.info.url_route~'invoice/view&id='~value.id }}" class="text-primary edit" data-toggle="tooltip" title="View" target="_blank"><i class="las la-laptop"></i></a>
-												</td>
-											{% endif %}	
-										</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			{% endif %}
 			{% if page_bills %}
 				<div class="tab-pane fade" id="customer-bills">
 					<div class="panel panel-default">

@@ -67,17 +67,12 @@ class CustomerController extends Controller
 			$this->url->redirect('customers');
 		}		
 		$data['result']['address'] = json_decode($data['result']['address'], true);
-		$data['invoices'] = $this->model_customer->getInvoices($data['result']);
 		$data['bills'] = $this->model_customer->getBills($data['result']);
 
 		$data['page_title'] = 'Customer View';
 		$data['page_edit'] = $this->user_agent->hasPermission('customer/edit') ? true : false;
 		$data['page_bills'] = $this->user_agent->hasPermission('medicine/billing') ? true : false;
 		$data['bill_view'] = $this->user_agent->hasPermission('medicine/billing/view') ? true : false;
-		$data['page_invoices'] = $this->user_agent->hasPermission('invoices') ? true : false;
-		$data['invoice_view'] = $this->user_agent->hasPermission('invoice/view') ? true : false;
-		$data['invoice_add'] = $this->user_agent->hasPermission('invoice/add') ? true : false;
-		$data['invoice_delete'] = $this->user_agent->hasPermission('invoice/delete') ? true : false;
 		$data['page_sendmail'] = $this->user_agent->hasPermission('customer/sendmail') ? true : false;
 
 				

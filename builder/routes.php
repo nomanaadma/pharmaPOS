@@ -115,16 +115,6 @@ $router->get('makepayment/add', 'ManagesalaryController@makepaymentAdd');
 $router->post('makepayment/add', 'ManagesalaryController@makepaymentAction');
 $router->post('checkstaffsalary', 'ManagesalaryController@checkStaffSalary');
 
-$router->get('invoices', 'InvoiceController@index');
-$router->get('invoice/view', 'InvoiceController@indexView');
-$router->get('invoice/pdf', 'InvoiceController@indexPdf');
-$router->post('invoice/sentmail', 'InvoiceController@indexMail');
-$router->get('invoice/add', 'InvoiceController@indexAdd');
-$router->post('invoice/add', 'InvoiceController@indexAction');
-$router->get('invoice/edit', 'InvoiceController@indexEdit');
-$router->post('invoice/edit', 'InvoiceController@indexAction');
-$router->post('invoice/delete', 'InvoiceController@indexDelete');
-$router->post('addpayment', 'InvoiceController@invoicePayment');
 $router->get('expenses', 'ExpenseController@index');
 $router->get('expense/add', 'ExpenseController@indexAdd');
 $router->post('expense/add', 'ExpenseController@indexAction');

@@ -13,7 +13,7 @@ $result = $this->model_commons->getTemplateAndInfo('forgotpassword');
 $mail_result = $this->controller_mail->sendMail($mail);
 mail controller
 
-
+remove dashboard chart
 
 remove emailsetting from setting table
 
@@ -41,8 +41,9 @@ remove permissions in user_role table
 remove extra fields like blood group, address, from customer 
 in bill if the customer is new then add it to customer section 
 
+search Invoice Items
 
-
+edit roleList()
 
 https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-application/25581006
 http://pepdev.com/theme-preview/drugstore/

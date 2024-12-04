@@ -476,24 +476,6 @@
         $('#addTax form').attr('action', $('.site_url').val().concat('tax/add'));
     });
 
-    //New or Edit Item Modal *************
-    $('body').on('click', '.edit-item', function () {
-        var ele = $(this);
-        $('#addItem .name').val(ele.data("name"));
-        $('#addItem .description').val(ele.data("description"));
-        $('#addItem .price').val(ele.data("price"));
-        $('#addItem .id').val(ele.data("id"));
-        $('#addItem .modal-title').text('Edit Item');
-        $('#addItem form').attr('action', $('.site_url').val().concat('item/edit'));
-        $('#addItem').modal('show');
-    });
-    $('#addItem').on('hidden.bs.modal', function (e) {
-        $('#addItem .modal-title').text('New Item');
-        $('#addItem input').not( "[name='_token']" ).val('');
-        $('#addItem form').attr('action', $('.site_url').val().concat('item/add'));
-        $('#addItem textarea').val('');
-    });
-
     //New or Edit Medicine Category Modal *************
     $('body').on('click', '.edit-mcategory', function () {
         var ele = $(this);
