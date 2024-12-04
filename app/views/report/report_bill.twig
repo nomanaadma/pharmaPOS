@@ -106,7 +106,7 @@
                                 <tbody>
                                     {% for value in result %}
                                         <tr>
-                                            <td>{{ common.info.invoice_prefix~"%05d"|format(value.id) }}</td>
+                                            <td>{{ "%05d"|format(value.id) }}</td>
                                             <td>
                                                 <p class="m-0 text-primary">{{ value.name }}</p>
                                                 <p class="m-0">{{ value.email }}</p>

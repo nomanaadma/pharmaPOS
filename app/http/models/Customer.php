@@ -13,19 +13,13 @@ class Customer extends Model
 
 	public function getCustomer($id)
 	{
-		$query = $this->database->query("SELECT *, TIMESTAMPDIFF(YEAR, dob, CURDATE()) AS age FROM `" . DB_PREFIX . "customers` WHERE `id` = ? ORDER BY `date_of_joining` DESC", array((int)$id));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "customers` WHERE `id` = ? ORDER BY `date_of_joining` DESC", array((int)$id));
 		return $query->row;
 	}
 
 	public function getBills($data)
 	{
 		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_bill` WHERE customer_id = ? OR email = ? ORDER BY bill_date DESC LIMIT 20", array((int)$data['id'], $data['email']));
-		return $query->rows;
-	}
-
-	public function getDocuments($data)
-	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "reports` WHERE patient_id = ? OR email = ? ORDER BY date_of_joining DESC", array((int)$data['id'], $data['email']));
 		return $query->rows;
 	}
 

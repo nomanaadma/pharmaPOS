@@ -15,7 +15,6 @@ class SettingController extends Controller
 		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
 
 		$this->load->controller('common');
-		$data['timezone'] = $this->controller_common->getTimezones();
 		/**
 		* Get all info data from DB using info model's method
 		**/

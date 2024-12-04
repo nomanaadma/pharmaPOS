@@ -54,20 +54,8 @@
 									<td>{{ result['mobile'] }}</td>
 								</tr>
 								<tr>
-									<td>Date of Birth</td>
-									<td>{% if result.dob %}{{ result.dob|date(common.info.date_format)~' ('~result.age~' Years)' }}{% endif %}</td>
-								</tr>
-								<tr>
 									<td>Gender</td>
 									<td>{{ result.gender }}</td>
-								</tr>
-								<tr>
-									<td>Blood Group</td>
-									<td>{{ result.bloodgroup }}</td>
-								</tr>
-								<tr>
-									<td>Address</td>
-									<td>{{ result.address|join(', ') }}</td>
 								</tr>
 								<tr>
 									<td>Status</td>
@@ -109,7 +97,7 @@
 								<tbody>
 									{% for value in bills %}
 									<tr>
-										<td class="text-primary">{{ common.info.invoice_prefix~"%05d"|format(value.id) }}</td>
+										<td class="text-primary">{{ "%05d"|format(value.id) }}</td>
 										<td>{{ common.info.currency_abbr~' '~value.amount }}</td>
 										<td>{{ value.bill_date|date(common.info.date_format) }}</td>
 										{% if bill_view %}

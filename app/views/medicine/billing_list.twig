@@ -42,7 +42,7 @@
 				<tbody>
 					{% for value in result %}
 						<tr>
-							<td>{{ common.info.invoice_prefix~"%05d"|format(value.id) }}</td>
+							<td>{{ "%05d"|format(value.id) }}</td>
 							<td class="text-primary">{{ value.name }}</td>
 							<td>{{ common.info.currency_abbr~value.subtotal }}</td>
 							<td>{{ common.info.currency_abbr~value.tax }}</td>

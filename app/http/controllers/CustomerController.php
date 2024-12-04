@@ -65,8 +65,7 @@ class CustomerController extends Controller
 		if (empty($data['result'])) {
 			$this->session->data['message'] = array('alert' => 'warning', 'value' => 'Customer does not exist in database!');
 			$this->url->redirect('customers');
-		}		
-		$data['result']['address'] = json_decode($data['result']['address'], true);
+		}
 		$data['bills'] = $this->model_customer->getBills($data['result']);
 
 		$data['page_title'] = 'Customer View';
@@ -124,9 +123,6 @@ class CustomerController extends Controller
 			$this->session->data['message'] = array('alert' => 'warning', 'value' => 'Customer does not exist in database!');
 			$this->url->redirect('customers');
 		}
-
-		
-		$data['result']['address'] = json_decode($data['result']['address'], true);
 		
 		if (isset($this->session->data['message'])) {
 			$data['message'] = $this->session->data['message'];

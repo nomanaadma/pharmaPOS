@@ -16,6 +16,14 @@ class Useragent {
 
 		$query = $this->database->query("SELECT `data` FROM `" . DB_PREFIX . "setting` WHERE `name` in ('siteinfo')");
 		$this->info = json_decode($query->rows[0]['data'], true);
+
+		$this->info["language"] = "en";
+		$this->info["currency"] = "PKR";
+		$this->info["currency_abbr"] = "Rs ";
+		$this->info["timezone"] = "Asia/Karachi";
+		$this->info["date_format"] = "d/m/Y";
+		$this->info["date_my_format"] = "m-Y";
+
 		$this->theme = json_decode($query->rows[0]['data'], true);
 
 		if (isset($this->session->data['user_id']) && isset($this->session->data['login_token'])) {
@@ -76,8 +84,7 @@ class Useragent {
 			'getmedicine',
 			'getbatch',
 			'getbatchdata',
-			'customer/search',
-			'get/receiver'
+			'customer/search'
 		);
 
 		$this->permission = array_merge($this->permission, $extension);

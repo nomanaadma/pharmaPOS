@@ -481,116 +481,6 @@
         $('#add-supplier form').attr('action', $('.site_url').val().concat('supplier/add'));
     });
 
-    //Email User
-    $('.send-user-type').on('change', function() {
-        var ele = $(this), user = ele.find('option:selected').val(), receiver = $('select.send-receiver');
-        $('.receiver-container .block').remove();
-        $.ajax({
-            method: "POST",
-            url: "index.php?route=get/receiver",
-            data: { user: user , _token: $('.s_token').val()},
-            error: function () {
-                alert('Sorry Try Again!');
-            },
-            success: function (response) {
-                $.each(JSON.parse(response), function (key, value) {
-                    if (value.id === 'all') {
-                        $('.receiver-container').append('<div class="custom-control custom-checkbox block mb-3 receiver-all">'+
-                            '<input type="checkbox" class="custom-control-input" id="receiver-'+value.id+'" value="'+value.id+'" checked>'+
-                            '<label class="custom-control-label" for="receiver-'+value.id+'">'+value.name+'</label></div>');
-                    } else {
-                        $('.receiver-container').append('<div class="custom-control custom-checkbox block mb-3 receiver-single">'+
-                            '<input type="checkbox" name="receiver[user][]" class="custom-control-input" id="receiver-'+value.id+'" value="'+value.id+'" checked>'+
-                            '<label class="custom-control-label" for="receiver-'+value.id+'">'+value.name+'</label></div>');
-                    }
-                });
-            }
-        });
-    });
-    $('.receiver-container').on('change', '.receiver-all input', function () {
-        var ele = $(this);
-        if (ele.is(":checked")) {
-            ele.parents('.receiver-container').find('input').prop("checked", true);
-        } else {
-            ele.parents('.receiver-container').find('input').prop("checked", false);
-        }
-    });
-    $('.receiver-container').on('change', '.receiver-single input', function () {
-        var ele = $(this);
-        $('.receiver-container').find('.receiver-all input').prop("checked", false);
-    });
-
-    //Attendence 
-    $('.attendence').datepicker({
-        autoclose: true,
-        dateFormat: $('.common_date_format').val(),
-        startDate:'01-01-2019',
-        endDate:'31-12-2019',
-        onSelect: function (dateText, date) {
-            if (dateText != '' && typeof dateText !== "undefined") {
-                $('.attendence-container').removeClass('d-none');
-                $('.date_pick input[name="day"]').val(date.currentDay);
-                $('.date_pick input[name="month"]').val(date.currentMonth);
-                $('.date_pick input[name="year"]').val(date.currentYear);
-                $('.attendence-submit').removeClass('d-none');
-            }
-        }
-    });
-
-    $('.attendence-container').on('change', '.attendence-head', function() {
-        var ele = $(this);
-        if (ele.prop("checked") === true) {
-            $('.attendence-container .attendence-'+ele.val()).prop("checked", true);
-        }
-        $('.attendence-container .attendence-head').not('#attendence-head-'+ele.val()).prop("checked", false);
-    });
-
-    if ($('.attendance-month').length) {
-        $(".attendance-month").datepicker( {
-            dateFormat: 'M yy',
-            changeMonth: true,
-            changeYear: true,
-            showButtonPanel: true,
-            beforeShow: function(input, inst) {
-                inst.dpDiv.css({marginTop: '10px', marginLeft: -input.offsetWidth + 'px'});
-            },
-            onClose: function(dateText, inst) {
-                var month = (inst.selectedMonth+1);
-                month = (month < 10 ? "0"+month : month);
-                var date = inst.selectedYear + '-' + month;
-                if (date !== $('.range-month').val()) {
-                    window.location.href = $('.site_url').val()+'staffattendance/view&id='+$('.staff-id').val()+'&monthyear='+date;
-                }
-            }
-        });
-    }
-
-    //Email Log
-    $('.table-action').on('click', '.log-message-view', function () {
-        var ele = $(this), message = ele.data('message');
-        $('#mailLogModal .log-message').append('<div class="message">'+message+'</div>');
-        $('#mailLogModal').modal('show');
-    });
-
-    $('#mailLogModal').on('hidden.bs.modal', function (e) {
-        $('#mailLogModal .log-message .message').remove();
-    });
-
-    //Mail Type
-    $('body').on('change', 'select.mail-type', function () {
-        if ($(this).val() == "2") { $('#smtp-mail').show(); }
-        else { $('#smtp-mail').hide(); }
-    });
-
-    if ($('.report-credit-value').length && $('.report-debit-value').length) {
-        $('.report-credit-value').text($('.report-statement-credit').val());
-        $('.report-debit-value').text($('.report-statement-debit').val());
-    }
-
-    //********************************************
-    //Listing Table ******************************
-    //********************************************
-
     var dataTable = $('.datatable-table').DataTable({
         aLengthMenu: [[10, 25, 50, 75, -1], [10, 25, 50, 75, "All"]],
         iDisplayLength: 10,
@@ -598,25 +488,6 @@
         order: [],
         dom: "<'row align-items-center pb-3'<'col-sm-6 text-left'l><'col-sm-6 text-right'f>><'row'<'col-sm-12'tr>><'row align-items-center pt-3'<'col-sm-12 col-md-4'i><'col-sm-12 col-md-8 text-right dataTables_pager'p>>",
         responsive: true,
-        buttons: [
-        {
-            extend: 'print',
-            autoPrint: true,
-            customize: function (win) {
-                $(win.document.body).find('h1').css('text-align','center');
-                $(win.document.body).find('h1').css('font-size','20px');
-            }
-        },
-        {
-            extend: 'copyHtml5'
-        },
-        {
-            extend: 'excelHtml5'
-        },
-        {
-            extend: 'csvHtml5'
-        }
-        ],
         language: {
             "paginate": {
                 "first":       '<i class="las la-angle-double-left"></i>',
@@ -647,7 +518,7 @@
             var api = this.api(), data, column;
             var intVal = function ( i ) {
                 return typeof i === 'string' ?
-                i.replace(/[\$,]/g, '')*1 :
+                i.replace(/[\Rs,]/g, '')*1 :
                 typeof i === 'number' ?
                 i : 0;
             };

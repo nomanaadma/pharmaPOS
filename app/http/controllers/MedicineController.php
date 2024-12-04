@@ -667,7 +667,7 @@ class MedicineController extends Controller
 					}
 				}
 				
-				$data['billing']['items'] = json_encode($data['billing']['items']);
+				$data['billing']['items'] = json_encode($data['billing']['items']);		
 				$this->model_medicine->updateMedicineBill($data['billing']);
 			}
 		} else {
@@ -678,6 +678,28 @@ class MedicineController extends Controller
 					$this->model_medicine->updateMedicineBatchSold($value);
 				}
 				$data['billing']['items'] = json_encode($data['billing']['items']);
+
+				if(empty($data['billing']['customer_id'])) {
+
+					$this->load->model('customer');
+
+					$nameParts = explode(' ', $data['billing']['name']);
+					$lastName = array_pop($nameParts);
+					$firstName = implode(' ', $nameParts);
+
+					$customer_data = [
+						'firstname' => $firstName,
+						'lastname' => $lastName,
+						'mail' => $data['billing']['email'],
+						'mobile' => $data['billing']['mobile'],
+						'user_id' => (int)$this->session->data['user_id'],
+						'datetime' => date('Y-m-d H:i:s'),
+						'gender' => null,
+					];
+
+					$data['billing']['customer_id'] = $this->model_customer->createCustomer($customer_data);
+				}
+
 				$data['billing']['id'] = $this->model_medicine->createMedicineBill($data['billing']);
 			}
 			$this->session->data['message'] = array('alert' => 'success', 'value' => 'Bill created successfully.');
