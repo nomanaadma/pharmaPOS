@@ -28,7 +28,6 @@ class FinanceController extends Controller
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
 		
 
-		/*call appointment list view*/
 		$this->response->setOutput($this->load->view('finance/currency', $data));
 	}
 
@@ -110,7 +109,6 @@ class FinanceController extends Controller
 		$data['action'] = URL.DIR_ROUTE.'paymentgateway';
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
 
-		/*call appointment list view*/
 		$this->response->setOutput($this->load->view('finance/payment_gateway', $data));
 	}
 

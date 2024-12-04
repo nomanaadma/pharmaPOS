@@ -172,7 +172,6 @@ class UserController extends Controller
 			$data['user']['hash'] = md5(uniqid(mt_rand(), true));
 			$data['user']['password'] = password_hash($data['user']['password'], PASSWORD_DEFAULT);
 			$data['user']['user_id'] = $this->model_user->createUser($data['user']);
-			$this->userMail($data['user']['user_id']);
 			$this->session->data['message'] = array('alert' => 'success', 'value' => 'Account created successfully.');
 		}
 		$this->url->redirect('user/edit&id='.$data['user']['user_id']);
@@ -200,31 +199,6 @@ class UserController extends Controller
 		$result = $this->model_user->deleteUser($this->url->post('id'));
 		$this->session->data['message'] = array('alert' => 'success', 'value' => 'Account deleted successfully.');
 		$this->url->redirect('users');
-	}
-
-	public function userMail($id)
-	{
-		$this->load->controller('mail');
-		$result = $this->controller_mail->getTemplate('newuser');
-		
-		if (empty($result['template']) || $result['template']['status'] == '0') {
-			return false;
-		}
-		$user = $this->model_user->getUser($id);
-		$link = '<a href="'.URL.'">Click Here</a>';
-		
-		$result['template']['message'] = str_replace('{name}', $user['firstname'], $result['template']['message']);
-		$result['template']['message'] = str_replace('{email}', $user['email'], $result['template']['message']);
-		$result['template']['message'] = str_replace('{username}', $user['user_name'], $result['template']['message']);
-		$result['template']['message'] = str_replace('{login_url}', $link, $result['template']['message']);
-		$result['template']['message'] = str_replace('{business_name}', $result['common']['name'], $result['template']['message']);
-		
-		$data['name'] = $user['firstname'].' '.$user['lastname'];
-		$data['email'] = $user['email'];
-		$data['subject'] = $result['template']['subject'];
-		$data['message'] = $result['template']['message'];
-		
-		return $this->controller_mail->sendMail($data);
 	}
 
 	/**

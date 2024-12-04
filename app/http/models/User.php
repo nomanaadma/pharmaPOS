@@ -90,17 +90,6 @@ class User extends Model
 			return false;
 		}
 	}
-
-	public function getUserReports($email)
-	{
-		$query = $this->database->query("SELECT `report`, `appointment_id` FROM `" . DB_PREFIX . "reports` WHERE `email` = ?", array($this->database->escape($email)));
-		if ($query->num_rows > 0) {
-			return $query->rows;
-		} else {
-			return false;
-		}
-	}
-
 	
 	public function userRole()
 	{

@@ -11,7 +11,6 @@ $router->post('profile', 'ProfileController@indexAction');
 $router->post('profile/password', 'ProfileController@indexPassword');
 
 $router->get('dashboard', 'DashboardController@index');
-$router->get('dashbaordappointment', 'DashboardController@getDashbaordAppointment');
 $router->get('info', 'SettingController@index');
 $router->post('info', 'SettingController@indexAction');
 $router->get('customization', 'SettingController@customization');
