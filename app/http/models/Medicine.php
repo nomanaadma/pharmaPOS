@@ -119,16 +119,16 @@ class Medicine extends Model
 		return $query->row;
 	}
 
+	public function getBillItems($id)
+	{
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "bill_items` WHERE bill_id = ?", array((int)$id));
+		return $query->rows;
+	}
+
 	public function getPaymentMethods()
 	{
 		$query = $this->database->query("SELECT id, name FROM `" . DB_PREFIX . "payment_method` WHERE status = ?", array(1));
 		return $query->rows;
-	}
-
-	public function getBillingItems($id)
-	{
-		$query = $this->database->query("SELECT items FROM `" . DB_PREFIX . "medicine_bill` WHERE id = ?", array((int)$id));
-		return $query->row;
 	}
 
 	public function updateMedicineBatchSold($data)
@@ -163,18 +163,57 @@ class Medicine extends Model
 
 	public function updateMedicineBill($data)
 	{
-		$this->database->query("UPDATE `" . DB_PREFIX . "medicine_bill` SET `name` = ?, `email` = ?, `mobile` = ?, `method` = ?, `bill_date` = ?, `items` = ?, `subtotal` = ?, `tax` = ?, `discount_value` = ?, `amount` = ?, `note` = ?, `customer_id` = ? WHERE `id` = ? ", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), (int)$data['method'], $data['bill_date'], $data['items'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['customer_id'], (int)$data['id']));
+
+		$id = (int)$data['id'];
+
+		$this->database->query("UPDATE `" . DB_PREFIX . "medicine_bill` SET `name` = ?, `email` = ?, `mobile` = ?, `method` = ?, `bill_date` = ?, `subtotal` = ?, `tax` = ?, `discount_value` = ?, `amount` = ?, `note` = ?, `customer_id` = ? WHERE `id` = ? ", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), (int)$data['method'], $data['bill_date'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['customer_id'], $id));
+
+		$this->database->query("DELETE FROM `" . DB_PREFIX . "bill_items` WHERE `bill_id` = ?", array((int)$id));
+
+		$this->createBillItems($id, $data['items']);
+
 		return true;
 	}
 
 	public function createMedicineBill($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_bill` (`name`, `email`, `mobile`, `method`, `bill_date`, `items`, `subtotal`, `tax`, `discount_value`, `amount`, `note`, `customer_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), $data['method'], $data['bill_date'], $data['items'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['customer_id'], $data['datetime']));
-		
+
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_bill` (`name`, `email`, `mobile`, `method`, `bill_date`, `subtotal`, `tax`, `discount_value`, `amount`, `note`, `customer_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $this->database->escape($data['email']), $this->database->escape($data['mobile']), $data['method'], $data['bill_date'], $data['subtotal'], $data['tax'], $data['discount_value'], $data['amount'], $data['note'], (int)$data['customer_id'], $data['datetime']));
+
 		if ($query->num_rows > 0) {
-			return $this->database->last_id();
+
+			$bill_id = $this->database->last_id();
+
+			$this->createBillItems($bill_id, $data['items']);
+
+			return $bill_id;
+
 		} else {
 			return false;
+		}
+	}
+
+	public function createBillItems($bill_id, $items) {
+		
+		foreach ($items as $key => $item) {
+	
+			$this->database->query("INSERT INTO `" . DB_PREFIX . "bill_items` (`bill_id`, `medicine_id`, `name`, `new`, `batch`, `batch_name`, `expiry`, `qty`, `saleprice`, `discounttype`, `discount`, `discountvalue`, `taxprice`, `price`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
+				$bill_id, 
+				$item['medicine_id'], 
+				$this->database->escape($item['name']),
+				$this->database->escape($item['new']),
+				$this->database->escape($item['batch']),
+				$this->database->escape($item['batch_name']),
+				$this->database->escape($item['expiry']),
+				$this->database->escape($item['qty']),
+				$this->database->escape($item['saleprice']),
+				$this->database->escape($item['discounttype']),
+				$this->database->escape($item['discount']),
+				$this->database->escape($item['discountvalue']),
+				$this->database->escape($item['taxprice']),
+				$this->database->escape($item['price']),
+			));
+
 		}
 	}
 

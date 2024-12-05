@@ -402,8 +402,10 @@ class MedicineController extends Controller
 			$this->session->data['message'] = array('alert' => 'warning', 'value' => 'Bill does not exist in database!');
 			$this->url->redirect('medicine/billing');
 		}
+		
+		$bill_items = $this->model_medicine->getBillItems($id);
 
-		$data['result']['items'] = json_decode($data['result']['items'], true);
+		$data['result']['items'] = $bill_items;
 		
 		$data['taxes'] = $this->model_medicine->getTaxes();
 		$this->load->model('commons');
@@ -511,7 +513,9 @@ class MedicineController extends Controller
 			$this->url->redirect('medicine/billing');
 		}
 
-		$data['result']['items'] = json_decode($data['result']['items'], true);
+		$bill_items = $this->model_medicine->getBillItems($id);
+
+		$data['result']['items'] = $bill_items;
 		
 		foreach ($data['result']['items'] as $key => $value) {
 			$value['monthyear'] = date('Y-m');
@@ -565,8 +569,9 @@ class MedicineController extends Controller
 		$this->load->model('medicine');
 		if (!empty($data['billing']['id'])) {
 			if (!empty($data['billing']['items'])) {
-				$old = $this->model_medicine->getBillingItems($data['billing']['id']);
-				$old = json_decode($old['items'], true);
+				
+				$old = $this->model_medicine->getBillItems($data['billing']['id']);
+
 				$oldid = $this->array2Dto1D($old, 'batch');
 				$newid = $this->array2Dto1D($data['billing']['items'], 'batch');
 
@@ -595,7 +600,6 @@ class MedicineController extends Controller
 					}
 				}
 				
-				$data['billing']['items'] = json_encode($data['billing']['items']);		
 				$this->model_medicine->updateMedicineBill($data['billing']);
 			}
 		} else {
@@ -605,7 +609,6 @@ class MedicineController extends Controller
 					$data['billing']['items'][$key]['expiry'] = $value['expiry'];
 					$this->model_medicine->updateMedicineBatchSold($value);
 				}
-				$data['billing']['items'] = json_encode($data['billing']['items']);
 
 				if(empty($data['billing']['customer_id'])) {
 
@@ -644,17 +647,18 @@ class MedicineController extends Controller
 		}
 
 		$this->load->model('medicine');
-		$items = $this->model_medicine->getBillingItems($this->url->post('id'));
-
-		if (!empty($items['items'])) {
-			$items = json_decode($items['items'], true);
+	
+		$items = $this->model_medicine->getBillItems($this->url->post('id'));
+		if( count($items) ) {
 			foreach ($items as $key => $value) {
-				$this->model_medicine->updateMedicineBatchSoldOnDelete($value);	
+				$this->model_medicine->updateMedicineBatchSoldOnDelete($value);
 			}
 		}
+
 		$this->model_medicine->deleteMedicineBill($this->url->post('id'));
 		$this->session->data['message'] = array('alert' => 'success', 'value' => 'Bill deleted successfully.');
 		$this->url->redirect('medicine/billing');
+
 	}
 	/**
 	* Validate Medicine Field

@@ -19,3 +19,23 @@ http://pepdev.com/theme-preview/drugstore/
 discounttype and discount column in medicine_purchase
 
 
+remove extra fields like reorder from medicine
+
+
+
+check columns in bill_items and add batch id foreign key if necessary
+
+
+
+ALTER TABLE `bill_items`
+ADD CONSTRAINT `fk_bill_medicine_id`
+FOREIGN KEY (`medicine_id`) 
+REFERENCES `medicines`(`id`) 
+ON DELETE CASCADE;
+
+
+ALTER TABLE `bill_items`
+ADD CONSTRAINT `fk_bill_bill_id`
+FOREIGN KEY (`bill_id`) 
+REFERENCES `medicine_bill`(`id`) 
+ON DELETE CASCADE;
