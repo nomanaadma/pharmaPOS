@@ -90,7 +90,6 @@
 								<td>
 									<input type="text" name="billing[items][{{ key }}][name]" class="form-control item-name" value="{{ value.name }}" required>
 									<input type="hidden" name="billing[items][{{ key }}][medicine_id]" class="form-control item-medicine-id" value="{{ value.medicine_id }}" required>
-									<input type="hidden" name="billing[items][{{ key }}][new]" value="0">
 								</td>
 								<td>
 									<select name="billing[items][{{ key }}][batch]" class="custom-select item-batch" required>
@@ -151,7 +150,6 @@
 								<td>
 									<input type="text" name="billing[items][0][name]" class="form-control item-name" required>
 									<input type="hidden" name="billing[items][0][medicine_id]" class="form-control item-medicine-id" required>
-									<input type="hidden" name="billing[items][0][new]" value="1">
 								</td>
 								<td>
 									<select name="billing[items][0][batch]" class="custom-select item-batch" required></select>

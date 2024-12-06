@@ -121,7 +121,27 @@ class Medicine extends Model
 
 	public function getBillItems($id)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "bill_items` WHERE bill_id = ?", array((int)$id));
+		$query = $this->database->query("
+		SELECT
+			bill_items.*, 
+			medicines.`name`,
+			medicine_batch.`expiry`, 
+			medicine_batch.`name` as batch_name
+		FROM
+			".DB_PREFIX."bill_items
+			INNER JOIN
+			medicines
+			ON 
+				bill_items.medicine_id = medicines.id
+			INNER JOIN
+			medicine_batch
+			ON 
+				bill_items.medicine_id = medicine_batch.medicine_id AND
+				bill_items.batch = medicine_batch.id
+		WHERE
+			bill_id = ?
+		", array((int)$id));
+
 		return $query->rows;
 	}
 
@@ -197,14 +217,10 @@ class Medicine extends Model
 		
 		foreach ($items as $key => $item) {
 	
-			$this->database->query("INSERT INTO `" . DB_PREFIX . "bill_items` (`bill_id`, `medicine_id`, `name`, `new`, `batch`, `batch_name`, `expiry`, `qty`, `saleprice`, `discounttype`, `discount`, `discountvalue`, `taxprice`, `price`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
+			$this->database->query("INSERT INTO `" . DB_PREFIX . "bill_items` (`bill_id`, `medicine_id`, `batch`, `qty`, `saleprice`, `discounttype`, `discount`, `discountvalue`, `taxprice`, `price`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
 				$bill_id, 
 				$item['medicine_id'], 
-				$this->database->escape($item['name']),
-				$this->database->escape($item['new']),
 				$this->database->escape($item['batch']),
-				$this->database->escape($item['batch_name']),
-				$this->database->escape($item['expiry']),
 				$this->database->escape($item['qty']),
 				$this->database->escape($item['saleprice']),
 				$this->database->escape($item['discounttype']),
@@ -215,6 +231,7 @@ class Medicine extends Model
 			));
 
 		}
+
 	}
 
 	public function deleteMedicineBill($id)

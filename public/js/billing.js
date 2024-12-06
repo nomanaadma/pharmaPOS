@@ -119,7 +119,6 @@ function updatePrice() {
 		tax_price = roundNumber(tax, 2);
 		price = Number(roundNumber(price, 2));
 
-		var unit_price = (+price) + (+tax_price);
 		isNaN(price) ? row.find('.item-price').val("N/A") : row.find('.item-price').val(price);
 		isNaN(tax_price) ? row.find('.item-tax-price').html("N/A") : row.find('.item-tax-price').val(tax_price);
 	});
@@ -177,7 +176,6 @@ function itemHtml(count) {
 	'<td>'+
 	'<input type="text" name="billing[items]['+count+'][name]" class="form-control item-name" required>'+
 	'<input type="hidden" name="billing[items]['+count+'][medicine_id]" class="form-control item-medicine-id" required>'+
-	'<input type="hidden" name="billing[items]['+count+'][new]" value="1">'+
 	'</td>'+
 	'<td>'+
 	'<select name="billing[items]['+count+'][batch]" class="custom-select item-batch" required></select>'+
