@@ -59,6 +59,7 @@
 						<th>Quantity</th>
 						<th>PurchasePrice</th>
 						<th>SalePrice</th>
+						<th>Gross</th>
 						<th>Discount</th>
 						<th>Tax</th>
 						<th>Price</th>
@@ -74,13 +75,14 @@
 						<td>{{ value.qty }}</td>
 						<td>{{ value.purchaseprice }}</td>
 						<td>{{ value.saleprice }}</td>
+						<td>{{ value.gross }}</td>
 						<td>{{ value.discountvalue }}</td>
 						<td>{{ value.taxprice }}</td>
 						<td>{{ value.price }}</td>
 					</tr>
 					{% endfor %}
 					<tr class="total">
-						<td rowspan="5" colspan="6" class="blank">
+						<td rowspan="5" colspan="7" class="blank">
 						</td>
 						<td class="title" colspan="2">Sub Total</td>
 						<td class="value" colspan="2">{{ common.info.currency_abbr~result.total }}</td>

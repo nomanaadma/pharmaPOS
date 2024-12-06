@@ -20,7 +20,7 @@ class Medicine extends Model
 
 	public function getMedicines()
 	{
-		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.created_date DESC");
+		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch_view` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.created_date DESC");
 		return $query->rows;
 	}
 
@@ -36,13 +36,13 @@ class Medicine extends Model
 
 	public function getMedicineLiveStock($id)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE medicine_id = ? AND expiry > ? ORDER BY medicine_id", array($id, date('Y-m')));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE medicine_id = ? AND expiry > ? ORDER BY medicine_id", array($id, date('Y-m')));
 		return $query->rows;
 	}
 
 	public function getMedicineBadStock($id)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE medicine_id = ? AND expiry < ? AND qty > sold",
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE medicine_id = ? AND expiry < ? AND qty > sold",
 			array($id, date('Y-m')));
 		return $query->rows;
 	}
@@ -79,19 +79,19 @@ class Medicine extends Model
 
 	public function getLiveStocks()
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE expiry > ? AND status = 1 ORDER BY medicine_id", array(date('Y-m')));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE expiry > ? AND status = 1 ORDER BY medicine_id", array(date('Y-m')));
 		return $query->rows;
 	}
 
 	public function getExpiredStocks()
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE expiry < ? AND status = 1 ORDER BY medicine_id", array(date('Y-m')));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE expiry < ? AND status = 1 ORDER BY medicine_id", array(date('Y-m')));
 		return $query->rows;
 	}
 
 	public function getWillExpireStocks($date)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE expiry < ? AND expiry > ? AND status = 1 ORDER BY medicine_id", array($date, date('Y-m')));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE expiry < ? AND expiry > ? AND status = 1 ORDER BY medicine_id", array($date, date('Y-m')));
 		return $query->rows;
 	}
 
@@ -126,7 +126,7 @@ class Medicine extends Model
 			bill_items.*, 
 			medicines.`name`,
 			medicine_batch.`expiry`, 
-			medicine_batch.`name` as batch_name
+			medicines.`name` as batch_name
 		FROM
 			".DB_PREFIX."bill_items
 			INNER JOIN
@@ -153,7 +153,7 @@ class Medicine extends Model
 
 	public function updateMedicineBatchSold($data)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE `id` = ? AND `medicine_id` = ?", array($data['batch'], $data['medicine_id']));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE `id` = ? AND `medicine_id` = ?", array($data['batch'], $data['medicine_id']));
 
 		if ($query->num_rows > 0) {
 			$count = $query->row['sold'];
@@ -168,7 +168,7 @@ class Medicine extends Model
 
 	public function updateMedicineBatchSoldOnDelete($data)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE `id` = ? AND `medicine_id` = ?", array($data['batch'], $data['medicine_id']));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE `id` = ? AND `medicine_id` = ?", array($data['batch'], $data['medicine_id']));
 
 		if ($query->num_rows > 0) {
 			$count = $query->row['sold'];
@@ -259,25 +259,26 @@ class Medicine extends Model
 
 	public function getBatches($id)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE purchase_id = ?", array((int)$id));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE purchase_id = ?", array((int)$id));
+
 		return $query->rows;
 	}
 
 	public function getSearchedBatchWithMedicine($data)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE medicine_id = ? AND id = ?", array($data['medicine'], $data['batch']));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE medicine_id = ? AND id = ?", array($data['medicine'], $data['batch']));
 		return $query->row;
 	}
 
 	public function getSearchedBatch($data)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE medicine_id = ? AND expiry > ? AND status = 1", array($data['id'], $data['monthyear']));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE medicine_id = ? AND expiry > ? AND status = 1", array($data['id'], $data['monthyear']));
 		return $query->rows;
 	}
 
 	public function getBatchNameFromId($id)
 	{
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch` WHERE id = ?", array((int)$id));
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "medicine_batch_view` WHERE id = ?", array((int)$id));
 		return $query->row;
 	}
 
@@ -299,14 +300,15 @@ class Medicine extends Model
 
 	public function updateMedicinebatch($data)
 	{
-		$this->database->query("UPDATE `" . DB_PREFIX . "medicine_batch` SET `name` = ?, `batch` = ?, `expiry` = ?, `pqty` = ?, `qty` = ?, `saleprice` = ?, `purchaseprice` = ?, `discounttype` = ?, `discount` = ?, `discountvalue` = ?, `tax` = ?, `taxprice` = ?, `price` = ?, `medicine_id` = ? WHERE `id` = ? AND `purchase_id` = ?", array($this->database->escape($data['name']), $data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], (int)$data['id'], (int)$data['purchase_id']));
+		$this->database->query("UPDATE `" . DB_PREFIX . "medicine_batch` SET `name` = ?, `batch` = ?, `expiry` = ?, `pqty` = ?, `qty` = ?, `saleprice` = ?, `purchaseprice` = ?, `gross` = ?, `discounttype` = ?, `discount` = ?, `discountvalue` = ?, `tax` = ?, `taxprice` = ?, `price` = ?, `medicine_id` = ? WHERE `id` = ? AND `purchase_id` = ?", array($this->database->escape($data['name']), $data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['gross'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], (int)$data['id'], (int)$data['purchase_id']));
 		
 		return true;
 	}
 
 	public function createMedicinebatch($data)
 	{
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_batch` (`name`, `batch`, `expiry`, `pqty`, `qty`, `saleprice`, `purchaseprice`, `discounttype`, `discount`, `discountvalue`, `tax`, `taxprice`, `price`, `medicine_id`, `purchase_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], $data['purchase_id'], $data['datetime']));
+
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_batch` (`name`, `batch`, `expiry`, `pqty`, `qty`, `saleprice`, `purchaseprice`, `gross`, `discounttype`, `discount`, `discountvalue`, `tax`, `taxprice`, `price`, `medicine_id`, `purchase_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['gross'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], $data['purchase_id'], $data['datetime']));
 		
 		if ($query->num_rows > 0) {
 			return $this->database->last_id();

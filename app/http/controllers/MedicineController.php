@@ -814,13 +814,7 @@ class MedicineController extends Controller
 		}
 		$data['batches'] = $this->model_medicine->getBatches($id);
 		$data['suppliers'] = $this->model_medicine->getSuppliers();
-		$data['taxes'] = $this->model_medicine->getTaxes();
 
-		if (!empty($data['batches'])) {
-			foreach ($data['batches'] as $key => $value) {
-				$data['batches'][$key]['tax'] = json_decode($value['tax'], true);
-			}
-		}
 		$this->load->model('commons');
 		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
 
@@ -858,8 +852,6 @@ class MedicineController extends Controller
 		if (!empty($data['purchase']['id'])) {
 			$batches = $this->model_medicine->getBatches($data['purchase']['id']);
 			$this->model_medicine->updateMedicinePurchase($data['purchase']);
-
-
 			
 			$newitems = $this->array2Dto1D($data['purchase']['items']);
 			foreach ($batches as $key => $value) {
@@ -872,11 +864,7 @@ class MedicineController extends Controller
 					$batch = array();
 					$batch = $value;
 					$batch['expiry'] = DateTime::createFromFormat($data['info']['date_my_format'], $value['expiry'])->format('Y-m');
-					if (!empty($value['tax'])) {
-						$batch['tax'] = json_encode($value['tax']);
-					} else {
-						$batch['tax'] = json_encode(array());
-					}
+					
 					$batch['purchase_id'] = $data['purchase']['id'];
 					$batch['datetime'] =  date('Y-m-d H:i:s');
 
@@ -897,11 +885,7 @@ class MedicineController extends Controller
 				foreach ($data['purchase']['items'] as $key => $value) {
 					$batch = array();
 					$batch = $value;
-					if (!empty($value['tax'])) {
-						$batch['tax'] = json_encode($value['tax']);
-					} else {
-						$batch['tax'] = json_encode(array());
-					}
+					
 					$batch['expiry'] = DateTime::createFromFormat($data['info']['date_my_format'], $value['expiry'])->format('Y-m');
 					$batch['purchase_id'] = $data['purchase']['id'];
 					$batch['datetime'] =  date('Y-m-d H:i:s');

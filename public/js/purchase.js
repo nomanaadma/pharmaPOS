@@ -41,14 +41,16 @@
  }
 
  function updateTotal() {
- 	var total = 0, discount = 0;
- 	$('.item-price').each(function(i) {
+ 	
+	var total = 0, discount = 0;
+ 	
+	$('.item-gross').each(function(i) {
  		price = $(this).val();
  		if (!isNaN(price)) { total += Number(price); }
  	});
 
  	var taxtotal = 0;
- 	$('.item-tax-price').each(function(i) {
+ 	$('.item-taxprice').each(function(i) {
  		taxprice = $(this).val();
  		if (!isNaN(taxprice)) { taxtotal += Number(taxprice); }
  	});
@@ -62,18 +64,25 @@
  	taxprice = roundNumber(taxtotal, 2);
  	discount = roundNumber(discount, 2);
 
-	var amount = +total + +taxprice;
-
  	$('.total-price').val(total);
  	$('.total-tax').val(taxprice);
+	$('.total-discount').val(discount);
+	
+	var amount = total - discount + parseFloat(taxprice);
+
+	amount = Number(roundNumber(amount, 2));
+
  	$('.total-amount').val(amount);
- 	$('.total-discount').val(discount);
  }
 
  function updatePrice() {
  	$('.item-row').each(function(){
  		var row = $(this),
  		price = row.find('.item-purchaseprice').val() * row.find('.item-qty').val();
+
+ 		price = Number(roundNumber(price, 2));
+		row.find('.item-gross').val(price);
+
 		discounttype = row.find('.item-discounttype').val(),
         discount = Number(row.find('.item-discount').val());
         
@@ -87,21 +96,15 @@
             price = price - discount;
         }
 
- 		var tax = 0,
- 		tax_price = 0;
-
- 		row.find('.invoice-tax p').each(function() {
- 			var ele = $(this);
- 			tax_amount = roundNumber(ele.find('.invoice-tax-rate').val() * price * 0.01, 2);
- 			ele.find('.single-tax-price').val(tax_amount);
- 			tax += Number($(this).find('input.invoice-tax-rate').val()) * price * 0.01;
- 		});
- 		tax_price = roundNumber(tax, 2);
+ 		var tax = Number(row.find('.item-tax').val());
+ 		tax_price = price * tax * 0.01;
+ 		tax_price = Number(roundNumber(tax_price, 2));
+		row.find('.item-taxprice').val(tax_price);
+		
+		price += tax_price;
  		price = Number(roundNumber(price, 2));
 
- 		var unit_price = (+price) + (+tax_price);
  		isNaN(price) ? row.find('.item-price').val("N/A") : row.find('.item-price').val(price);
- 		isNaN(tax_price) ? row.find('.item-tax-price').html("N/A") : row.find('.item-tax-price').val(tax_price);
  	});
  	updateTotal();
  }
@@ -111,8 +114,8 @@
  	$(".item-qty").on('input', updatePrice);
  	$(".item-discounttype").on('input', updatePrice);
  	$(".item-discount").on('input', updatePrice);
+ 	$(".item-tax").on('input', updatePrice);
  	$(".discount-total").on('input', updatePrice);
- 	$("body").on('change', '.item-tax', updatePrice);
  	$("body").on('change', '.discount-type', updatePrice);
  }
 
@@ -178,6 +181,9 @@
  	'<td>'+
  	'<textarea class="item-saleprice" name="purchase[items]['+count+'][saleprice]" required></textarea>'+
  	'</td>'+
+	'<td>'+
+ 	'<input class="item-gross" readonly name="purchase[items]['+count+'][gross]" />'+
+ 	'</td>'+
  	'<td class="">'+
  	'<div class="row no-gutters">'+
  	'<div class="col">'+
@@ -188,18 +194,18 @@
  	'</div>'+
  	'<div class="col">'+
  	'<textarea type="text" name="purchase[items]['+count+'][discount]" class="item-discount">0.00</textarea>'+
+	'<input type="text" readonly name="purchase[items]['+count+'][discountvalue]" class="item-discountvalue" value="0.00">'+
  	'</div>'+
  	'</div>'+
- 	'<input type="hidden" name="purchase[items]['+count+'][discountvalue]" class="item-discountvalue" value="0.00">'+
  	'</td>'+
  	'<td class="invoice-tax">'+
- 	'<input type="hidden" class="item-tax-price" name="purchase[items]['+count+'][taxprice]" value="0" readonly>'+
+	'<input type="text" name="purchase[items]['+count+'][tax]" class="item-tax">' +
+	'<input type="text" readonly name="purchase[items]['+count+'][taxprice]" class="item-taxprice">' +
  	'</td>'+
  	'<td>'+
  	'<textarea class="bg-white item-price" name="purchase[items]['+count+'][price]" required readonly></textarea>'+
  	'</td>'+
  	'<td>'+
- 	'<a class="badge badge-warning badge-sm badge-pill add-taxes m-1">Add Taxes</a>'+
  	'<a class="badge badge-danger badge-sm badge-pill delete m-1">Delete</a>'+
  	'</td>'+
  	'</tr>';
@@ -213,45 +219,6 @@
 
  $(document).ready(function () {
  	"use strict";
- 	$('body').on('click', `.add-taxes, .invoice-tax p`, function () {
- 		var ele = $(this).parents('.item-row').find('.invoice-tax');
- 		ele.addClass('tax-modal-open');
- 		ele.find('p').each(function() {
- 			var id = $(this).find('.invoice-tax-id').val();
- 			$('#addTax').find('#inv-taxes-'+id).prop('checked', true)
- 		});
- 		$('#addTax').modal('show');
- 	});
-
- 	$('#addTax').on('hidden.bs.modal', function (e) {
- 		$('.tax-modal-open').removeClass('tax-modal-open');
- 		$("#addTax input").prop("checked", false);
- 	});
-
- 	$('body').on('click', '.add-modal-taxes', function () {
- 		$('.tax-modal-open p').remove();
-
- 		var ele_target  = $('.tax-modal-open').parents('.item-row'),
- 		price = ele_target.find('.item-purchaseprice').val() * ele_target.find('.item-qty').val(),
- 		count = ele_target.find('.item-name').attr('name').split('[')[2];
- 		count = parseInt(count.split(']')[0]);
-
- 		$("input:checkbox[name=modaltax]:checked").each(function(index, element){
- 			var ele = $(this), name = ele.siblings("label").text(), id = ele.val(), rate = ele.data('rate'),
- 			tax_amount = roundNumber(rate * price * 0.01, 2);
-
- 			$('.tax-modal-open').prepend('<p class="badge badge-light badge-sm badge-pill">'+
- 				name+
- 				'<input type="text" class="single-tax-price" name="purchase[items]['+count+'][tax]['+index+'][tax_price]" value="'+tax_amount+'" readonly>'+
- 				'<input type="hidden" class="invoice-tax-id" name="purchase[items]['+count+'][tax]['+index+'][id]" value="'+id+'">'+ 
- 				'<input type="hidden" name="purchase[items]['+count+'][tax]['+index+'][name]" value="'+name+'">' +
- 				'<input type="hidden" class="invoice-tax-rate" name="purchase[items]['+count+'][tax]['+index+'][rate]" value="' +rate+'">' +
- 				'</p>');
- 		});
- 		updatePrice();
- 		$('.tax-modal-open').removeClass('tax-modal-open');
- 		$('#addTax').modal('hide')
- 	});
 
  	$('.purchase-items').on('click', '.add-items', function () {
  		if($(".item-row").length === 0) {
@@ -272,6 +239,32 @@
  		bind();
  		return false;
  	});
+
+	$(".item-name").on('input', function() {
+		$('.item-id').val('');
+		$(this).removeClass('ui-state-error');
+	});
+
+	$('.purchase_form').submit(function (e) { 
+
+		$('.item-id').each(function() {
+			const itemEl = $(this);
+			const item_id = itemEl.val();
+
+			if(item_id == "") {
+				
+				e.preventDefault();
+
+				itemEl.prev().addClass('ui-state-error');
+				itemEl.focus();
+				
+			} else {
+				itemEl.prev().removeClass('ui-state-error');
+			}
+
+		});
+
+	});
 
  	initAutocomplete();
  	initDatepicker();

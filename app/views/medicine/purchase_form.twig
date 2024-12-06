@@ -14,7 +14,7 @@
 	</div>
 </div>
 
-<form action="{{ action }}" method="post">
+<form action="{{ action }}" method="post" class="purchase_form">
 	<input type="hidden" name="_token" value="{{ common.token }}">
 	<div class="panel panel-default">
 		<div class="panel-body">
@@ -61,6 +61,7 @@
 							<th>Quantity<span class="form-required">*</span></th>
 							<th>Purchase Price<span class="form-required">*</span></th>
 							<th>Sale Price<span class="form-required">*</span></th>
+							<th>Gross</th>
 							<th>Discount</th>
 							<th>Tax</th>
 							<th>Price<span class="form-required">*</span></th>
@@ -93,6 +94,9 @@
 								<td>
 									<textarea class="item-saleprice" name="purchase[items][{{ key }}][saleprice]" required>{{ value.saleprice }}</textarea>
 								</td>
+								<td>
+									<input type="text" readonly class="item-gross" name="purchase[items][{{ key }}][gross]" value="{{ value.gross }}" />
+								</td>
 								<td class="">
                                     <div class="row no-gutters">
                                         <div class="col">
@@ -103,27 +107,18 @@
                                         </div>
                                         <div class="col">
                                             <textarea type="text" name="purchase[items][{{ key }}][discount]" class="item-discount">{{ value.discount }}</textarea>
+											<input type="text" readonly name="purchase[items][{{ key }}][discountvalue]" class="item-discountvalue" value="{{ value.discountvalue }}">
                                         </div>
                                     </div>
-                                    <input type="hidden" name="purchase[items][{{ key }}][discountvalue]" class="item-discountvalue" value="{{ value.discountvalue }}">
                                 </td>
 								<td class="invoice-tax">
-									{% for tax in value.tax %}
-										<p class="badge badge-light badge-sm badge-pill">{{ tax.name }}
-											<input type="text" name="purchase[items][{{ key }}][tax][{{ loop.index0 }}][tax_price]" class="single-tax-price" value="{{ tax.tax_price }}" readonly>
-											<input type="hidden" name="purchase[items][{{ key }}][tax][{{ loop.index0 }}][id]" class="invoice-tax-id" value="{{ tax.id }}"> 
-											<input type="hidden" name="purchase[items][{{ key }}][tax][{{ loop.index0 }}][name]" value="{{ tax.name }}">
-											<input type="hidden" class="invoice-tax-rate" name="purchase[items][{{ key }}][tax][{{ loop.index0 }}][rate]" value="{{ tax.rate }}">
-										</p>
-									{% endfor %}
-									
-									<input type="hidden" class="item-tax-price" name="purchase[items][{{ key }}][taxprice]" value="{{ value.taxprice }}" readonly>
+									<input type="text" name="purchase[items][{{ key }}][tax]" class="item-tax" value="{{ value.tax }}">
+									<input type="text" readonly name="purchase[items][{{ key }}][taxprice]" class="item-taxprice" value="{{ value.taxprice }}">
 								</td>
 								<td>
 									<textarea class="bg-white item-price" name="purchase[items][{{ key }}][price]" required readonly>{{ value.price }}</textarea>
 								</td>
 								<td>
-									<a class="badge badge-warning badge-sm badge-pill add-taxes m-1">Add Taxes</a>
 									<a class="badge badge-danger badge-sm badge-pill delete m-1">Delete</a>
 								</td>
 							</tr>
@@ -152,7 +147,10 @@
 								<td>
 									<textarea class="item-saleprice" name="purchase[items][0][saleprice]" required></textarea>
 								</td>
-								<td class="">
+								<td>
+									<input type="text" readonly class="item-gross" name="purchase[items][0][gross]" />
+								</td>
+								<td>
                                     <div class="row no-gutters">
                                         <div class="col">
                                             <select name="purchase[items][0][discounttype]" class="custom-select border-light item-discounttype">
@@ -162,52 +160,52 @@
                                         </div>
                                         <div class="col">
                                             <textarea type="text" name="purchase[items][0][discount]" class="item-discount">0.00</textarea>
+											<input type="text" readonly name="purchase[items][0][discountvalue]" class="item-discountvalue" value="0.00">
                                         </div>
                                     </div>
-                                    <input type="hidden" name="purchase[items][0][discountvalue]" class="item-discountvalue" value="0.00">
                                 </td>
 								<td class="invoice-tax">
-									<input type="hidden" class="item-tax-price" name="purchase[items][0][taxprice]" value="0" readonly>
+									<input type="text" name="purchase[items][0][tax]" class="item-tax">
+									<input type="text" readonly name="purchase[items][0][taxprice]" class="item-taxprice">
 								</td>
 								<td>
 									<textarea class="bg-white item-price" name="purchase[items][0][price]" required readonly></textarea>
 								</td>
 								<td>
-									<a class="badge badge-warning badge-sm badge-pill add-taxes m-1">Add Taxes</a>
 									<a class="badge badge-danger badge-sm badge-pill delete m-1">Delete</a>
 								</td>
 							</tr>
 						{% endfor %}
 						<tr>
-							<td colspan="11">
+							<td colspan="12">
 								<div class="add-items d-inline-block">
 									<a class="btn btn-success btn-sm m-1"><i class="icon-plus mr-1"></i> Add Item</a>
 								</div>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="4" class="blank"></td>
+							<td colspan="5" class="blank"></td>
 							<td colspan="3" class="total-line"><label class="p-2">Sub Total</label></td>
 							<td colspan="4" class="total-value">
 								<input type="text" name="purchase[total]" class="form-transparent p-2 total-price" value="{{ result.total }}" readonly>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="4" class="blank"></td>
+							<td colspan="5" class="blank"></td>
 							<td colspan="3" class="total-line"><label class="p-2">Discount</label></td>
 							<td colspan="4" class="total-value">
 								<input type="text" name="purchase[discount_value]" class="form-transparent p-2 total-discount" value="{{ result.discount_value }}" readonly>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="4" class="blank"></td>
+							<td colspan="5" class="blank"></td>
 							<td colspan="3" class="total-line"><label class="p-2">Tax</label></td>
 							<td colspan="4" class="total-value">
 								<input type="text" name="purchase[tax]" class="form-transparent p-2 total-tax" value="{{ result.tax }}" readonly>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="4" class="blank"></td>
+							<td colspan="5" class="blank"></td>
 							<td colspan="3" class="total-line"><label class="p-2">Amount</label></td>
 							<td colspan="4" class="total-value">
 								<input type="text" name="purchase[amount]" class="form-transparent p-2 total-amount" value="{{ result.amount }}" readonly>
@@ -223,28 +221,6 @@
 		</div>
 	</div>
 </form>
-
-<div class="modal fade" id="addTax">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Tax</h5>
-				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-			</div>
-			<div class="modal-body">
-				{% for value in taxes %}
-					<div class="custom-control custom-checkbox custom-checkbox-1 mb-3">
-						<input type="checkbox" class="custom-control-input" id="inv-taxes-{{ value.id }}" value="{{ value.id }}" data-rate="{{ value.rate }}" data-name="{{ value.name }}" name="modaltax">
-						<label class="custom-control-label" for="inv-taxes-{{ value.id }}">{{ value.name~'( '~value.rate~'% )' }}</label>
-					</div>
-				{% endfor %}
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-warning add-modal-taxes">Add Taxes</button>
-			</div>
-		</div>
-	</div>
-</div>
 
 <link rel="stylesheet" href="public/css/bootstrap-datetimepicker.min.css">
 <script type="text/javascript" src="public/js/bootstrap-datetimepicker.min.js"></script>

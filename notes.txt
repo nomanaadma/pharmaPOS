@@ -40,8 +40,20 @@ FOREIGN KEY (`bill_id`)
 REFERENCES `medicine_bill`(`id`) 
 ON DELETE CASCADE;
 
-
+remove db prefix
 
 sub total amount on discount
+
+double submit issue in purchase
+
+make only one tax field
+
+remove tax section
+
+pqty can be removed
+
+$data['taxes'] = $this->model_medicine->getTaxes();
+
+
 
 
