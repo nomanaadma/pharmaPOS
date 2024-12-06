@@ -4,8 +4,6 @@ $upeEam#@!f0
 aminshoukat4@gmail.com
 $upeEam#@!f0
 
-medicine_bills table work
-
 expense
 
 bills not showing for default values getMedicineBills(
@@ -16,16 +14,7 @@ https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-applicati
 http://pepdev.com/theme-preview/drugstore/
 
 
-discounttype and discount column in medicine_purchase
-
-
 remove extra fields from medicine
-
-
-
-check columns in bill_items and add batch id foreign key if necessary
-
-
 
 ALTER TABLE `bill_items`
 ADD CONSTRAINT `fk_bill_medicine_id`
@@ -33,26 +22,22 @@ FOREIGN KEY (`medicine_id`)
 REFERENCES `medicines`(`id`) 
 ON DELETE CASCADE;
 
-
-ALTER TABLE `bill_items`
-ADD CONSTRAINT `fk_bill_bill_id`
-FOREIGN KEY (`bill_id`) 
-REFERENCES `medicine_bill`(`id`) 
-ON DELETE CASCADE;
-
 remove db prefix
-
-sub total amount on discount
-
-double submit issue in purchase
-
-make only one tax field
 
 remove tax section
 
 pqty can be removed
 
 $data['taxes'] = $this->model_medicine->getTaxes();
+
+['tax']
+
+
+FinanceController@tax
+
+remove name in batch inserting test createMedicinebatch( updateMedicinebatch(
+
+on creating bill first name lastname not concatinating well medicineBillingAction
 
 
 

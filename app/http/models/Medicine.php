@@ -12,12 +12,6 @@ class Medicine extends Model
 		return $query->rows;
 	}
 
-	public function getTaxes()
-	{
-		$query = $this->database->query("SELECT `id`, `name`, `rate` FROM `" . DB_PREFIX . "taxes`");
-		return $query->rows;
-	}
-
 	public function getMedicines()
 	{
 		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `" . DB_PREFIX . "medicines` AS m LEFT JOIN `" . DB_PREFIX . "medicine_category` AS mc ON mc.id = m.category LEFT JOIN `" . DB_PREFIX . "medicine_batch_view` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.created_date DESC");
@@ -217,15 +211,17 @@ class Medicine extends Model
 		
 		foreach ($items as $key => $item) {
 	
-			$this->database->query("INSERT INTO `" . DB_PREFIX . "bill_items` (`bill_id`, `medicine_id`, `batch`, `qty`, `saleprice`, `discounttype`, `discount`, `discountvalue`, `taxprice`, `price`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
+			$this->database->query("INSERT INTO `" . DB_PREFIX . "bill_items` (`bill_id`, `medicine_id`, `batch`, `qty`, `saleprice`, `gross`, `discounttype`, `discount`, `discountvalue`, `tax`, `taxprice`, `price`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
 				$bill_id, 
 				$item['medicine_id'], 
 				$this->database->escape($item['batch']),
 				$this->database->escape($item['qty']),
 				$this->database->escape($item['saleprice']),
+				$this->database->escape($item['gross']),
 				$this->database->escape($item['discounttype']),
 				$this->database->escape($item['discount']),
 				$this->database->escape($item['discountvalue']),
+				$this->database->escape($item['tax']),
 				$this->database->escape($item['taxprice']),
 				$this->database->escape($item['price']),
 			));
@@ -300,7 +296,7 @@ class Medicine extends Model
 
 	public function updateMedicinebatch($data)
 	{
-		$this->database->query("UPDATE `" . DB_PREFIX . "medicine_batch` SET `name` = ?, `batch` = ?, `expiry` = ?, `pqty` = ?, `qty` = ?, `saleprice` = ?, `purchaseprice` = ?, `gross` = ?, `discounttype` = ?, `discount` = ?, `discountvalue` = ?, `tax` = ?, `taxprice` = ?, `price` = ?, `medicine_id` = ? WHERE `id` = ? AND `purchase_id` = ?", array($this->database->escape($data['name']), $data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['gross'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], (int)$data['id'], (int)$data['purchase_id']));
+		$this->database->query("UPDATE `" . DB_PREFIX . "medicine_batch` SET `batch` = ?, `expiry` = ?, `pqty` = ?, `qty` = ?, `saleprice` = ?, `purchaseprice` = ?, `gross` = ?, `discounttype` = ?, `discount` = ?, `discountvalue` = ?, `tax` = ?, `taxprice` = ?, `price` = ?, `medicine_id` = ? WHERE `id` = ? AND `purchase_id` = ?", array($data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['gross'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], (int)$data['id'], (int)$data['purchase_id']));
 		
 		return true;
 	}
@@ -308,7 +304,7 @@ class Medicine extends Model
 	public function createMedicinebatch($data)
 	{
 
-		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_batch` (`name`, `batch`, `expiry`, `pqty`, `qty`, `saleprice`, `purchaseprice`, `gross`, `discounttype`, `discount`, `discountvalue`, `tax`, `taxprice`, `price`, `medicine_id`, `purchase_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['name']), $data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['gross'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], $data['purchase_id'], $data['datetime']));
+		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "medicine_batch` (`batch`, `expiry`, `pqty`, `qty`, `saleprice`, `purchaseprice`, `gross`, `discounttype`, `discount`, `discountvalue`, `tax`, `taxprice`, `price`, `medicine_id`, `purchase_id`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array($data['batch'], $data['expiry'], $data['pqty'], (int)$data['qty'], $data['saleprice'], $data['purchaseprice'], $data['gross'], $data['discounttype'], $data['discount'], $data['discountvalue'], $data['tax'], $data['taxprice'], $data['price'], $data['medicine_id'], $data['purchase_id'], $data['datetime']));
 		
 		if ($query->num_rows > 0) {
 			return $this->database->last_id();

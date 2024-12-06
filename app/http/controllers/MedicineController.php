@@ -407,7 +407,6 @@ class MedicineController extends Controller
 
 		$data['result']['items'] = $bill_items;
 		
-		$data['taxes'] = $this->model_medicine->getTaxes();
 		$this->load->model('commons');
 		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
 
@@ -428,7 +427,6 @@ class MedicineController extends Controller
 		$this->load->model('medicine');
 		/* Set empty data to array */
 		$data['result'] =  NULL;
-		$data['taxes'] = $this->model_medicine->getTaxes();
 		$data['methods'] = $this->model_medicine->getPaymentMethods();
 
 		/* Set confirmation message if page submitted before */
@@ -524,7 +522,6 @@ class MedicineController extends Controller
 			$data['result']['items'][$key]['batches'] = $batches;
 		}
 
-		$data['taxes'] = $this->model_medicine->getTaxes();
 		$data['methods'] = $this->model_medicine->getPaymentMethods();
 
 		$this->load->model('commons');
@@ -712,7 +709,6 @@ class MedicineController extends Controller
 		$this->load->model('medicine');
 		$data['result'] = $this->model_medicine->getPurchases($data['period']);
 		$data['suppliers'] = $this->model_medicine->getSuppliers();
-		$data['taxes'] = $this->model_medicine->getTaxes();
 
 		/* Set confirmation message if page submitted before */
 		if (isset($this->session->data['message'])) {
@@ -778,7 +774,6 @@ class MedicineController extends Controller
 		$this->load->model('medicine');
 		$data['result'] = NULL;
 		$data['suppliers'] = $this->model_medicine->getSuppliers();
-		$data['taxes'] = $this->model_medicine->getTaxes();
 
 		/* Set confirmation message if page submitted before */
 		if (isset($this->session->data['message'])) {

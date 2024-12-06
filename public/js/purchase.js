@@ -92,6 +92,7 @@
             row.find('.item-discountvalue').val(discount);
         } else {
             discount = price * discount * 0.01;
+			discount = Number(roundNumber(discount, 2));
             row.find('.item-discountvalue').val(discount);
             price = price - discount;
         }
@@ -115,7 +116,6 @@
  	$(".item-discounttype").on('input', updatePrice);
  	$(".item-discount").on('input', updatePrice);
  	$(".item-tax").on('input', updatePrice);
- 	$(".discount-total").on('input', updatePrice);
  	$("body").on('change', '.discount-type', updatePrice);
  }
 
@@ -151,6 +151,7 @@
  		select: function( event, ui ) {
  			$(this).parents('tr').find('.item-name').val( ui.item.label );
  			$(this).parents('tr').find('.item-id').val( ui.item.id );
+			$(this).removeClass('ui-state-error');
  			return false;
  		}
  	});
@@ -241,8 +242,9 @@
  	});
 
 	$(".item-name").on('input', function() {
-		$('.item-id').val('');
-		$(this).removeClass('ui-state-error');
+		const ethis = $(this);
+		ethis.next().val('');
+		ethis.addClass('ui-state-error');
 	});
 
 	$('.purchase_form').submit(function (e) { 

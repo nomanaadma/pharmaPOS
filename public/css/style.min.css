@@ -10634,9 +10634,9 @@ body .ui-tooltip {
 }
 
 .ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {
-  border: 1px solid #f1a899;
-  background: #fddfdf;
-  color: #5f3f3f;
+  border: 1px solid #f1a899 !important;
+  background: #fddfdf !important;
+  color: #5f3f3f !important;
 }
 
 .ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a {
