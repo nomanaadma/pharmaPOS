@@ -140,7 +140,7 @@
     //********************************************
     //Delete Item From List **********************
     //********************************************
-    $('.table-delete').click(function () {
+    $(document).on('click', '.table-delete', function () {
         $('.delete-card-button input.delete-id').val($(this).find('input').val());
         $("#delete-card").modal({
             keyboard: true

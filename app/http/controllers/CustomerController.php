@@ -18,19 +18,6 @@ class CustomerController extends Controller
 		* Get all Customer data from DB using User model 
 		**/
 		$this->load->controller('common');
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-
-		$this->load->model('customer');
-		$data['result'] = $this->model_customer->getCustomers($data['period']);
 
 		/* Set confirmation message if page submitted before */
 		if (isset($this->session->data['message'])) {
@@ -50,6 +37,76 @@ class CustomerController extends Controller
 
 		/*Render User list view*/
 		$this->response->setOutput($this->load->view('customer/customer_list', $data));
+	}
+
+	public function filter() {
+
+		$page_view = $this->user_agent->hasPermission('customer/view') ? true : false;
+		$page_edit = $this->user_agent->hasPermission('customer/edit') ? true : false;
+		$page_delete = $this->user_agent->hasPermission('customer/delete') ? true : false;
+
+		$this->load->model('customer');
+		$customers = $this->model_customer->filterCustomer($_POST);
+
+		$response = [
+			'draw' => $this->url->post('draw'),
+			'recordsFiltered' => $customers['recordsFiltered'],
+			'recordsTotal' => $customers['total'],
+			'data' => []
+		];
+		
+		foreach ($customers['data'] as $key => $customer) {
+
+			
+			$id = $customer['id'];
+
+			$status = '';
+
+			if($customer['status'] == '1') {
+				$status = '<span class="label label-success">Active</span>';
+			} else if ($customer['status'] == '0')  {
+				$status = '<span class="label label-danger">InActive</span>';
+			}
+
+			$action = '';
+
+			if($page_view || $page_edit) {
+				$action .= '<div class="dropdown d-inline-block">
+											<a class="text-primary edit dropdown-toggle" data-toggle="dropdown"><i class="las la-ellipsis-h"></i></a>
+											<ul class="dropdown-menu dropdown-menu-right">';
+				if($page_view) {
+					$action .= '<li><a href="index.php?route=customer/view&id='.$id.'"><i class="las la-laptop pr-2"></i>View</a></li>';
+				}
+
+				if($page_view) {
+					$action .= '<li><a href="index.php?route=customer/edit&id='.$id.'"><i class="las la-edit pr-2"></i>Edit</a></li>';
+				}
+
+				$action .= '</ul></div>';
+
+			}
+
+			if($page_delete) {
+				$action .= '<a class="table-delete text-danger delete" data-toggle="tooltip" title="Delete"><i class="las la-trash-alt"></i><input type="hidden" value="'.$id.'"></a>';
+			}
+
+
+			$response['data'][] = [
+				"id" => $id,
+				"name" => $customer['firstname'] . ' ' . $customer['lastname'], 
+				"gender" => $customer['gender'], 
+				"email" => $customer['email'], 
+				"mobile" => $customer['mobile'], 
+				"status" => trim($status), 
+				"created_date" => $customer['created_date'],
+				"action" => trim($action)
+			];
+		}
+		
+		// Convert the data array to JSON
+		$jsonData = json_encode($response, JSON_PRETTY_PRINT);
+
+		echo $jsonData;
 	}
 
 	public function indexView()

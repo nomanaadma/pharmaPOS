@@ -24,6 +24,7 @@ $router->get('customer/edit', 'CustomerController@indexEdit');
 $router->post('customer/edit', 'CustomerController@indexAction');
 $router->post('customer/delete', 'CustomerController@indexDelete');
 $router->get('customer/search', 'CustomerController@searchCustomer');
+$router->post('customer/filter', 'CustomerController@filter');
 
 $router->get('users', 'UserController@index');
 $router->get('user/add', 'UserController@indexAdd');

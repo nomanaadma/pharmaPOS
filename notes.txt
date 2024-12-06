@@ -19,7 +19,7 @@ http://pepdev.com/theme-preview/drugstore/
 discounttype and discount column in medicine_purchase
 
 
-remove extra fields like reorder from medicine
+remove extra fields from medicine
 
 
 
@@ -39,3 +39,9 @@ ADD CONSTRAINT `fk_bill_bill_id`
 FOREIGN KEY (`bill_id`) 
 REFERENCES `medicine_bill`(`id`) 
 ON DELETE CASCADE;
+
+
+
+sub total amount on discount
+
+
