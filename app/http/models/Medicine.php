@@ -110,6 +110,40 @@ class Medicine extends Search
 		return $query->row;
 	}
 
+
+	public function filterMedicine($options)
+	{
+
+		$sqlQuery = "SELECT m.*, mc.name AS category, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `medicines` AS m LEFT JOIN `medicine_category` AS mc ON mc.id = m.category LEFT JOIN `medicine_batch_view` AS mb ON mb.medicine_id = m.id WHERE 1=?";
+		
+		$search = $options['search']['value'];
+
+		if($search != '') {
+			$sqlQuery .= " AND (name like '%".$search."%'";
+			$sqlQuery .= " OR generic like '%".$search."%'";
+			$sqlQuery .= " OR company like '%".$search."%'";
+			$sqlQuery .= " OR medicine_group like '%".$search."%'";
+			$sqlQuery .= " OR unit like '%".$search."%'";
+			$sqlQuery .= " OR unitpacking like '%".$search."%'";
+			$sqlQuery .= " OR category like '%".$search."%'";
+			$sqlQuery .= " OR storebox like '%".$search."%'";
+			$sqlQuery .= " OR reorderlevel like '%".$search."%'";
+			$sqlQuery .= " OR livestock like '%".$search."%'";
+			$sqlQuery .= " OR status like '%".$search."%')";
+		}
+
+        $queries = $this->queryBuilder($options, $sqlQuery);
+
+		$countQuery = $this->database->query("SELECT COUNT(*) as total FROM `medicine_bill`");
+		
+		return [
+			'data' => $queries['dataQuery']->rows,
+			'recordsFiltered' => $queries['filteredQuery']->num_rows,
+			'total' => (int)$countQuery->row['total']
+		];
+	}
+
+
 	public function filterBilling($options)
 	{
 
@@ -162,7 +196,7 @@ class Medicine extends Search
 
         $queries = $this->queryBuilder($options, $sqlQuery);
 
-		$countQuery = $this->database->query("SELECT COUNT(*) as total FROM `medicine_bill`");
+		$countQuery = $this->database->query("SELECT COUNT(*) as total FROM `medicine_purchase`");
 		
 		return [
 			'data' => $queries['dataQuery']->rows,

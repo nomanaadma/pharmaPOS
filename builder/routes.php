@@ -50,6 +50,7 @@ $router->get('medicine/edit', 'MedicineController@indexEdit');
 $router->post('medicine/edit', 'MedicineController@indexAction');
 $router->post('medicine/delete', 'MedicineController@indexDelete');
 $router->get('getmedicine', 'MedicineController@getMedicine');
+$router->get('medicine/filter', 'MedicineController@medicineFilter');
 
 $router->get('medicine/purchase', 'MedicineController@medicinePurchaseList');
 $router->get('medicine/purchase/view', 'MedicineController@medicinePurchaseView');

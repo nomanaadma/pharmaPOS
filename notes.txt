@@ -16,14 +16,11 @@ https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-applicati
 http://pepdev.com/theme-preview/drugstore/
 
 
-
 expense
 
 reports work
 
 remove extra fields from medicine
-
-pqty can be removed
 
 toggle-button
 
@@ -36,4 +33,10 @@ remove scroll in ajax datatable table
 fix datatable height
 
 show Custom Search Builder and tfoot only when there's report permission allowed
+
+in medicine form change datatype of number of unit first check must min level and re-order level
+
+Enterogermina sold -22.00 issue
+
+check all $countQuery
 

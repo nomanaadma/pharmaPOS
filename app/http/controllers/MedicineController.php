@@ -336,6 +336,75 @@ class MedicineController extends Controller
 		$this->url->abs_redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	public function medicineFilter() {
+
+		$filterRoute = 'medicine/';
+		$modelName = 'medicine';
+		$modelLoad = "model_" . $modelName;
+
+		$page_view = $this->user_agent->hasPermission($filterRoute.'view') ? true : false;
+		$page_edit = $this->user_agent->hasPermission($filterRoute.'edit') ? true : false;
+		$page_delete = $this->user_agent->hasPermission($filterRoute.'delete') ? true : false;
+
+		$this->load->model($modelName);
+		$filteredData = $this->{$modelLoad}->filterMedicine($_POST);
+
+		$response = [
+			'draw' => $this->url->post('draw'),
+			'recordsFiltered' => $filteredData['recordsFiltered'],
+			'recordsTotal' => $filteredData['total'],
+			'data' => []
+		];
+		
+		foreach ($filteredData['data'] as $key => $data) {
+
+			$id = $data['id'];
+
+			$action = '';
+
+			if($page_view || $page_edit) {
+				$action .= '<div class="dropdown d-inline-block">
+											<a class="text-primary edit dropdown-toggle" data-toggle="dropdown"><i class="las la-ellipsis-h"></i></a>
+											<ul class="dropdown-menu dropdown-menu-right">';
+				if($page_view) {
+					$action .= '<li><a href="index.php?route='.$filterRoute.'view&id='.$id.'"><i class="las la-laptop pr-2"></i>View</a></li>';
+				}
+
+				if($page_view) {
+					$action .= '<li><a href="index.php?route='.$filterRoute.'edit&id='.$id.'"><i class="las la-edit pr-2"></i>Edit</a></li>';
+				}
+
+				$action .= '</ul></div>';
+
+			}
+
+			if($page_delete) {
+				$action .= '<a class="table-delete text-danger delete" data-toggle="tooltip" title="Delete"><i class="las la-trash-alt"></i><input type="hidden" value="'.$id.'"></a>';
+			}
+
+			$response['data'][] = [
+				"id" => $id,
+				"name" => $data['name'],
+				"generic" => $data['generic'],
+				"company" => $data['company'],
+				"medicine_group" => $data['medicine_group'],
+				"unit" => $data['unit'],
+				"unitpacking" => $data['unitpacking'],
+				"category" => $data['category'],
+				"storebox" => $data['storebox'],
+				"reorderlevel" => $data['reorderlevel'],
+				"livestock" => $data['livestock'],
+				"status" => $data['status'],
+				"action" => trim($action)
+			];
+		}
+		
+		// Convert the data array to JSON
+		$jsonData = json_encode($response, JSON_PRETTY_PRINT);
+
+		echo $jsonData;
+	}
+
 	public function billingFilter() {
 
 		$filterRoute = 'medicine/billing/';
