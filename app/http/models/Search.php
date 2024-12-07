@@ -38,15 +38,15 @@ class Search extends Model
         $condition = $conditions[$criteriaCondition];
         $value = ($criteriaValue != '') ? $criteriaValue[0] : '';
 
-        if( $criteriaCondition == 'starts' || $criteriaCondition == '!starts' ) {
+        if( ($criteriaCondition == 'starts' || $criteriaCondition == '!starts') && $value != '' ) {
             return " AND $columnName $condition '$value%'";
         }
 
-        if( $criteriaCondition == 'ends' || $criteriaCondition == '!ends' ) {
+        if( ($criteriaCondition == 'ends' || $criteriaCondition == '!ends') && $value != '' ) {
             return " AND $columnName $condition '%$value'";
         }
 
-        if($criteriaCondition == 'contains' || $criteriaCondition == '!contains') {
+        if( ($criteriaCondition == 'contains' || $criteriaCondition == '!contains') && $value != '' ) {
             return " AND $columnName $condition '%$value%'";
         }
 
@@ -65,6 +65,7 @@ class Search extends Model
                 $criteriaCondition == '>='
             )
             && is_numeric($value)
+            && $value != ''
         ) {
             return " AND $columnName $condition $value";
         }
@@ -86,12 +87,14 @@ class Search extends Model
         }
 
         if(
-            $criteriaCondition == '=' ||
+            ($criteriaCondition == '=' ||
             $criteriaCondition == '!=' ||
             $criteriaCondition == '<' ||
             $criteriaCondition == '<=' ||
             $criteriaCondition == '>' ||
-            $criteriaCondition == '>='
+            $criteriaCondition == '>=') &&
+            $value != ''
+            
         ) {
             return " AND $columnName $condition '$value'";
         }
@@ -143,7 +146,7 @@ class Search extends Model
 
         $sqlQuery .= " LIMIT $length OFFSET $offset";
 
-        // var_dump($sqlQuery);
+        // error_log($sqlQuery);
 
         $dataQuery = $this->database->query($sqlQuery, [1]);
 

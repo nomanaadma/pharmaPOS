@@ -33,22 +33,11 @@ remove by checking getMedicineBills(
 
 remove bill in customer view
 
-
 common.info.currency_abbr
-
 
 remove scroll in ajax datatable table
 
 fix datatable height
 
-Total not updating error when searching
-
-
-		$data['result'] = $this->model_medicine->getPurchases($data['period']);
-$data['suppliers'] = $this->model_medicine->getSuppliers();
-
-
-sub total should be a number filter in purchase 
-
-fix empty field filter 
+show Custom Search Builder and tfoot only when there's report permission allowed
 

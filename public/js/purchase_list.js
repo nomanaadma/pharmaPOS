@@ -12,10 +12,10 @@ $(function () {
             }
         },
         { data: "name" },
-        { data: "total" },
-        { data: "tax" },
-        { data: "discount_value" },
-        { data: "amount" },
+        { data: "total", type: 'num' },
+        { data: "tax", type: 'num' },
+        { data: "discount_value", type: 'num' },
+        { data: "amount", type: 'num' },
         { data: "date", type: 'date' },
     ];
 
@@ -51,6 +51,9 @@ $(function () {
         dom: 'Qlfrtip',
         footerCallback: function ( row, data, start, end, display ) {
 
+            console.log( data );
+            
+
             var api = this.api(), data, column;
             var intVal = function ( i ) {
                 return typeof i === 'string' ?
@@ -58,6 +61,13 @@ $(function () {
                 typeof i === 'number' ?
                 i : 0;
             };
+
+            if (data.length === 0) {
+                for (var i = 0; i < row.childElementCount; i++) {
+                    $(api.column(i).footer()).html('');
+                }
+                return;
+            }
 
             for (var i = row.childElementCount - 1; i >= 0; i--) {
                 if (i == 0 ) {

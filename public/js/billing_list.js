@@ -5,10 +5,10 @@ $(function () {
     const columns = [
         { data: "id" },
         { data: "name" },
-        { data: "subtotal" },
-        { data: "tax" },
-        { data: "discount_value" },
-        { data: "amount" },
+        { data: "subtotal", type: 'num' },
+        { data: "tax", type: 'num' },
+        { data: "discount_value", type: 'num' },
+        { data: "amount", type: 'num' },
         { data: "bill_date", type: 'date' },
     ];
 
@@ -51,6 +51,13 @@ $(function () {
                 typeof i === 'number' ?
                 i : 0;
             };
+
+            if (data.length === 0) {
+                for (var i = 0; i < row.childElementCount; i++) {
+                    $(api.column(i).footer()).html('');
+                }
+                return;
+            }
 
             for (var i = row.childElementCount - 1; i >= 0; i--) {
                 if (i == 0 ) {

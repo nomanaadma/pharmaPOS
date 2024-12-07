@@ -159,11 +159,11 @@ class Medicine extends Search
 
 		if($search != '') {
 			$sqlQuery .= " AND (name like '%".$search."%'";
-			$sqlQuery .= " OR subtotal like '%".$search."%'";
+			$sqlQuery .= " OR total like '%".$search."%'";
 			$sqlQuery .= " OR tax like '%".$search."%'";
 			$sqlQuery .= " OR discount_value like '%".$search."%'";
 			$sqlQuery .= " OR amount like '%".$search."%'";
-			$sqlQuery .= " OR bill_date like '%".$search."%')";
+			$sqlQuery .= " OR date like '%".$search."%')";
 		}
 
         $queries = $this->queryBuilder($options, $sqlQuery);

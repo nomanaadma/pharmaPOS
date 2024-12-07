@@ -21351,7 +21351,7 @@ div.dtsb-searchBuilder div.dtsb-group div.dtsb-logicContainer {
   display: none;
 }
 
-.customer_table .dtsb-data.dtsb-dropDown option[value="0"] {
+.hide_id .dtsb-data.dtsb-dropDown option[value="0"] {
   display: none;
 }
 
