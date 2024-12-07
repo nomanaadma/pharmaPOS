@@ -116,10 +116,44 @@ class Medicine extends Search
 		return $query->row;
 	}
 
-	public function filterData($options)
+	public function filterBilling($options)
 	{
 
 		$sqlQuery = "SELECT * FROM `medicine_bill` WHERE 1=?";
+		
+		$search = $options['search']['value'];
+
+		if($search != '') {
+			$sqlQuery .= " AND (name like '%".$search."%'";
+			$sqlQuery .= " OR subtotal like '%".$search."%'";
+			$sqlQuery .= " OR tax like '%".$search."%'";
+			$sqlQuery .= " OR discount_value like '%".$search."%'";
+			$sqlQuery .= " OR amount like '%".$search."%'";
+			$sqlQuery .= " OR bill_date like '%".$search."%')";
+		}
+
+        $queries = $this->queryBuilder($options, $sqlQuery);
+
+		$countQuery = $this->database->query("SELECT COUNT(*) as total FROM `medicine_bill`");
+		
+		return [
+			'data' => $queries['dataQuery']->rows,
+			'recordsFiltered' => $queries['filteredQuery']->num_rows,
+			'total' => (int)$countQuery->row['total']
+		];
+	}
+
+	public function filterPurchase($options)
+	{
+
+		$sqlQuery = "SELECT 
+			medicine_purchase.*, 
+			suppliers.`name`
+			FROM `medicine_purchase` INNER JOIN
+			suppliers
+			ON 
+				medicine_purchase.supplier = suppliers.id 
+			WHERE 1=?";
 		
 		$search = $options['search']['value'];
 

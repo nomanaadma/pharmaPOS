@@ -58,6 +58,7 @@ $router->post('medicine/purchase/add', 'MedicineController@medicinePurchaseActio
 $router->get('medicine/purchase/edit', 'MedicineController@medicinePurchaseEdit');
 $router->post('medicine/purchase/edit', 'MedicineController@medicinePurchaseAction');
 $router->post('medicine/purchase/delete', 'MedicineController@medicinePurchaseDelete');
+$router->post('purchase/filter', 'MedicineController@purchaseFilter');
 
 $router->get('medicine/stock', 'MedicineController@stockList');
 $router->post('medicine/stock', 'MedicineController@stockUpdate');
@@ -70,7 +71,7 @@ $router->post('medicine/billing/add', 'MedicineController@medicineBillingAction'
 $router->get('medicine/billing/edit', 'MedicineController@medicineBillingEdit');
 $router->post('medicine/billing/edit', 'MedicineController@medicineBillingAction');
 $router->post('medicine/billing/delete', 'MedicineController@medicineBillingDelete');
-$router->post('billing/filter', 'MedicineController@filter');
+$router->post('billing/filter', 'MedicineController@billingFilter');
 
 $router->post('getbatch', 'MedicineController@medicineBillingBatch');
 $router->post('getbatchdata', 'MedicineController@medicineBillingBatchData');

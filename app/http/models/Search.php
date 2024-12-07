@@ -143,6 +143,8 @@ class Search extends Model
 
         $sqlQuery .= " LIMIT $length OFFSET $offset";
 
+        // var_dump($sqlQuery);
+
         $dataQuery = $this->database->query($sqlQuery, [1]);
 
         return [

@@ -44,3 +44,11 @@ fix datatable height
 Total not updating error when searching
 
 
+		$data['result'] = $this->model_medicine->getPurchases($data['period']);
+$data['suppliers'] = $this->model_medicine->getSuppliers();
+
+
+sub total should be a number filter in purchase 
+
+fix empty field filter 
+
