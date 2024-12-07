@@ -65,6 +65,12 @@ class Customer extends Search
 		}
 	}
 
+	public function getCustomerByMail($mail)
+	{
+		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "customers` WHERE `email` = ? ", array($this->database->escape($mail)));
+		return $query->row;
+	}
+
 	public function createCustomer($data)
 	{
 		$query = $this->database->query("INSERT INTO `" . DB_PREFIX . "customers` (`firstname`, `lastname`, `email`, `mobile`, `gender`, `status`, `created_date`) VALUES (?, ?, ?, ?, ?, ?, ?)", array($this->database->escape($data['firstname']), $this->database->escape($data['lastname']), $this->database->escape($data['mail']), $this->database->escape($data['mobile']), $this->database->escape($data['gender']), 1, $data['datetime']));

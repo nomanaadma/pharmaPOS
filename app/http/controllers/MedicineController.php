@@ -543,7 +543,7 @@ class MedicineController extends Controller
 	* This method will be called on Medicine Billing Action
 	**/
 	public function medicineBillingAction()
-	{
+	{	
 		$data = $this->url->post;		
 		$this->load->controller('common');
 		$this->load->model('commons');
@@ -612,8 +612,8 @@ class MedicineController extends Controller
 					$this->load->model('customer');
 
 					$nameParts = explode(' ', $data['billing']['name']);
-					$firstName = implode(' ', $nameParts);
 					$lastName = array_pop($nameParts);
+					$firstName = implode(' ', $nameParts);
 
 					$customer_data = [
 						'firstname' => $firstName,
@@ -624,7 +624,13 @@ class MedicineController extends Controller
 						'gender' => null,
 					];
 
-					$data['billing']['customer_id'] = $this->model_customer->createCustomer($customer_data);
+					$existingCustomer = $this->model_customer->getCustomerByMail($customer_data['mail']);
+
+					if( isset( $existingCustomer['id'] ) ) {
+						$data['billing']['customer_id'] = $existingCustomer['id'];	
+					} else {
+						$data['billing']['customer_id'] = $this->model_customer->createCustomer($customer_data);
+					}
 				}
 
 				$data['billing']['id'] = $this->model_medicine->createMedicineBill($data['billing']);
