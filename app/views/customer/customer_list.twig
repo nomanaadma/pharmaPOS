@@ -19,8 +19,8 @@
 </div>
 <div class="panel panel-default">
 	<div class="panel-body">
-		<div class="table-responsive hide_id">
-			<table class="table table-middle table-bordered table-striped datatable-table-custom">
+		<div class="table-responsive">
+			<table class="table table-middle table-bordered table-striped datatable-table">
 				<thead>
 					<tr class="table-heading">
 						<th>#</th>
@@ -31,15 +31,54 @@
 						<th>Status</th>
 						<th>Created Date</th>
 						{% if page_view or page_edit or page_delete %}
-							<th class="action-th"></th>
+							<th></th>
 						{% endif %}
 					</tr>
 				</thead>
-				<tbody></tbody>
+				<tbody>
+					{% for value in result %}
+						<tr>
+							<td>{{ loop.index }}</td>
+							<td>
+								<p class="m-0 text-primary">{{ value.firstname~value.lastname }}</p>
+							</td>
+							<td>{{ value.gender }}</td>
+							<td>{{ value.email }}</td>
+							<td>{{ value.mobile }}</td>
+							<td>
+								{% if value.status == '1' %}
+									<span class="label label-success">Active</span>
+								{% elseif value.status == '0' %}
+									<span class="label label-danger">InActive</span>
+								{% endif %}
+							</td>
+							<td>{{ value.created_date|date(common.info.date_format) }}</td>
+							{% if page_view or page_edit or page_delete %}
+								<td class="table-action">
+									{% if page_view or page_edit %}
+										<div class="dropdown d-inline-block">
+											<a class="text-primary edit dropdown-toggle" data-toggle="dropdown"><i class="las la-ellipsis-h"></i></a>
+											<ul class="dropdown-menu dropdown-menu-right">
+												{% if page_view %}
+													<li><a href="{{ common.info.url_route~'customer/view&id='~value.id }}"><i class="las la-laptop pr-2"></i>View</a></li>
+												{% endif %}
+												{% if page_edit %}
+													<li><a href="{{ common.info.url_route~'customer/edit&id='~value.id }}"><i class="las la-edit pr-2"></i>Edit</a></li>	
+												{% endif %}
+											</ul>
+										</div>
+									{% endif %}
+									{% if page_delete %}
+										<a class="table-delete text-danger delete" data-toggle="tooltip" title="Delete"><i class="las la-trash-alt"></i><input type="hidden" value="{{ value.id }}"></a>
+									{% endif %}
+								</td>
+							{% endif %}
+						</tr>
+					{% endfor %}
+				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
 {% if page_delete %}{{ include('common/delete_modal.twig') }}{% endif %}
-<script type="text/javascript" src="public/js/customer.js"></script>
 {{ include('common/footer.twig') }}

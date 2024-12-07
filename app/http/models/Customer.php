@@ -4,44 +4,19 @@
  * Customer.php
  */
 
-include_once('Search.php');
-
-class Customer extends Search
+class Customer extends Model
 {
+
+	public function getCustomers()
+	{
+		$query = $this->database->query("SELECT * FROM `customers` ORDER BY `created_date` DESC");		
+		return $query->rows;
+	}
 
 	public function getCustomer($id)
 	{
 		$query = $this->database->query("SELECT * FROM `customers` WHERE `id` = ? ORDER BY `created_date` DESC", array((int)$id));
 		return $query->row;
-	}
-
-	public function filterData($options)
-	{
-
-		$sqlQuery = "SELECT *, CONCAT(firstname, ' ', lastname) AS 'name' FROM `customers` WHERE 1=?";
-		
-		$search = $options['search']['value'];
-
-		if($search != '') {
-
-			$sqlQuery .= " AND (CONCAT(firstname, ' ', lastname) like '%".$search."%'";
-			$sqlQuery .= " OR gender like '%".$search."%'";
-			$sqlQuery .= " OR email like '%".$search."%'";
-			$sqlQuery .= " OR mobile like '%".$search."%'";
-			$sqlQuery .= " OR status like '%".$search."%'";
-			$sqlQuery .= " OR created_date like '%".$search."%')";
-		}
-
-        $queries = $this->queryBuilder($options, $sqlQuery, 'customer');
-
-
-		$countQuery = $this->database->query("SELECT COUNT(*) as total FROM `customers`");
-		
-		return [
-			'data' => $queries['dataQuery']->rows,
-			'recordsFiltered' => $queries['filteredQuery']->num_rows,
-			'total' => (int)$countQuery->row['total']
-		];
 	}
 
 	public function getBills($data)

@@ -4,13 +4,13 @@ $upeEam#@!f0
 aminshoukat4@gmail.com
 $upeEam#@!f0
 
+
+
 ALTER TABLE `bill_items`
 ADD CONSTRAINT `fk_bill_medicine_id`
 FOREIGN KEY (`medicine_id`)
 REFERENCES `medicines`(`id`)
 ON DELETE CASCADE;
-
-remove comments
 
 select `medicines`.`name` AS `name`,`medicine_batch`.`id` AS `id`,`medicine_batch`.`batch` AS `batch`,`medicine_batch`.`expiry` AS `expiry`,`medicine_batch`.`pqty` AS `pqty`,`medicine_batch`.`qty` AS `qty`,`medicine_batch`.`saleprice` AS `saleprice`,`medicine_batch`.`purchaseprice` AS `purchaseprice`,`medicine_batch`.`gross` AS `gross`,`medicine_batch`.`discounttype` AS `discounttype`,`medicine_batch`.`discount` AS `discount`,`medicine_batch`.`discountvalue` AS `discountvalue`,`medicine_batch`.`tax` AS `tax`,`medicine_batch`.`taxprice` AS `taxprice`,`medicine_batch`.`price` AS `price`,`medicine_batch`.`sold` AS `sold`,`medicine_batch`.`medicine_id` AS `medicine_id`,`medicine_batch`.`purchase_id` AS `purchase_id`,`medicine_batch`.`status` AS `status`,`medicine_batch`.`created_date` AS `created_date` from (`medicine_batch` join `medicines` on((`medicine_batch`.`medicine_id` = `medicines`.`id`)))
 
