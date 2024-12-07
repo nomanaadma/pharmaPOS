@@ -336,6 +336,70 @@ class MedicineController extends Controller
 		$this->url->abs_redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	public function filter() {
+
+		$filterRoute = 'medicine/billing/';
+		$modelName = 'medicine';
+		$modelLoad = "model_" . $modelName;
+
+		$page_view = $this->user_agent->hasPermission($filterRoute.'view') ? true : false;
+		$page_edit = $this->user_agent->hasPermission($filterRoute.'edit') ? true : false;
+		$page_delete = $this->user_agent->hasPermission($filterRoute.'delete') ? true : false;
+
+		$this->load->model($modelName);
+		$filteredData = $this->{$modelLoad}->filterData($_POST);
+
+		$response = [
+			'draw' => $this->url->post('draw'),
+			'recordsFiltered' => $filteredData['recordsFiltered'],
+			'recordsTotal' => $filteredData['total'],
+			'data' => []
+		];
+		
+		foreach ($filteredData['data'] as $key => $data) {
+
+			$id = $data['id'];
+
+			$action = '';
+
+			if($page_view || $page_edit) {
+				$action .= '<div class="dropdown d-inline-block">
+											<a class="text-primary edit dropdown-toggle" data-toggle="dropdown"><i class="las la-ellipsis-h"></i></a>
+											<ul class="dropdown-menu dropdown-menu-right">';
+				if($page_view) {
+					$action .= '<li><a href="index.php?route='.$filterRoute.'view&id='.$id.'"><i class="las la-laptop pr-2"></i>View</a></li>';
+				}
+
+				if($page_view) {
+					$action .= '<li><a href="index.php?route='.$filterRoute.'edit&id='.$id.'"><i class="las la-edit pr-2"></i>Edit</a></li>';
+				}
+
+				$action .= '</ul></div>';
+
+			}
+
+			if($page_delete) {
+				$action .= '<a class="table-delete text-danger delete" data-toggle="tooltip" title="Delete"><i class="las la-trash-alt"></i><input type="hidden" value="'.$id.'"></a>';
+			}
+
+			$response['data'][] = [
+				"id" => $id,
+				"name" => $data['name'],
+				"subtotal" => 'Rs '.$data['subtotal'],
+				"tax" => 'Rs '.$data['tax'],
+				"discount_value" => 'Rs '.$data['discount_value'],
+				"amount" => 'Rs '.$data['amount'],
+				"bill_date" => $data['bill_date'],
+				"action" => trim($action)
+			];
+		}
+		
+		// Convert the data array to JSON
+		$jsonData = json_encode($response, JSON_PRETTY_PRINT);
+
+		echo $jsonData;
+	}
+
 	/**
 	* Medicine Purchase index List method
 	* This method will be called on Medicine Purchase list
@@ -346,23 +410,12 @@ class MedicineController extends Controller
 		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
 
 		$this->load->controller('common');
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
 
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00');
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-		
 		/**
 		* Get all Medicine data from DB using Medicine model 
 		**/
 		$this->load->model('medicine');
-		$data['result'] = $this->model_medicine->getMedicineBills($data['period']);
-
+		
 		/* Set confirmation message if page submitted before */
 		if (isset($this->session->data['message'])) {
 			$data['message'] = $this->session->data['message'];

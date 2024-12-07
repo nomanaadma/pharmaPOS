@@ -11,10 +11,6 @@
 			</div>
 		</div>
 		<div class="col-sm-8 text-right">
-			<div class="btn btn-white btn-sm text-left mr-2">
-				<i class="las la-filter text-danger pr-2"></i>
-				<input type="text" class="table-date-range" data-start="{{ period.start|date(common.info.date_format) }}" data-end="{{ period.end|date(common.info.date_format) }}" data-route="medicine/billing">
-			</div>
 			{% if page_add %}
 				<a href="{{ common.info.url_route }}medicine/billing/add" class="btn btn-primary btn-sm"><i class="las la-plus pr-2"></i> New Bill</a>
 			{% endif %}
@@ -24,7 +20,7 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="table-responsive">
-			<table class="table table-middle table-bordered table-striped datatable-count-table">
+			<table class="table table-middle table-bordered table-striped datatable-table-custom">
 				<thead>
 					<tr>
 						<th>#</th>
@@ -33,45 +29,13 @@
 						<th>Tax</th>
 						<th>Discount</th>
 						<th>Amount</th>
-						<th>Date</th>
+						<th>Bill Date</th>
 						{% if page_view or page_edit or page_delete %}
-							<th></th>
+							<th class="action-th"></th>
 						{% endif %}
 					</tr>
 				</thead>
-				<tbody>
-					{% for value in result %}
-						<tr>
-							<td>{{ "%05d"|format(value.id) }}</td>
-							<td class="text-primary">{{ value.name }}</td>
-							<td>{{ common.info.currency_abbr~value.subtotal }}</td>
-							<td>{{ common.info.currency_abbr~value.tax }}</td>
-							<th>{{ common.info.currency_abbr~value.discount_value }}</th>
-							<td>{{ common.info.currency_abbr~value.amount }}</td>
-							<th>{{ value.created_date|date(common.info.date_format) }}</th>
-							{% if page_view or page_edit or page_delete %}
-								<td class="table-action">
-									{% if page_view or page_edit %}
-										<div class="dropdown d-inline-block">
-											<a class="text-primary edit dropdown-toggle" data-toggle="dropdown"><i class="las la-ellipsis-h"></i></a>
-											<ul class="dropdown-menu dropdown-menu-right">
-												{% if page_view %}
-													<li><a href="{{ common.info.url_route~'medicine/billing/view&id='~value.id }}"><i class="las la-laptop pr-2"></i>View</a></li>
-												{% endif %}
-												{% if page_edit %}
-													<li><a href="{{ common.info.url_route~'medicine/billing/edit&id='~value.id }}"><i class="las la-edit pr-2"></i>Edit</a></li>
-												{% endif %}
-											</ul>
-										</div>
-									{% endif %}
-									{% if page_delete %}
-										<a class="table-delete text-danger delete" data-toggle="tooltip" title="Delete"><i class="las la-trash-alt"></i><input type="hidden" value="{{ value.id }}"></a>
-									{% endif %}
-								</td>
-							{% endif %}
-						</tr>
-					{% endfor %}
-				</tbody>
+				<tbody></tbody>
 				<tfoot>
 					<tr>
 						<th></th>
@@ -91,4 +55,5 @@
 	</div>
 </div>
 {% if page_delete %}{{ include('common/delete_modal.twig') }}{% endif %}
+<script type="text/javascript" src="public/js/billing_list.js"></script>
 {{ include('common/footer.twig') }}

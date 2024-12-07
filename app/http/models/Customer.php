@@ -15,7 +15,7 @@ class Customer extends Search
 		return $query->row;
 	}
 
-	public function filterCustomer($options)
+	public function filterData($options)
 	{
 
 		$sqlQuery = "SELECT *, CONCAT(firstname, ' ', lastname) AS 'name' FROM `customers` WHERE 1=?";
@@ -32,7 +32,7 @@ class Customer extends Search
 			$sqlQuery .= " OR created_date like '%".$search."%')";
 		}
 
-        $queries = $this->queryBuilder($options, $sqlQuery);
+        $queries = $this->queryBuilder($options, $sqlQuery, 'customer');
 
 
 		$countQuery = $this->database->query("SELECT COUNT(*) as total FROM `customers`");

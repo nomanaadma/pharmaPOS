@@ -41,15 +41,22 @@ class Commons extends Model
 			$data['logo'] = 'public/images/logo.png';
 		}
 
-		if (!empty($data['logo']) && file_exists(DIR.'public/uploads/'.$data['logo_icon'])) {
+		if (!empty($data['logo_icon']) && file_exists(DIR.'public/uploads/'.$data['logo_icon'])) {
 			$data['logo_icon'] = 'public/uploads/'.$data['logo_icon'];
 		} else {
 			$data['logo_icon'] = 'public/images/icon.png';
 		}
+
 		if (!empty($data['favicon']) && file_exists(DIR.'public/uploads/'.$data['favicon'])) {
 			$data['favicon'] = 'public/uploads/'.$data['favicon'];
 		} else {
-			$data['favicon'] = 'public/images/logo.png';
+			$data['favicon'] = 'public/images/favicon.png';
+		}
+
+		if (!empty($data['lg_background']) && file_exists(DIR.'public/uploads/'.$data['lg_background'])) {
+			$data['lg_background'] = 'public/uploads/'.$data['lg_background'];
+		} else {
+			$data['lg_background'] = 'public/images/login-bg.jpg';
 		}
 
 		return $data;
@@ -63,10 +70,23 @@ class Commons extends Model
 		} else {
 			$data['logo'] = 'public/images/logo.png';
 		}
+
+		if (!empty($data['logo_icon']) && file_exists(DIR.'public/uploads/'.$data['logo_icon'])) {
+			$data['logo_icon'] = 'public/uploads/'.$data['logo_icon'];
+		} else {
+			$data['logo_icon'] = 'public/images/icon.png';
+		}
+
 		if (!empty($data['favicon']) && file_exists(DIR.'public/uploads/'.$data['favicon'])) {
 			$data['favicon'] = 'public/uploads/'.$data['favicon'];
 		} else {
-			$data['favicon'] = 'public/images/logo.png';
+			$data['favicon'] = 'public/images/favicon.png';
+		}
+
+		if (!empty($data['lg_background']) && file_exists(DIR.'public/uploads/'.$data['lg_background'])) {
+			$data['lg_background'] = 'public/uploads/'.$data['lg_background'];
+		} else {
+			$data['lg_background'] = 'public/images/login-bg.jpg';
 		}
 
 		$data['picker_date_format'] = str_replace(['d', 'm', 'Y'], ['dd', 'mm', 'yy'], $data['date_format']);

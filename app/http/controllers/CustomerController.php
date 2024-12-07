@@ -41,30 +41,34 @@ class CustomerController extends Controller
 
 	public function filter() {
 
-		$page_view = $this->user_agent->hasPermission('customer/view') ? true : false;
-		$page_edit = $this->user_agent->hasPermission('customer/edit') ? true : false;
-		$page_delete = $this->user_agent->hasPermission('customer/delete') ? true : false;
+		$filterRoute = 'customer/';
+		$modelName = 'customer';
+		$modelLoad = "model_" . $modelName;
 
-		$this->load->model('customer');
-		$customers = $this->model_customer->filterCustomer($_POST);
+		$page_view = $this->user_agent->hasPermission($filterRoute.'view') ? true : false;
+		$page_edit = $this->user_agent->hasPermission($filterRoute.'edit') ? true : false;
+		$page_delete = $this->user_agent->hasPermission($filterRoute.'delete') ? true : false;
+
+		$this->load->model($modelName);
+		$filteredData = $this->{$modelLoad}->filterData($_POST);
 
 		$response = [
 			'draw' => $this->url->post('draw'),
-			'recordsFiltered' => $customers['recordsFiltered'],
-			'recordsTotal' => $customers['total'],
+			'recordsFiltered' => $filteredData['recordsFiltered'],
+			'recordsTotal' => $filteredData['total'],
 			'data' => []
 		];
 		
-		foreach ($customers['data'] as $key => $customer) {
+		foreach ($filteredData['data'] as $key => $data) {
 
 			
-			$id = $customer['id'];
+			$id = $data['id'];
 
 			$status = '';
 
-			if($customer['status'] == '1') {
+			if($data['status'] == '1') {
 				$status = '<span class="label label-success">Active</span>';
-			} else if ($customer['status'] == '0')  {
+			} else if ($data['status'] == '0')  {
 				$status = '<span class="label label-danger">InActive</span>';
 			}
 
@@ -75,11 +79,11 @@ class CustomerController extends Controller
 											<a class="text-primary edit dropdown-toggle" data-toggle="dropdown"><i class="las la-ellipsis-h"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">';
 				if($page_view) {
-					$action .= '<li><a href="index.php?route=customer/view&id='.$id.'"><i class="las la-laptop pr-2"></i>View</a></li>';
+					$action .= '<li><a href="index.php?route='.$filterRoute.'view&id='.$id.'"><i class="las la-laptop pr-2"></i>View</a></li>';
 				}
 
 				if($page_view) {
-					$action .= '<li><a href="index.php?route=customer/edit&id='.$id.'"><i class="las la-edit pr-2"></i>Edit</a></li>';
+					$action .= '<li><a href="index.php?route='.$filterRoute.'edit&id='.$id.'"><i class="las la-edit pr-2"></i>Edit</a></li>';
 				}
 
 				$action .= '</ul></div>';
@@ -90,15 +94,14 @@ class CustomerController extends Controller
 				$action .= '<a class="table-delete text-danger delete" data-toggle="tooltip" title="Delete"><i class="las la-trash-alt"></i><input type="hidden" value="'.$id.'"></a>';
 			}
 
-
 			$response['data'][] = [
 				"id" => $id,
-				"name" => $customer['firstname'] . ' ' . $customer['lastname'], 
-				"gender" => $customer['gender'], 
-				"email" => $customer['email'], 
-				"mobile" => $customer['mobile'], 
+				"name" => $data['firstname'] . ' ' . $data['lastname'], 
+				"gender" => $data['gender'], 
+				"email" => $data['email'], 
+				"mobile" => $data['mobile'], 
 				"status" => trim($status), 
-				"created_date" => $customer['created_date'],
+				"created_date" => $data['created_date'],
 				"action" => trim($action)
 			];
 		}

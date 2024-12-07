@@ -1,9 +1,12 @@
 <?php
 
 /**
-* Blog Model
+* Medicine Model
 */
-class Medicine extends Model
+
+include_once('Search.php');
+
+class Medicine extends Search
 {
 
 	public function getSuppliers()
@@ -111,6 +114,33 @@ class Medicine extends Model
 	{
 		$query = $this->database->query("SELECT mb.*, pm.name AS payment_method FROM `medicine_bill` AS mb LEFT JOIN `payment_method` AS pm ON pm.id = mb.method WHERE mb.id = ?", array((int)$id));
 		return $query->row;
+	}
+
+	public function filterData($options)
+	{
+
+		$sqlQuery = "SELECT * FROM `medicine_bill` WHERE 1=?";
+		
+		$search = $options['search']['value'];
+
+		if($search != '') {
+			$sqlQuery .= " AND (name like '%".$search."%'";
+			$sqlQuery .= " OR subtotal like '%".$search."%'";
+			$sqlQuery .= " OR tax like '%".$search."%'";
+			$sqlQuery .= " OR discount_value like '%".$search."%'";
+			$sqlQuery .= " OR amount like '%".$search."%'";
+			$sqlQuery .= " OR bill_date like '%".$search."%')";
+		}
+
+        $queries = $this->queryBuilder($options, $sqlQuery);
+
+		$countQuery = $this->database->query("SELECT COUNT(*) as total FROM `medicine_bill`");
+		
+		return [
+			'data' => $queries['dataQuery']->rows,
+			'recordsFiltered' => $queries['filteredQuery']->num_rows,
+			'total' => (int)$countQuery->row['total']
+		];
 	}
 
 	public function getBillItems($id)

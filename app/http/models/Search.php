@@ -98,7 +98,7 @@ class Search extends Model
 
     }
 
-    protected function queryBuilder($options, $sqlQuery) {
+    protected function queryBuilder($options, $sqlQuery, $model = '') {
 
         if(isset($options['searchBuilder'])) {
 
@@ -108,7 +108,7 @@ class Search extends Model
 
                 $columnName = $criteria['origData'];
 
-                if($columnName == 'name') {
+                if($columnName == 'name' && $model == 'customer') {
                     $columnName = "CONCAT(firstname, ' ', lastname)";
                 }
 
