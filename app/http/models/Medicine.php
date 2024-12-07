@@ -104,12 +104,6 @@ class Medicine extends Search
 		return true;
 	}
 
-	public function getMedicineBills($period)
-	{
-		$query = $this->database->query("SELECT * FROM `medicine_bill` WHERE bill_date BETWEEN ? AND ? ORDER BY bill_date DESC", array($period['start'], $period['end']));
-		return $query->rows;
-	}
-
 	public function getMedicineBill($id)
 	{
 		$query = $this->database->query("SELECT mb.*, pm.name AS payment_method FROM `medicine_bill` AS mb LEFT JOIN `payment_method` AS pm ON pm.id = mb.method WHERE mb.id = ?", array((int)$id));

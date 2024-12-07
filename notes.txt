@@ -19,8 +19,6 @@ http://pepdev.com/theme-preview/drugstore/
 
 expense
 
-bills not showing for default values getMedicineBills(
-
 reports work
 
 remove extra fields from medicine
@@ -28,8 +26,6 @@ remove extra fields from medicine
 pqty can be removed
 
 toggle-button
-
-remove by checking getMedicineBills(
 
 remove bill in customer view
 

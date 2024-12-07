@@ -51,8 +51,8 @@ $(function () {
         dom: 'Qlfrtip',
         footerCallback: function ( row, data, start, end, display ) {
 
-            console.log( data );
-            
+            let dataHtml = '<div class="row datatotals">';
+    
 
             var api = this.api(), data, column;
             var intVal = function ( i ) {
@@ -82,11 +82,31 @@ $(function () {
                     }, 0 );
 
                     if (column) {
-                        $( api.column(i).footer() ).html($('.common_currency').val()+column.toFixed(2));
+
+                        const numbers = $('.common_currency').val()+column.toFixed(2);
+                        const columnTitle = $(api.column(i).header()).text();
+
+                        dataHtml += `
+                            <div class="col-md-3">
+                                <div class="dashboard-stat">
+                                    <div class="content"><h4 class="text-dark">${numbers}</h4>
+                                    <span class="text-dark">${columnTitle}</span></div>
+                                    <div class="icon"><i class="las la-dollar-sign text-secondary"></i></div>
+                                </div>
+                            </div>
+                        `;
+
+                        $( api.column(i).footer() ).html(numbers);
                     }
                 }
 
             }
+
+            dataHtml += '</div>';
+
+            $('.datatotals').remove();
+
+            $(dataHtml).insertBefore('.dtsb-searchBuilder');
         }
     });
     

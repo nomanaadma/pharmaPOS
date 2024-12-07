@@ -21378,4 +21378,25 @@ div.dtsb-searchBuilder div.dtsb-group div.dtsb-logicContainer {
   opacity: 0.7;
 }
 
+.datatotals .dashboard-stat {
+  border: 1px solid #e6e6e6;
+  height: 93px;
+}
 
+.datatotals {
+  flex-direction: row-reverse;
+}
+
+.datatotals .dashboard-stat h4 {
+  font-size: 28px;
+}
+
+.datatotals .dashboard-stat .content span {
+  font-size: 18px;
+}
+
+.datatotals .dashboard-stat .icon {
+  transform: translateY(-48%);
+  font-size: 63px;
+  right: 0;
+}
