@@ -9,14 +9,8 @@ class ReportController extends Controller
 	{
 		$report = $this->url->get('name');
 		
-		if ($report == "purchase") {
-			$this->reportPurchase();
-		} elseif ($report == "bill") {
-			$this->reportBill();
-		} elseif ($report == "inventory") {
+		if ($report == "inventory") {
 			$this->reportInventory();
-		} elseif ($report == "outofstock") {
-			$this->reportOutofStock();
 		} elseif ($report == "income_expenses") {
 			$this->reportIncome();
 		} else {
@@ -32,57 +26,6 @@ class ReportController extends Controller
 		$this->response->setOutput($this->load->view('report/reports', $data));
 	}
 
-	public function reportPurchase()
-	{
-		$this->load->controller('common');
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-
-		$this->load->model('report');
-		$data['result'] = $this->model_report->getPurchases($data['period']);
-
-		$data['purchase_stats'] = $this->model_report->getPurchaseStats($data['period']);
-		
-		$data['page_title'] = 'Purchase Report';
-		$this->response->setOutput($this->load->view('report/report_purchase', $data));
-	}
-
-	public function reportBill()
-	{
-		$this->load->controller('common');
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-
-		$this->load->model('report');
-		$data['result'] = $this->model_report->getBills($data['period']);
-		$data['bill_stats'] = $this->model_report->getBillsStats($data['period']);
-		
-		$data['page_title'] = 'POS/Bill Report';
-		$this->response->setOutput($this->load->view('report/report_bill', $data));
-	}
-
 	public function reportInventory()
 	{
 		$this->load->controller('common');
@@ -95,30 +38,6 @@ class ReportController extends Controller
 
 		$data['page_title'] = 'Inventory Report';
 		$this->response->setOutput($this->load->view('report/report_inventory', $data));
-	}
-
-	public function reportOutofStock()
-	{
-		$this->load->controller('common');
-		$this->load->model('commons');
-		$data['common'] = $this->model_commons->getCommonData($this->session->data['user_id']);
-		
-		$data['period']['start'] = $this->url->get('start');
-		$data['period']['end'] = $this->url->get('end');
-
-		if (!empty($data['period']['start']) && !empty($data['period']['end']) && !$this->controller_common->validateDate($data['period']['start']) && !$this->controller_common->validateDate($data['period']['end'])) {
-			$data['period']['start'] = date_format(date_create($data['period']['start'].'00:00:00'), "Y-m-d H:i:s");
-			$data['period']['end'] = date_format(date_create($data['period']['end'].'23:59:59'), "Y-m-d H:i:s");
-		} else {
-			$data['period']['start'] = date('Y-m-d '.'00:00:00', strtotime("-1 month"));
-			$data['period']['end'] = date('Y-m-d '.'23:59:59');
-		}
-		
-		$this->load->model('report');
-		$data['result'] = $this->model_report->getOutofStock($data['period']);
-
-		$data['page_title'] = 'Out of Stock Report';
-		$this->response->setOutput($this->load->view('report/report_outofstock', $data));
 	}
 
 	public function reportIncome()

@@ -65,13 +65,6 @@ class Report extends Model
 		return $query->rows;
 	}
 
-	public function getOutofStock()
-	{
-		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `medicines` AS m LEFT JOIN `medicine_category` AS mc ON mc.id = m.category LEFT JOIN `medicine_batch_view` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.created_date DESC");
-		return $query->rows;
-	}
-
-
 	public function getAllIncome($period)
 	{
 		$query = $this->database->query("SELECT SUM(amount) AS amount, SUM(discount_value) AS discount, SUM(tax) AS tax FROM `medicine_bill` WHERE bill_date between '".$period['start']."' AND '".$period['end']."'");
