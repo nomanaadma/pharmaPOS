@@ -14,7 +14,7 @@ class Useragent {
 		$this->database = $registry->get('database');
 		$this->session = $registry->get('session');
 
-		$query = $this->database->query("SELECT `data` FROM `" . DB_PREFIX . "setting` WHERE `name` in ('siteinfo')");
+		$query = $this->database->query("SELECT `data` FROM `setting` WHERE `name` in ('siteinfo')");
 		$this->info = json_decode($query->rows[0]['data'], true);
 
 		$this->info["language"] = "en";
@@ -30,7 +30,7 @@ class Useragent {
 			if ($this->validateLoginToken($this->session->data['login_token'])) {
 				$this->logout();
 			} else {
-				$query = $this->database->query("SELECT u.user_id, u.firstname, u.lastname, ur.id AS role_id, ur.name AS role, ur.permission FROM `" . DB_PREFIX . "users` AS u LEFT JOIN `" . DB_PREFIX . "user_role` AS ur ON ur.id = u.user_role WHERE u.user_id = ? AND u.status = ?", array((int)$this->session->data['user_id'], '1'));
+				$query = $this->database->query("SELECT u.user_id, u.firstname, u.lastname, ur.id AS role_id, ur.name AS role, ur.permission FROM `users` AS u LEFT JOIN `user_role` AS ur ON ur.id = u.user_role WHERE u.user_id = ? AND u.status = ?", array((int)$this->session->data['user_id'], '1'));
 				if ($query->num_rows > 0) {
 					$this->user = $query->row;
 					$this->user_id = $this->user['user_id'];

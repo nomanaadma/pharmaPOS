@@ -83,7 +83,7 @@ class Commons extends Model
 
 	public function getUserData($id)
 	{
-		$query = $this->database->query("SELECT `firstname`, `lastname` FROM `" . DB_PREFIX . "users` WHERE `user_id` = ?", array((int)$id));
+		$query = $this->database->query("SELECT `firstname`, `lastname` FROM `users` WHERE `user_id` = ?", array((int)$id));
 		if ($query->num_rows > 0) {
 			return $query->row['firstname'].' '.$query->row['lastname'];
 		} else {
@@ -94,7 +94,7 @@ class Commons extends Model
 	public function createAdminMenu()
 	{
 		$tree = array();
-		$query = $this->database->query("SELECT * FROM `" . DB_PREFIX . "menu` WHERE `status` = ? ORDER BY `priority` DESC", array(1));
+		$query = $this->database->query("SELECT * FROM `menu` WHERE `status` = ? ORDER BY `priority` DESC", array(1));
 		$list = $query->rows;
 		if (!empty($list)) {
 			$active = $this->activeMenuList($this->url->get('route'));

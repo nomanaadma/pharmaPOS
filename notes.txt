@@ -4,17 +4,6 @@ $upeEam#@!f0
 aminshoukat4@gmail.com
 $upeEam#@!f0
 
-expense
-
-bills not showing for default values getMedicineBills(
-
-reports work
-
-https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-application/25581006
-http://pepdev.com/theme-preview/drugstore/
-
-
-remove extra fields from medicine
 
 ALTER TABLE `bill_items`
 ADD CONSTRAINT `fk_bill_medicine_id`
@@ -22,24 +11,21 @@ FOREIGN KEY (`medicine_id`)
 REFERENCES `medicines`(`id`) 
 ON DELETE CASCADE;
 
-remove db prefix
 
-remove tax section
+https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-application/25581006
+http://pepdev.com/theme-preview/drugstore/
+
+
+
+expense
+
+bills not showing for default values getMedicineBills(
+
+reports work
+
+remove extra fields from medicine
 
 pqty can be removed
-
-$data['taxes'] = $this->model_medicine->getTaxes();
-
-['tax']
-
-
-FinanceController@tax
-
-remove name in batch inserting test createMedicinebatch( updateMedicinebatch(
-
-on creating bill first name lastname not concatinating well medicineBillingAction
-
-
 
 toggle-button
 
