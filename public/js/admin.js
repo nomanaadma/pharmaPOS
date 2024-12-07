@@ -27,6 +27,11 @@
     });
 
     if ($('.customer-name').length) {
+
+        $(".customer-name").on('input', function() {
+            $(this).next().val('');
+        });
+
         $(".customer-name").autocomplete({
             source: path.concat('customer/search'),
             minLength: 2,

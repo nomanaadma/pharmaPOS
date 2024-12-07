@@ -563,6 +563,36 @@ class MedicineController extends Controller
 		$this->load->model('commons');
 		$data['info'] = $this->model_commons->getSiteInfo();
 
+		if(empty($data['billing']['customer_id'])) {
+
+			$this->load->model('customer');
+
+			$nameParts = explode(' ', $data['billing']['name']);
+			$lastName = array_pop($nameParts);
+			$firstName = implode(' ', $nameParts);
+
+			if($firstName == '') {
+				$firstName = $lastName;
+			}
+
+			$customer_data = [
+				'firstname' => $firstName,
+				'lastname' => $lastName,
+				'mail' => $data['billing']['email'],
+				'mobile' => $data['billing']['mobile'],
+				'datetime' => date('Y-m-d H:i:s'),
+				'gender' => null,
+			];
+
+			$existingCustomer = $this->model_customer->getCustomerByMail($customer_data['mail']);
+
+			if( isset( $existingCustomer['id'] ) ) {
+				$data['billing']['customer_id'] = $existingCustomer['id'];	
+			} else {
+				$data['billing']['customer_id'] = $this->model_customer->createCustomer($customer_data);
+			}
+		}
+
 		$this->load->model('medicine');
 		if (!empty($data['billing']['id'])) {
 			if (!empty($data['billing']['items'])) {
@@ -605,32 +635,6 @@ class MedicineController extends Controller
 					$value['expiry'] = DateTime::createFromFormat($data['info']['date_my_format'], $value['expiry'])->format('Y-m');
 					$data['billing']['items'][$key]['expiry'] = $value['expiry'];
 					$this->model_medicine->updateMedicineBatchSold($value);
-				}
-
-				if(empty($data['billing']['customer_id'])) {
-
-					$this->load->model('customer');
-
-					$nameParts = explode(' ', $data['billing']['name']);
-					$lastName = array_pop($nameParts);
-					$firstName = implode(' ', $nameParts);
-
-					$customer_data = [
-						'firstname' => $firstName,
-						'lastname' => $lastName,
-						'mail' => $data['billing']['email'],
-						'mobile' => $data['billing']['mobile'],
-						'datetime' => date('Y-m-d H:i:s'),
-						'gender' => null,
-					];
-
-					$existingCustomer = $this->model_customer->getCustomerByMail($customer_data['mail']);
-
-					if( isset( $existingCustomer['id'] ) ) {
-						$data['billing']['customer_id'] = $existingCustomer['id'];	
-					} else {
-						$data['billing']['customer_id'] = $this->model_customer->createCustomer($customer_data);
-					}
 				}
 
 				$data['billing']['id'] = $this->model_medicine->createMedicineBill($data['billing']);
