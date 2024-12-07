@@ -21400,3 +21400,10 @@ div.dtsb-searchBuilder div.dtsb-group div.dtsb-logicContainer {
   font-size: 63px;
   right: 0;
 }
+
+body[data-reports=""] .dtsb-searchBuilder,
+body[data-reports=""] .datatotals,
+body[data-reports=""] tfoot
+{
+  display: none !important;
+}

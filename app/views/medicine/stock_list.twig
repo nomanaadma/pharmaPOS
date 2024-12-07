@@ -29,7 +29,7 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="table-responsive stock-table">
-			<table class="table table-middle table-bordered table-striped datatable-table">
+			<table class="table table-middle table-bordered table-striped datatable-count-table stock-list">
 				<thead>
 					<tr>
 						<th>#</th>
@@ -38,6 +38,9 @@
 						<th>Expiry</th>
 						<th>Purchase Price</th>
 						<th>Sale Price</th>
+						<th>Total Purchase</th>
+						<th>Total Sale</th>
+						<th>Profit</th>
 						<th>Qty</th>
 						<th>Sold</th>
 						<th>Available</th>
@@ -53,8 +56,23 @@
 							<td class="text-primary medicine">{{ value.name }}</td>
 							<td class="batch">{{ value.batch }}</td>
 							<td class="expiry text-danger">{{ value.expiry|date(common.info.date_my_format) }}</td>
-							<td class="purchase">{{ common.info.currency_abbr~value.purchaseprice }}</td>
-							<td class="sale">{{ common.info.currency_abbr~value.saleprice }}</td>
+							<td class="purchase">{{ common.info.currency_abbr~value.unit_purchase_price }}</td>
+							<td class="sale">
+								{% if value.unit_sale_price is not empty %}
+									{{ common.info.currency_abbr ~ value.unit_sale_price }}
+								{% endif %}
+							</td>
+							<td>{{ common.info.currency_abbr~value.total_purchase }}</td>
+							<td>
+								{% if value.total_sales is not empty %}
+									{{ common.info.currency_abbr ~ value.total_sales }}
+								{% endif %}
+							</td>
+							<td>
+								{% if value.profit is not empty %}
+									{{ common.info.currency_abbr ~ value.profit }}
+								{% endif %}
+							</td>
 							<td class="qty">{{ value.qty }}</td>
 							<td class="sold">{{ value.sold }}</td>
 							<td class="available">{{ value.qty - value.sold }}</td>
@@ -86,6 +104,25 @@
 						</tr>
 					{% endfor %}
 				</tbody>
+				<tfoot>
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						{% if page_view or page_edit or page_delete %}
+							<th></th>
+						{% endif %}
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>
@@ -142,4 +179,4 @@
 	</div>
 </div>
 {% if page_delete %}{{ include('common/delete_modal.twig') }}{% endif %}
-	{{ include('common/footer.twig') }}
+{{ include('common/footer.twig') }}

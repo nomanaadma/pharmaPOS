@@ -39,7 +39,29 @@ class Report extends Model
 
 	public function getMedicines()
 	{
-		$query = $this->database->query("SELECT m.*, mc.name AS category_name, SUM(mb.qty) AS qty, SUM(mb.qty) - SUM(mb.sold) AS livestock FROM `medicines` AS m LEFT JOIN `medicine_category` AS mc ON mc.id = m.category LEFT JOIN `medicine_batch_view` AS mb ON mb.medicine_id = m.id AND mb.expiry > '".date('Y-m')."' GROUP BY m.id ORDER BY m.created_date DESC");
+		$query = $this->database->query("SELECT
+			m.id,
+			m.`NAME`,
+			mc.`NAME` AS category_name, 
+			SUM(mb.qty) AS qty, 
+			SUM(mb.qty) - SUM(mb.sold) AS livestock, 
+			SUM(mb.total_sales) AS total_sales, 
+			SUM(mb.profit) AS profit, 
+			SUM(mb.total_purchase) AS total_purchase
+		FROM
+			medicines AS m
+			LEFT JOIN
+			medicine_category AS mc
+			ON 
+				mc.id = m.category
+			LEFT JOIN
+			medicine_batch_view AS mb
+			ON 
+				mb.medicine_id = m.id
+		GROUP BY
+			m.id, mc.`NAME`
+		ORDER BY
+			m.created_date DESC");
 		return $query->rows;
 	}
 

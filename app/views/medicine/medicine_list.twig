@@ -20,15 +20,13 @@
 
 <div class="panel panel-default">
 	<div class="panel-body">
-		<div class="table-responsive hide_id">
-			<table class="table table-middle table-bordered table-striped datatable-table-custom">
+		<div class="table-responsive">
+			<table class="table table-middle table-bordered table-striped datatable-table">
 				<thead>
 					<tr>
 						<th>#</th>
 						<th>Medicine</th>
-						<th>Generic</th>
 						<th>Company</th>
-						<th>Group</th>
 						<th>Unit</th>
 						<th>Unit/Packing</th>
 						<th>Category</th>
@@ -37,12 +35,12 @@
 						<th>Live Stock</th>
 						<th>Status</th>
 						{% if page_view or page_edit or page_delete %}
-							<th class="action-th"></th>
+							<th></th>
 						{% endif %}
 					</tr>
 				</thead>
 				<tbody>
-					{# {% for value in result %}
+					{% for value in result %}
 						<tr>
 							<td>{{ loop.index }}</td>
 							<td>
@@ -88,7 +86,7 @@
 								</td>
 							{% endif %}
 						</tr>
-					{% endfor %} #}
+					{% endfor %}
 				</tbody>
 			</table>
 		</div>
@@ -96,5 +94,4 @@
 </div>
 
 {% if page_delete %}{{ include('common/delete_modal.twig') }}{% endif %}
-<script type="text/javascript" src="public/js/medicine.js"></script>
 	{{ include('common/footer.twig') }}

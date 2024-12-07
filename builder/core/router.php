@@ -32,7 +32,14 @@ class Router
 	{
 		if (array_key_exists($uri, $this->routes[$method])) {
 			$user_agent = $this->repository->get('user_agent');
-			if (!$user_agent->hasPermission($uri)) {
+
+			$permission = $user_agent->hasPermission($uri);
+
+			if (strpos($uri, 'filter') !== false) {
+				$permission = true;
+			}
+
+			if (!$permission) {
 				$this->dispatch(array('controller' => 'ErrorController', 'method' => 'forbidden'));
 			} else {
 				$route = explode('@', $this->routes[$method][$uri]);

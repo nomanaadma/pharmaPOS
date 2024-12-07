@@ -4,39 +4,56 @@ $upeEam#@!f0
 aminshoukat4@gmail.com
 $upeEam#@!f0
 
-
 ALTER TABLE `bill_items`
 ADD CONSTRAINT `fk_bill_medicine_id`
-FOREIGN KEY (`medicine_id`) 
-REFERENCES `medicines`(`id`) 
+FOREIGN KEY (`medicine_id`)
+REFERENCES `medicines`(`id`)
 ON DELETE CASCADE;
 
+remove comments
 
-https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-application/25581006
-http://pepdev.com/theme-preview/drugstore/
+select `medicines`.`name` AS `name`,`medicine_batch`.`id` AS `id`,`medicine_batch`.`batch` AS `batch`,`medicine_batch`.`expiry` AS `expiry`,`medicine_batch`.`pqty` AS `pqty`,`medicine_batch`.`qty` AS `qty`,`medicine_batch`.`saleprice` AS `saleprice`,`medicine_batch`.`purchaseprice` AS `purchaseprice`,`medicine_batch`.`gross` AS `gross`,`medicine_batch`.`discounttype` AS `discounttype`,`medicine_batch`.`discount` AS `discount`,`medicine_batch`.`discountvalue` AS `discountvalue`,`medicine_batch`.`tax` AS `tax`,`medicine_batch`.`taxprice` AS `taxprice`,`medicine_batch`.`price` AS `price`,`medicine_batch`.`sold` AS `sold`,`medicine_batch`.`medicine_id` AS `medicine_id`,`medicine_batch`.`purchase_id` AS `purchase_id`,`medicine_batch`.`status` AS `status`,`medicine_batch`.`created_date` AS `created_date` from (`medicine_batch` join `medicines` on((`medicine_batch`.`medicine_id` = `medicines`.`id`)))
+
+SELECT
+	medicines.`name` AS `name`, 
+	medicine_batch.id AS id, 
+	medicine_batch.batch AS batch, 
+	medicine_batch.expiry AS expiry, 
+	medicine_batch.pqty AS pqty, 
+	medicine_batch.qty AS qty, 
+	medicine_batch.saleprice AS saleprice, 
+	medicine_batch.purchaseprice AS purchaseprice, 
+	medicine_batch.gross AS gross, 
+	medicine_batch.discounttype AS discounttype, 
+	medicine_batch.discount AS discount, 
+	medicine_batch.discountvalue AS discountvalue, 
+	medicine_batch.tax AS tax, 
+	medicine_batch.taxprice AS taxprice, 
+	medicine_batch.price AS price, 
+	round((`medicine_batch`.`price` / nullif(`medicine_batch`.`qty`,0)),2) AS unit_purchase_price, 
+	medicine_batch.sold AS sold, 
+	medicine_batch.medicine_id AS medicine_id, 
+	medicine_batch.purchase_id AS purchase_id, 
+	medicine_batch.`status` AS `status`, 
+	medicine_batch.created_date AS created_date, 
+	round((`medicine_bill`.`price` / nullif(`medicine_bill`.`qty`,0)),2) AS unit_sale_price
+FROM
+	(
+		medicine_batch
+		join
+		medicines
+		ON 
+			(
+				(
+					medicine_batch.medicine_id = medicines.id
+				)
+			)
+	)
+	LEFT JOIN
+	bill_items_view AS medicine_bill
+	ON 
+		medicine_batch.medicine_id = medicine_bill.medicine_id AND
+		medicine_batch.id = medicine_bill.batch
 
 
-expense
-
-reports work
-
-remove extra fields from medicine
-
-toggle-button
-
-remove bill in customer view
-
-common.info.currency_abbr
-
-remove scroll in ajax datatable table
-
-fix datatable height
-
-show Custom Search Builder and tfoot only when there's report permission allowed
-
-in medicine form change datatype of number of unit first check must min level and re-order level
-
-Enterogermina sold -22.00 issue
-
-check all $countQuery
 

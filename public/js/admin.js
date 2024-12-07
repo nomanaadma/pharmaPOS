@@ -374,7 +374,7 @@
         }
     });
 
-    var countdatatable = $('.datatable-count-table').DataTable({
+    $('.datatable-count-table').DataTable({
         aLengthMenu: [[10, 25, 50, 75, -1], [10, 25, 50, 75, "All"]],
         iDisplayLength: 10,
         pagingType: 'full_numbers',
@@ -399,6 +399,16 @@
                 i : 0;
             };
 
+            if (data.length === 0) {
+                for (var i = 0; i < row.childElementCount; i++) {
+                    $(api.column(i).footer()).html('');
+                }
+                return;
+            }
+
+            let dataHtml = '<div class="row datatotals">';
+
+
             for (var i = row.childElementCount - 1; i >= 0; i--) {
                 if (i == 0 ) {
                     $( api.column(i).footer() ).html('Total');
@@ -412,11 +422,74 @@
                     }, 0 );
 
                     if (column) {
-                        $( api.column(i).footer() ).html($('.common_currency').val()+column.toFixed(2));
+                        
+                        const columnTitle = $(api.column(i).header()).text();
+
+                        if( $(this).hasClass('stock-list') ) {
+
+                            const cols = ['Total Purchase', 'Total Sale', 'Profit', 'Sold'];
+                            
+                            if( cols.includes(columnTitle) ) {
+
+                                const currencyCol =  ['Total Purchase', 'Total Sale', 'Profit'];
+
+                                let numbers = column.toFixed(2);
+
+                                if( columnTitle.includes(columnTitle) ) {
+                                    numbers = $('.common_currency').val()+column.toFixed(2);
+                                }
+
+                                dataHtml += `
+                                    <div class="col">
+                                        <div class="dashboard-stat">
+                                            <div class="content"><h4 class="text-dark">${numbers}</h4>
+                                            <span class="text-dark">${columnTitle}</span></div>
+                                            <div class="icon"><i class="las la-dollar-sign text-secondary"></i></div>
+                                        </div>
+                                    </div>
+                                `;
+    
+                                $( api.column(i).footer() ).html(numbers);
+
+                            }                     
+
+                        } else if( $(this).hasClass('report_inventory') ) {
+
+                            const cols = ['Purchase', 'Sales', 'Profit'];
+                            
+                            if( cols.includes(columnTitle) ) {
+
+                                let numbers = $('.common_currency').val()+column.toFixed(2);
+
+                                dataHtml += `
+                                    <div class="col">
+                                        <div class="dashboard-stat">
+                                            <div class="content"><h4 class="text-dark">${numbers}</h4>
+                                            <span class="text-dark">${columnTitle}</span></div>
+                                            <div class="icon"><i class="las la-dollar-sign text-secondary"></i></div>
+                                        </div>
+                                    </div>
+                                `;
+    
+                                $( api.column(i).footer()).html(numbers);
+
+                            } 
+
+                        } else {
+                         
+                            $( api.column(i).footer() ).html($('.common_currency').val()+column.toFixed(2));
+
+                        }
                     }
                 }
 
             }
+
+            dataHtml += '</div>';
+
+            $('.datatotals').remove();
+
+            $(dataHtml).insertBefore('.dataTables_wrapper');
         }
     });
 

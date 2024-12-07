@@ -16,6 +16,7 @@ class Commons extends Model
 		$data['new_transaction'] = $this->user_agent->hasPermission('account/transaction/add');
 		$data['new_customer'] = $this->user_agent->hasPermission('customer/add');
 		$data['live_stock'] = $this->user_agent->hasPermission('medicine/stock');
+		$data['report_permission'] = $this->user_agent->hasPermission('reports');
 		$data['token'] = hash('sha512', TOKEN . TOKEN_SALT);
 		$data['admin_menu'] = $this->createAdminMenu();
 		return $data;

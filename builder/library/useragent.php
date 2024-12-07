@@ -87,6 +87,7 @@ class Useragent {
 			'customer/search'
 		);
 
+
 		$this->permission = array_merge($this->permission, $extension);
 		if (in_array($data, $this->permission) || $this->role == "1") {
 			return true;

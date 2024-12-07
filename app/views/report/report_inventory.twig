@@ -16,16 +16,14 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="table-responsive">
-			<table class="table table-middle table-bordered table-striped datatable-table">
+			<table class="table table-middle table-bordered table-striped datatable-count-table report_inventory">
 				<thead>
 					<tr>
 						<th>#</th>
 						<th>Medicine</th>
-						<th>Company</th>
-						<th>Unit</th>
-						<th>Unit/Packing</th>
-						<th>Category</th>
-						<th>Storebox</th>
+						<th>Purchase</th>
+						<th>Sales</th>
+						<th>Profit</th>
 						<th>Reorderlevel</th>
 						<th>Live Stock</th>
 						<th>Status</th>
@@ -36,14 +34,19 @@
 						<tr>
 							<td>{{ loop.index }}</td>
 							<td>
-								<p class="text-primary mb-0">{{ value.name }}</p>
-								<p class="mb-0">{{ value.generic }}</p>
+								<p class="text-primary mb-0">{{ value.NAME }}</p>
 							</td>
-							<td>{{ value.company }}</td>
-							<th>{{ value.unit }}</th>
-							<td>{{ value.unitpacking }}</td>
-							<td>{{ value.category_name }}</td>
-							<td>{{ value.storebox }}</td>
+							<td>{{ common.info.currency_abbr~value.total_purchase }}</td>
+							<td>
+								{% if value.total_sales is not empty %}
+									{{ common.info.currency_abbr ~ value.total_sales }}
+								{% endif %}
+							</td>
+							<td>
+								{% if value.profit is not empty %}
+									{{ common.info.currency_abbr ~ value.profit }}
+								{% endif %}
+							</td>
 							<td>{{ value.reorderlevel }}</td>
 							<td>{{ value.livestock }}</td>
 							<td>
@@ -58,6 +61,18 @@
 						</tr>
 					{% endfor %}
 				</tbody>
+				<tfoot>
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>
