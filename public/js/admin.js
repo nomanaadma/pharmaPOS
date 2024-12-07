@@ -1,17 +1,13 @@
  Dropzone.autoDiscover = false;
+ 
  $(document).ready(function () {
+  
     "use strict";
     var path = $('.site_url').val();
 
-    //********************************************
-    //Data-Title Tool tip bootstrap **************
-    //********************************************
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover()
 
-    //*************************************************
-    //Left Side menu  *********************************
-    //*************************************************
     $('body').on('click', '.menu-close', function () {
         var ele = $(this);
         $('#main-wrapper').addClass('page-menu-small');
@@ -29,24 +25,6 @@
         ele.removeClass('menu-open');
         ele.addClass('menu-close');
     });
-
-    if ($('.page-search input').length) {
-        $(".page-search input").autocomplete({
-            source: path.concat('customer/search'),
-            minLength: 2,
-            focus: function() {
-                return false;
-            },
-            select: function(event, ui) {
-                window.location.href = $('.site_url').val().concat('customer/view&id='+ui.item.id);
-                return false;
-            }
-        }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-            return $( "<li>" )
-            .append('<div>' + item.label + '<div class="font-12"> ( ' + item.email + ' )</div><div class="font-12"> ( ' + item.mobile + ' )</div></div>')
-            .appendTo( ul );
-        };
-    }
 
     if ($('.customer-name').length) {
         $(".customer-name").autocomplete({
@@ -67,7 +45,6 @@
         };
     }
 
-    //Left side Sub Menu
     $('body').on('click', 'li.has-sub > a', function () {
         var ele = $(this), target = ele.parent('li.has-sub').find('ul.sub-menu:first');
         ele.parent('li.has-sub').siblings('li').find('a .arrow').removeClass('rotate');
@@ -82,31 +59,18 @@
         return false;
     });
 
-    //Open Left Side Menu in mobile
     $('body').on('click', '.open-left-menu', function () {
         var ele = $('.menu-wrapper'), nav_ele = $('.navbar-container');
         $('body').append('<div class="menu-overlay"></div>');
         ele.addClass('menu-mobile-open');
         nav_ele.addClass('menu-mobile-open');
     });
-    //Close Left Side Menu in mobile
+
     $('body').on('click', '.menu-overlay', function () {
         $('.menu-wrapper, .navbar-container').removeClass('menu-mobile-open');
         $('.menu-overlay').remove();
     });
 
-
-    function openSideNav() {
-        $('body').addClass('sidenav-active');
-        $('.sidenav').css('right', '0');
-    }
-
-    function closeSideNav() {
-        $('.sidenav').css('right', '-60%');
-        $('body').removeClass('sidenav-active');
-    }
-
-    //Open Page hdr right menu in Mobile
     $('body').on('click', '.open-page-menu-desktop', function () {
         var ele = $('.page-hdr-desktop');
         $('.page-search').slideUp(300);
@@ -116,30 +80,8 @@
             ele.slideUp(300);
         }
     });
-    //Open Page search in mobile
-    $('body').on('click', '.open-mobile-search', function () {
-        var ele = $('.page-search');
-        $('.page-hdr-desktop').slideUp(300);
-        if (ele.css('display') === "none") {
-            ele.slideDown(300);
-        } else {
-            ele.slideUp(300);
-        }
-    });
+    
 
-    //*************************************************
-    //Perfect Scrollbar  ******************************
-    //************************************************* 
-    if ($('.menu-fixed').length > 0 && $('.menu-wrapper').length > 0) {
-        new PerfectScrollbar('.menu-fixed .menu-wrapper .menu ul', {
-            wheelSpeed: 2,
-            minScrollbarLength: 20
-        });
-    }
-
-    //********************************************
-    //Delete Item From List **********************
-    //********************************************
     $(document).on('click', '.table-delete', function () {
         $('.delete-card-button input.delete-id').val($(this).find('input').val());
         $("#delete-card").modal({
@@ -151,9 +93,6 @@
         $('.delete-card-button input.delete-id').val('');
     });
 
-    //********************************************
-    //Image  Uplaod ******************************
-    //********************************************
     $('#media-upload').on('show.bs.modal', function (e) {
         var uploaded = $('#media-upload .uploaded');
         if (uploaded.val() === '0') {
@@ -182,7 +121,6 @@
         $('#media-upload .media-all').removeClass('media-modal-open');
     });
 
-    //Dropzone.autoDiscover = false;
     $("#media-dropzone").dropzone({
         addRemoveLinks: false,
         acceptedFiles: "image/*",
@@ -224,7 +162,7 @@
         $('#media-upload').modal('hide');
     });
 
-    //Image Delete 
+    // Image Delete 
     $('.media-all').on('click', '.block .remove', function () {
         var ele = $(this), ele_par = ele.parent(),
         media = ele_par.find('.picture input').val(),
@@ -257,10 +195,6 @@
     });
 
 
-    //********************************************
-    //Admin Panel Left Side Menu *****************
-    //********************************************
-    //Left side Sub Menu 
     $('.menu-dropdown').click(function () {
         var ele = $(this);
         if (ele.siblings('.sub-menu').css('display') === 'none') {
@@ -275,9 +209,6 @@
     });
 
 
-    //*************************************************
-    //ThemeAccordion **********************************
-    //*************************************************
     $('.theme-accordion:nth-child(1) .theme-accordion-bdy').slideDown();
     $('.theme-accordion:nth-child(1) .theme-accordion-control i').addClass('ti-minus');
     $('body').on('click', '.theme-accordion-hdr', function () {
@@ -301,27 +232,6 @@
         $('.picture').show();
     });
 
-
-    //********************************************
-    //Jaquery Ui Datepicker **********************
-    //********************************************
-
-    //User profile date picker
-    $('#user-dob').datepicker({
-        dateFormat: $('.common_date_format').val(),
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-100:+0"
-    });
-
-    $('.dateofbirth').datepicker({
-        dateFormat: $('.common_date_format').val(),
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-100:+0"
-    });
-
-
     //Filter date picker
     $('.filter-date').datepicker({
         dateFormat: $('.common_date_format').val()
@@ -332,9 +242,6 @@
         dateFormat: $('.common_date_format').val()
     });
 
-    //********************************************
-    //Date Range picker JS ***********************
-    //********************************************
     if ($('.table-date-range').length) {
         var tabledate_data = $('.table-date-range').data();
         $('.table-date-range').daterangepicker({
@@ -366,25 +273,6 @@
         });
     }
 
-    //New or Edit Epxense type Modal *************
-    $('body').on('click', '.edit-expense-type', function () {
-        var ele = $(this);
-        $('#addExpenseModel input[name="name"]').val(ele.data("name"));
-        $('#addExpenseModel textarea[name="description"]').val(ele.data("description"));
-        $('#addExpenseModel input[name="id"]').val(ele.data("id"));
-        $('#addExpenseModel select[name="status"]').val(ele.data("status"));
-        $('#addExpenseModel .modal-title').text('Edit Expense Type');
-        $('#addExpenseModel form').attr('action', $('.site_url').val().concat('expensetype/edit'));
-        $('#addExpenseModel').modal('show');
-    });
-    $('#addExpenseModel').on('hidden.bs.modal', function (e) {
-        $('#addExpenseModel .modal-title').text('New Expense Type');
-        $('#addExpenseModel input').not( "[name='_token']" ).val('');
-        $('#addExpenseModel textarea').val('');
-        $('#addExpenseModel form').attr('action', $('.site_url').val().concat('expensetype/add'));
-    });
-
-    //New or Edit Payment type Modal *************
     $('body').on('click', '.edit-paymenttype', function () {
         var ele = $(this);
         $('#addPaymentType input[name="name"]').val(ele.data("name"));
@@ -399,23 +287,6 @@
         $('#addPaymentType input').not( "[name='_token']" ).val('');
         $('#addPaymentType textarea').val('');
         $('#addPaymentType form').attr('action', $('.site_url').val().concat('paymentmethod/add'));
-    });
-
-    //New or Edit Tax Modal *************
-    $('body').on('click', '.edit-tax', function () {
-        var ele = $(this);
-        $('#addTax input[name="name"]').val(ele.data("name"));
-        $('#addTax input[name="rate"]').val(ele.data("rate"));
-        $('#addTax input[name="id"]').val(ele.data("id"));
-        $('#addTax .modal-title').text('Edit Tax Rate');
-        $('#addTax form').attr('action', $('.site_url').val().concat('tax/edit'));
-        $('#addTax').modal('show');
-    });
-    $('#addTax').on('hidden.bs.modal', function (e) {
-        $('#addTax .modal-title').text('New Tax Rate');
-        $('#addTax input').not( "[name='_token']" ).val('');
-        $('#addTax textarea').val('');
-        $('#addTax form').attr('action', $('.site_url').val().concat('tax/add'));
     });
 
     //New or Edit Medicine Category Modal *************
@@ -556,56 +427,6 @@
             ele.find('i').removeClass('la-toggle-off');
         }
         column.visible(!column.visible());
-    });
-
-    $('body').on('change', 'input:radio[name=layout]', function () {
-        var ele = $(this), ele_val = $(this).val();
-        if (ele_val === "boxed") {
-            $('.wrapper').addClass('boxed');
-        } else {
-            $('.wrapper').removeClass('boxed');
-        }
-    });
-
-    $('body').on('change', 'input:radio[name=layout_fixed]', function () {
-        var ele = $(this), ele_val = $(this).val();
-        if (ele_val === "menu-fixed page-hdr-fixed") {
-            $('#main-wrapper').addClass('menu-fixed page-hdr-fixed');
-        } else {
-            $('#main-wrapper').removeClass('menu-fixed page-hdr-fixed');
-        }
-    });
-
-    $('body').on('change', 'input:checkbox[name=layout_menu]', function () {
-        var ele = $(this), ele_val = $(this).val();
-        if (ele.prop('checked') === true) {
-            $('#main-wrapper').addClass('page-menu-small');
-        } else {
-            $('#main-wrapper').removeClass('page-menu-small');
-        }
-    });
-
-    $('body').on('change', 'input:radio[name=side-menu]', function () {
-        var ele = $(this), ele_val = $(this).val();
-        if (ele_val === 'light') {
-            $('#main-wrapper').addClass('menu-light');
-        } else {
-            $('#main-wrapper').removeClass('menu-light');
-        }
-    });
-
-    $('body').on('change', 'input:radio[name=header-color]', function () {
-        var ele = $(this), ele_val = $(this).val(), hdr = $('.page-hdr');
-        hdr.removeClass('page-hdr-colored');
-        hdr.removeClass('page-hdr-gradient');
-        hdr.removeClass('bg-primary');
-        hdr.removeClass('bg-success');
-        hdr.removeClass('bg-secondary');
-        hdr.removeClass('bg-warning');
-        hdr.removeClass('bg-danger');
-        hdr.removeClass('bg-info');
-        hdr.removeClass('bg-dark');
-        hdr.addClass(ele_val);
     });
 
     if ($('.alert-message').length) {

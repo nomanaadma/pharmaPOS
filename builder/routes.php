@@ -82,10 +82,6 @@ $router->get('paymentmethod', 'FinanceController@paymentMethod');
 $router->post('paymentmethod/add', 'FinanceController@paymentMethodAction');
 $router->post('paymentmethod/edit', 'FinanceController@paymentMethodAction');
 $router->post('paymentmethod/delete', 'FinanceController@paymentMethodDelete');
-$router->get('tax', 'FinanceController@tax');
-$router->post('tax/add', 'FinanceController@taxAction');
-$router->post('tax/edit', 'FinanceController@taxAction');
-$router->post('tax/delete', 'FinanceController@taxDelete');
 
 $router->get('get/media', 'UploadController@getMedia');
 $router->post('media/upload', 'UploadController@uploadMedia');

@@ -164,11 +164,7 @@ class Commons extends Model
 			'medicine/stock' => 'stockadjustment',
 			'info' => 'settings',
 			'paymentmethod' => 'settings',
-			'tax' => 'settings',
-			'paymentgateway' => 'settings',
 			'suppliers' => 'settings',
-			'items' => 'settings',
-			'customization' => 'customization'
 		);
 		if (isset($data[$key])) {
 			return $data[$key];
