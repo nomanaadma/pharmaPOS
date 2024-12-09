@@ -81,7 +81,7 @@ $(function () {
                         return intVal(a) + intVal(b);
                     }, 0 );
 
-                    if (column) {
+                    if (!Number.isNaN(column))  {
 
                         const numbers = $('.common_currency').val()+column.toFixed(2);
                         const columnTitle = $(api.column(i).header()).text();

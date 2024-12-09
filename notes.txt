@@ -4,7 +4,8 @@ $upeEam#@!f0
 aminshoukat4@gmail.com
 $upeEam#@!f0
 
-
+https://codecanyon.net/item/drug-store-pharmacy-billing-management-web-application/25581006
+http://pepdev.com/theme-preview/drugstore/
 
 ALTER TABLE `bill_items`
 ADD CONSTRAINT `fk_bill_medicine_id`

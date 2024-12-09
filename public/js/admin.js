@@ -421,7 +421,7 @@
                         return intVal(a) + intVal(b);
                     }, 0 );
 
-                    if (column) {
+                    if (!Number.isNaN(column))  {
                         
                         const columnTitle = $(api.column(i).header()).text();
 
@@ -435,7 +435,7 @@
 
                                 let numbers = column.toFixed(2);
 
-                                if( columnTitle.includes(columnTitle) ) {
+                                if( currencyCol.includes(columnTitle) ) {
                                     numbers = $('.common_currency').val()+column.toFixed(2);
                                 }
 
